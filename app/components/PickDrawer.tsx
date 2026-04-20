@@ -150,7 +150,7 @@ export function PickDrawer({
 
         {/* Price history chart */}
         <Section title="Price History">
-          <div className="mt-3 h-40">
+          <div className="mt-3 h-52">
             {pick.history.length > 1 ? (
               <Sparkline
                 data={pick.history}
