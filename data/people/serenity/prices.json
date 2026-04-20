@@ -1,0 +1,106 @@
+{
+  "LWLG": {
+    "price": 12.54,
+    "market_cap": 1900000000,
+    "currency": "USD",
+    "ytd_pct": 242.62,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "POWL": {
+    "price": 241.01,
+    "market_cap": 8800000000,
+    "currency": "USD",
+    "ytd_pct": 105.2,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "ALRIB.ST": {
+    "price": null,
+    "market_cap": null,
+    "currency": "SEK",
+    "ytd_pct": 0,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "IQE.L": {
+    "price": null,
+    "market_cap": null,
+    "currency": "GBp",
+    "ytd_pct": 911.65,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "AAOI": {
+    "price": null,
+    "market_cap": null,
+    "currency": "USD",
+    "ytd_pct": 412,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "AXTI": {
+    "price": null,
+    "market_cap": null,
+    "currency": "USD",
+    "ytd_pct": 510,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "LITE": {
+    "price": null,
+    "market_cap": null,
+    "currency": "USD",
+    "ytd_pct": 130,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "AEHR": {
+    "price": null,
+    "market_cap": null,
+    "currency": "USD",
+    "ytd_pct": 88,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "SIVE.ST": {
+    "price": null,
+    "market_cap": null,
+    "currency": "SEK",
+    "ytd_pct": 385,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "SOI": {
+    "price": null,
+    "market_cap": null,
+    "currency": "EUR",
+    "ytd_pct": 208,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "CRCL": {
+    "price": null,
+    "market_cap": null,
+    "currency": "USD",
+    "ytd_pct": 145,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "RPI": {
+    "price": null,
+    "market_cap": null,
+    "currency": "GBp",
+    "ytd_pct": 107,
+    "history": [],
+    "updated_at": "2026-04-17"
+  },
+  "RDDT": {
+    "price": null,
+    "market_cap": null,
+    "currency": "USD",
+    "ytd_pct": -32.28,
+    "history": [],
+    "updated_at": "2026-04-17"
+  }
+}
