@@ -59,7 +59,7 @@ export function InsightsPanel({
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
             Where They&apos;re Struggling
           </p>
-          <h3 className="mt-1 text-3xl font-semibold text-white">Watch-list</h3>
+          <h3 className="mt-1 text-3xl font-semibold text-white">Watchlist</h3>
         </header>
         <div className="space-y-3">
           {focusList.map((pick) => (
