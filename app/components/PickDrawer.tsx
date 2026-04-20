@@ -67,6 +67,7 @@ export function PickDrawer({
       : recTone === "down"
         ? "text-[var(--color-down)]"
         : "text-[var(--color-text-dim)]";
+  const tweetMarkers = buildTweetMarkers(pick);
 
   return (
     <div
@@ -151,7 +152,11 @@ export function PickDrawer({
         <Section title="Price History">
           <div className="mt-3 h-40">
             {pick.history.length > 1 ? (
-              <Sparkline data={pick.history} positive={pick.ytd_pct >= 0} />
+              <Sparkline
+                data={pick.history}
+                positive={pick.ytd_pct >= 0}
+                tweetMarkers={tweetMarkers}
+              />
             ) : (
               <EmptyHint>
                 Run <code className="text-[var(--color-gold)]">npm run refresh</code>{" "}
@@ -159,6 +164,13 @@ export function PickDrawer({
               </EmptyHint>
             )}
           </div>
+          {pick.history.length > 1 && tweetMarkers.length > 0 && (
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+              <span className="text-[var(--color-gold)]">●</span>{" "}
+              {tweetMarkers.length} tweet marker
+              {tweetMarkers.length === 1 ? "" : "s"} overlaid on chart
+            </p>
+          )}
           {pick.updated_at && (
             <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
               Updated {pick.updated_at}
@@ -478,6 +490,30 @@ export function PickDrawer({
 function tonePct(n: number | null | undefined): string | undefined {
   if (n == null) return undefined;
   return n >= 0 ? "text-[var(--color-up)]" : "text-[var(--color-down)]";
+}
+
+function buildTweetMarkers(pick: EnrichedPick): {
+  tweet_id: string;
+  tweet_url: string;
+  tweeted_at: string;
+}[] {
+  if (pick.tweet_events && pick.tweet_events.length > 0) {
+    return pick.tweet_events
+      .filter((event) => Boolean(event.tweeted_at))
+      .map((event) => ({
+        tweet_id: event.tweet_id,
+        tweet_url: event.tweet_url,
+        tweeted_at: event.tweeted_at,
+      }));
+  }
+  if (!pick.first_mentioned_at) return [];
+  return [
+    {
+      tweet_id: pick.tweet_id,
+      tweet_url: pick.tweet_url,
+      tweeted_at: pick.first_mentioned_at,
+    },
+  ];
 }
 
 function Section({
