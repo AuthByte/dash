@@ -2,14 +2,25 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import {
+  AreaSeries,
   ColorType,
   CrosshairMode,
   LineStyle,
+  createSeriesMarkers,
   createChart,
+  type AreaData,
+  type AreaStyleOptions,
+  type AreaSeriesOptions,
+  type DeepPartial,
   type IChartApi,
   type ISeriesApi,
+  type ISeriesMarkersPluginApi,
   type MouseEventParams,
+  type SeriesMarker,
+  type SeriesOptionsCommon,
   type Time,
+  type TimeChartOptions,
+  type WhitespaceData,
 } from "lightweight-charts";
 import type { PriceHistoryPoint } from "@/lib/schema";
 
@@ -30,7 +41,16 @@ export function Sparkline({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef =
-    useRef<ISeriesApi<"Area", Time, { time: Time; value: number }> | null>(null);
+    useRef<
+      ISeriesApi<
+        "Area",
+        Time,
+        AreaData<Time> | WhitespaceData<Time>,
+        AreaSeriesOptions,
+        DeepPartial<AreaStyleOptions & SeriesOptionsCommon>
+      > | null
+    >(null);
+  const seriesMarkersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const markerUrlMapRef = useRef<Map<string, string>>(new Map());
 
   const chartData = useMemo(
@@ -108,7 +128,7 @@ export function Sparkline({
       },
     });
 
-    const series = chart.addAreaSeries({
+    const series = chart.addSeries(AreaSeries, {
       lineColor: stroke,
       topColor: positive ? "rgba(52, 211, 153, 0.26)" : "rgba(248, 113, 113, 0.24)",
       bottomColor: "rgba(0,0,0,0)",
@@ -123,6 +143,7 @@ export function Sparkline({
 
     chartRef.current = chart;
     seriesRef.current = series;
+    seriesMarkersRef.current = createSeriesMarkers<Time>(series, []);
 
     const resize = () => {
       if (!containerRef.current || !chartRef.current) return;
@@ -152,6 +173,7 @@ export function Sparkline({
       chart.remove();
       chartRef.current = null;
       seriesRef.current = null;
+      seriesMarkersRef.current = null;
     };
   }, [positive, stroke]);
 
@@ -162,11 +184,11 @@ export function Sparkline({
   }, [chartData]);
 
   useEffect(() => {
-    if (!seriesRef.current) return;
+    if (!seriesMarkersRef.current) return;
     markerUrlMapRef.current = new Map(
       markers.map((marker) => [String(marker.id), marker.tweet_url]),
     );
-    seriesRef.current.setMarkers(
+    seriesMarkersRef.current.setMarkers(
       markers.map((marker) => ({
         time: marker.time,
         position: marker.position,
@@ -175,7 +197,7 @@ export function Sparkline({
         text: marker.text,
         size: marker.size,
         id: marker.id,
-      })),
+      })) as SeriesMarker<Time>[],
     );
   }, [markers]);
 
