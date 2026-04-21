@@ -72,6 +72,33 @@ export type EnrichedPick = Pick & {
   updated_at: string | null;
 };
 
+export type TweetMarker = {
+  tweet_id: string;
+  tweet_url: string;
+  tweeted_at: string;
+};
+
+export function getTweetMarkersForPick(pick: Pick): TweetMarker[] {
+  if (pick.tweet_events && pick.tweet_events.length > 0) {
+    return pick.tweet_events
+      .filter((event) => event.tweeted_at)
+      .map((event) => ({
+        tweet_id: event.tweet_id,
+        tweet_url: event.tweet_url,
+        tweeted_at: event.tweeted_at,
+      }))
+      .sort((a, b) => a.tweeted_at.localeCompare(b.tweeted_at));
+  }
+  if (!pick.first_mentioned_at) return [];
+  return [
+    {
+      tweet_id: pick.tweet_id,
+      tweet_url: pick.tweet_url,
+      tweeted_at: pick.first_mentioned_at,
+    },
+  ];
+}
+
 export function getEnrichedPicks(personSlug: string): EnrichedPick[] {
   const picks = getPicks(personSlug);
   const prices = getPrices(personSlug);

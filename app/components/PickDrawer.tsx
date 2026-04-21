@@ -20,6 +20,12 @@ const Sparkline = dynamic(() => import("./Sparkline").then((m) => m.Sparkline), 
   ssr: false,
 });
 
+type TweetMarker = {
+  tweet_id: string;
+  tweet_url: string;
+  tweeted_at: string;
+};
+
 export function PickDrawer({
   pick,
   theme,
@@ -43,6 +49,23 @@ export function PickDrawer({
   }, [pick, onClose]);
 
   if (!pick) return null;
+
+  const tweetMarkers: TweetMarker[] =
+    pick.tweet_events && pick.tweet_events.length > 0
+      ? pick.tweet_events.map((event) => ({
+          tweet_id: event.tweet_id,
+          tweet_url: event.tweet_url,
+          tweeted_at: event.tweeted_at,
+        }))
+      : pick.first_mentioned_at
+        ? [
+            {
+              tweet_id: pick.tweet_id,
+              tweet_url: pick.tweet_url,
+              tweeted_at: pick.first_mentioned_at,
+            },
+          ]
+        : [];
 
   const m = pick.metrics ?? {};
   const ytdTone =
@@ -151,7 +174,11 @@ export function PickDrawer({
         <Section title="Price History">
           <div className="mt-3 h-40">
             {pick.history.length > 1 ? (
-              <Sparkline data={pick.history} positive={pick.ytd_pct >= 0} />
+              <Sparkline
+                data={pick.history}
+                positive={pick.ytd_pct >= 0}
+                tweetMarkers={tweetMarkers}
+              />
             ) : (
               <EmptyHint>
                 Run <code className="text-[var(--color-gold)]">npm run refresh</code>{" "}
