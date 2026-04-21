@@ -66,13 +66,6 @@ export function PickDrawer({
             },
           ]
         : [];
-  const { chartHistory, hasSyntheticHistory } = buildChartHistory(
-    pick.history,
-    pick.price,
-    pick.first_mentioned_at,
-    pick.updated_at,
-    tweetMarkers,
-  );
 
   const m = pick.metrics ?? {};
   const ytdTone =
@@ -180,24 +173,38 @@ export function PickDrawer({
         {/* Price history chart */}
         <Section title="Price History">
           <div className="mt-3 h-40">
-            {chartHistory.length > 1 ? (
+            {pick.history.length > 1 ? (
               <Sparkline
-                data={chartHistory}
+                data={pick.history}
                 positive={pick.ytd_pct >= 0}
                 tweetMarkers={tweetMarkers}
               />
             ) : (
-              <EmptyHint>
-                Run <code className="text-[var(--color-gold)]">npm run refresh</code>{" "}
-                to populate price history
-              </EmptyHint>
+              <div className="flex h-full flex-col items-center justify-center rounded-sm border border-dashed border-[var(--color-border-strong)] px-4 text-center">
+                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-muted)]">
+                  Historical candles unavailable
+                </p>
+                <p className="mt-1 font-mono text-lg text-white">
+                  Spot {formatPrice(pick.price, pick.currency)}
+                </p>
+                {m.day_change_pct != null && (
+                  <p
+                    className={`mt-1 font-mono text-xs ${
+                      m.day_change_pct >= 0
+                        ? "text-[var(--color-up)]"
+                        : "text-[var(--color-down)]"
+                    }`}
+                  >
+                    Day {formatPctNullable(m.day_change_pct, { sign: true })}
+                  </p>
+                )}
+                <p className="mt-2 text-[11px] text-[var(--color-text-muted)]">
+                  Run <code className="text-[var(--color-gold)]">npm run refresh</code>{" "}
+                  after plan upgrade to load full history.
+                </p>
+              </div>
             )}
           </div>
-          {hasSyntheticHistory && (
-            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
-              Synthetic line: historical candles unavailable on current data plan
-            </p>
-          )}
           {pick.updated_at && (
             <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
               Updated {pick.updated_at}
@@ -497,17 +504,34 @@ export function PickDrawer({
           />
         </div>
 
-        <div className="px-6 py-5">
-          {pick.tweet_url && (
-            <a
-              href={pick.tweet_url}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-sm border border-[var(--color-border-strong)] px-3 py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--color-text-dim)] transition hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
-            >
-              View Original Tweet ↗
-            </a>
-          )}
+        <div className="border-t border-[var(--color-border)] px-6 py-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-gold-dim)]">
+            / Related Tweets ({tweetMarkers.length})
+          </p>
+          <div className="mt-3 space-y-2">
+            {tweetMarkers.length === 0 ? (
+              <p className="font-mono text-[11px] text-[var(--color-text-muted)]">
+                No tweet references available for this stock.
+              </p>
+            ) : (
+              tweetMarkers.map((tweet) => (
+                <a
+                  key={`${tweet.tweet_id}-${tweet.tweeted_at}`}
+                  href={tweet.tweet_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-sm border border-[var(--color-border-strong)] px-3 py-2 transition hover:border-[var(--color-gold)]"
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-dim)]">
+                    {formatDate(tweet.tweeted_at)}
+                  </span>
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-gold)]">
+                    Open Tweet ↗
+                  </span>
+                </a>
+              ))
+            )}
+          </div>
         </div>
       </aside>
     </div>
@@ -517,53 +541,6 @@ export function PickDrawer({
 function tonePct(n: number | null | undefined): string | undefined {
   if (n == null) return undefined;
   return n >= 0 ? "text-[var(--color-up)]" : "text-[var(--color-down)]";
-}
-
-function buildChartHistory(
-  history: { date: string; close: number }[],
-  price: number | null,
-  firstMentionedAt: string,
-  updatedAt: string | null,
-  tweetMarkers: TweetMarker[],
-): { chartHistory: { date: string; close: number }[]; hasSyntheticHistory: boolean } {
-  if (history.length > 1) {
-    return { chartHistory: history, hasSyntheticHistory: false };
-  }
-  if (price == null) {
-    return { chartHistory: history, hasSyntheticHistory: false };
-  }
-
-  const dateSet = new Set<string>();
-  const addDate = (value: string | null | undefined) => {
-    if (!value) return;
-    const date = value.slice(0, 10);
-    if (!Number.isNaN(Date.parse(date))) dateSet.add(date);
-  };
-
-  addDate(firstMentionedAt);
-  addDate(updatedAt);
-  for (const marker of tweetMarkers) {
-    addDate(marker.tweeted_at);
-  }
-
-  if (dateSet.size < 2) {
-    const now = new Date();
-    const end = now.toISOString().slice(0, 10);
-    const start = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
-      .toISOString()
-      .slice(0, 10);
-    dateSet.add(start);
-    dateSet.add(end);
-  }
-
-  const chartHistory = Array.from(dateSet)
-    .sort((a, b) => a.localeCompare(b))
-    .map((date) => ({
-      date,
-      close: price,
-    }));
-
-  return { chartHistory, hasSyntheticHistory: true };
 }
 
 function Section({

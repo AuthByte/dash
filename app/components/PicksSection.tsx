@@ -7,6 +7,7 @@ import type { Stance, Theme } from "@/lib/schema";
 import { FilterBar } from "./FilterBar";
 import { PicksTable, type SortKey, type SortDir } from "./PicksTable";
 import { PickDrawer } from "./PickDrawer";
+import { TweetsByStockPanel } from "./TweetsByStockPanel";
 
 const STANCE_VALUES: (Stance | "all")[] = [
   "all",
@@ -94,6 +95,9 @@ export function PicksSection({
           onSort={onSort}
           onSelect={setActiveTicker}
         />
+      </div>
+      <div className="mt-6">
+        <TweetsByStockPanel picks={sorted} />
       </div>
       <PickDrawer
         pick={activePick}
