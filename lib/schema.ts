@@ -40,6 +40,16 @@ export const PickSchema = z.object({
   first_mentioned_at: z.string(),
   tweet_url: z.string().url().or(z.literal("")),
   tweet_id: z.string(),
+  tweet_events: z
+    .array(
+      z.object({
+        tweet_id: z.string(),
+        tweeted_at: z.string(),
+        tweet_url: z.string().url().or(z.literal("")),
+        text: z.string().optional(),
+      }),
+    )
+    .optional(),
   exited_at: z.string().nullable(),
   exit_price: z.number().nullable(),
 });

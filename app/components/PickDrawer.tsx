@@ -67,6 +67,7 @@ export function PickDrawer({
       : recTone === "down"
         ? "text-[var(--color-down)]"
         : "text-[var(--color-text-dim)]";
+  const tweetMarkers = buildTweetMarkers(pick);
 
   return (
     <div
@@ -149,9 +150,13 @@ export function PickDrawer({
 
         {/* Price history chart */}
         <Section title="Price History">
-          <div className="mt-3 h-40">
+          <div className="mt-3 h-52">
             {pick.history.length > 1 ? (
-              <Sparkline data={pick.history} positive={pick.ytd_pct >= 0} />
+              <Sparkline
+                data={pick.history}
+                positive={pick.ytd_pct >= 0}
+                tweetMarkers={tweetMarkers}
+              />
             ) : (
               <EmptyHint>
                 Run <code className="text-[var(--color-gold)]">npm run refresh</code>{" "}
@@ -159,6 +164,13 @@ export function PickDrawer({
               </EmptyHint>
             )}
           </div>
+          {pick.history.length > 1 && tweetMarkers.length > 0 && (
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+              <span className="text-[var(--color-gold)]">●</span>{" "}
+              {tweetMarkers.length} tweet marker
+              {tweetMarkers.length === 1 ? "" : "s"} overlaid on chart
+            </p>
+          )}
           {pick.updated_at && (
             <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
               Updated {pick.updated_at}
@@ -458,7 +470,7 @@ export function PickDrawer({
           />
         </div>
 
-        <div className="px-6 py-5">
+        <div className="space-y-4 px-6 py-5">
           {pick.tweet_url && (
             <a
               href={pick.tweet_url}
@@ -469,6 +481,31 @@ export function PickDrawer({
               View Original Tweet ↗
             </a>
           )}
+          {tweetMarkers.length > 0 && (
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+                Related Tweets ({tweetMarkers.length})
+              </p>
+              <div className="mt-2 space-y-2">
+                {tweetMarkers.map((tweet) => (
+                  <a
+                    key={tweet.tweet_id}
+                    href={tweet.tweet_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-between rounded-md border border-[var(--color-border)] bg-[var(--color-bg-soft)] px-3 py-2 text-xs text-[var(--color-text-dim)] transition hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
+                  >
+                    <span className="font-mono text-[10px] uppercase tracking-[0.15em]">
+                      {tweet.tweeted_at ? formatDate(tweet.tweeted_at) : "Unknown Date"}
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.18em]">
+                      View ↗
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </aside>
     </div>
@@ -478,6 +515,38 @@ export function PickDrawer({
 function tonePct(n: number | null | undefined): string | undefined {
   if (n == null) return undefined;
   return n >= 0 ? "text-[var(--color-up)]" : "text-[var(--color-down)]";
+}
+
+function buildTweetMarkers(pick: EnrichedPick): {
+  tweet_id: string;
+  tweet_url: string;
+  tweeted_at: string;
+}[] {
+  if (pick.tweet_events && pick.tweet_events.length > 0) {
+    return pick.tweet_events
+      .filter((event) => Boolean(event.tweet_url))
+      .map((event) => ({
+        tweet_id: event.tweet_id,
+        tweet_url: event.tweet_url,
+        tweeted_at: event.tweeted_at,
+      }))
+      .sort((a, b) => {
+        const aMs = Date.parse(a.tweeted_at);
+        const bMs = Date.parse(b.tweeted_at);
+        if (Number.isNaN(aMs) && Number.isNaN(bMs)) return 0;
+        if (Number.isNaN(aMs)) return 1;
+        if (Number.isNaN(bMs)) return -1;
+        return aMs - bMs;
+      });
+  }
+  if (!pick.first_mentioned_at) return [];
+  return [
+    {
+      tweet_id: pick.tweet_id,
+      tweet_url: pick.tweet_url,
+      tweeted_at: pick.first_mentioned_at,
+    },
+  ];
 }
 
 function Section({

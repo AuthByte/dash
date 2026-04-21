@@ -12,10 +12,11 @@ import {
 import { Hero } from "../components/Hero";
 import { ThesisBlock } from "../components/ThesisBlock";
 import { StatStrip } from "../components/StatStrip";
-import { ThemeGrid } from "../components/ThemeGrid";
 import { PicksSection } from "../components/PicksSection";
 import { Footer } from "../components/Footer";
 import { ProfileSwitcher } from "../components/ProfileSwitcher";
+import { HighlightsPanel } from "../components/HighlightsPanel";
+import { InsightsPanel } from "../components/InsightsPanel";
 
 export const dynamic = "force-static";
 
@@ -53,7 +54,13 @@ export default async function PersonDashboardPage({
           <StatStrip stats={headline} />
         </div>
         <div className="mt-8">
-          <ThemeGrid stats={themeStats} />
+          <HighlightsPanel
+            picks={picks}
+            themeMap={new Map(themes.map((theme) => [theme.slug, theme] as const))}
+          />
+        </div>
+        <div id="insights" className="mt-8">
+          <InsightsPanel themeStats={themeStats} picks={picks} />
         </div>
         <div className="mt-10">
           <Suspense fallback={null}>

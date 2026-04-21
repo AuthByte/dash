@@ -61,6 +61,7 @@ USER_BY_SCREEN_NAME_URL = (
     "https://x.com/i/api/graphql/G3KGOASz96M-Qu0nwmGXNg/UserByScreenName"
 )
 USER_TWEETS_URL = "https://x.com/i/api/graphql/E3opETHurmVJflFsUBVuUQ/UserTweets"
+MAX_TWEETS_PER_PAGE = 100
 
 
 def require_cookies() -> dict[str, str]:
@@ -141,17 +142,30 @@ async def resolve_user_id(client: httpx.AsyncClient, handle: str) -> str:
     return str(user["rest_id"])
 
 
+def parse_tweet_datetime(raw: str | None) -> dt.datetime | None:
+    if not raw:
+        return None
+    try:
+        return dt.datetime.strptime(raw, "%a %b %d %H:%M:%S %z %Y")
+    except ValueError:
+        return None
+
+
 async def fetch_user_tweets(
-    client: httpx.AsyncClient, user_id: str, limit: int
+    client: httpx.AsyncClient,
+    user_id: str,
+    limit: int,
+    days_back: int | None,
+    max_pages: int,
 ) -> list[dict[str, Any]]:
-    variables = {
-        "userId": user_id,
-        "count": min(limit, 200),
-        "includePromotedContent": False,
-        "withQuickPromoteEligibilityTweetFields": False,
-        "withVoice": True,
-        "withV2Timeline": True,
-    }
+    since_dt: dt.datetime | None = None
+    if days_back is not None and days_back > 0:
+        since_dt = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=days_back)
+
+    tweets: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+    cursor: str | None = None
+
     features = {
         "rweb_tipjar_consumption_enabled": True,
         "responsive_web_graphql_exclude_directive_enabled": True,
@@ -178,29 +192,92 @@ async def fetch_user_tweets(
         "longform_notetweets_inline_media_enabled": True,
         "responsive_web_enhance_cards_enabled": False,
     }
-    params = {
-        "variables": json.dumps(variables, separators=(",", ":")),
-        "features": json.dumps(features, separators=(",", ":")),
-    }
-    r = await client.get(USER_TWEETS_URL, params=params)
-    if r.status_code != 200:
-        auth_error(r.status_code, r.text)
-    return _flatten_timeline(r.json())
+    for _ in range(max_pages):
+        if len(tweets) >= limit:
+            break
+
+        remaining = max(1, limit - len(tweets))
+        variables = {
+            "userId": user_id,
+            "count": min(MAX_TWEETS_PER_PAGE, remaining),
+            "includePromotedContent": False,
+            "withQuickPromoteEligibilityTweetFields": False,
+            "withVoice": True,
+            "withV2Timeline": True,
+        }
+        if cursor:
+            variables["cursor"] = cursor
+
+        params = {
+            "variables": json.dumps(variables, separators=(",", ":")),
+            "features": json.dumps(features, separators=(",", ":")),
+        }
+        r = await client.get(USER_TWEETS_URL, params=params)
+        if r.status_code != 200:
+            auth_error(r.status_code, r.text)
+
+        page_tweets, next_cursor = _flatten_timeline(r.json())
+        if not page_tweets:
+            break
+
+        page_oldest_dt: dt.datetime | None = None
+        for t in page_tweets:
+            tid = str(t.get("id") or "")
+            if not tid or tid in seen_ids:
+                continue
+            seen_ids.add(tid)
+
+            tweet_dt = parse_tweet_datetime(t.get("date"))
+            if tweet_dt and (
+                page_oldest_dt is None or tweet_dt < page_oldest_dt
+            ):
+                page_oldest_dt = tweet_dt
+
+            if since_dt and tweet_dt and tweet_dt < since_dt:
+                continue
+            tweets.append(t)
+            if len(tweets) >= limit:
+                break
+
+        # Timeline entries are reverse-chronological; once oldest in page is
+        # beyond the cutoff, all further pages will be older.
+        if since_dt and page_oldest_dt and page_oldest_dt < since_dt:
+            break
+        if not next_cursor or next_cursor == cursor:
+            break
+        cursor = next_cursor
+
+    return tweets
 
 
-def _flatten_timeline(payload: dict[str, Any]) -> list[dict[str, Any]]:
-    """Walk X's deeply-nested timeline_v2 payload and pull out tweets."""
+def _flatten_timeline(payload: dict[str, Any]) -> tuple[list[dict[str, Any]], str | None]:
+    """Walk X's nested timeline_v2 payload and pull tweets + bottom cursor."""
     out: list[dict[str, Any]] = []
+    next_cursor: str | None = None
     try:
         instructions = payload["data"]["user"]["result"]["timeline_v2"]["timeline"][
             "instructions"
         ]
     except KeyError:
-        return out
+        return out, next_cursor
     for instr in instructions:
         for entry in instr.get("entries", []) or []:
             out.extend(_extract_from_entry(entry))
-    return out
+            candidate = _extract_cursor_from_entry(entry)
+            if candidate:
+                next_cursor = candidate
+    return out, next_cursor
+
+
+def _extract_cursor_from_entry(entry: dict[str, Any]) -> str | None:
+    content = entry.get("content", {}) or {}
+    if content.get("entryType") != "TimelineTimelineCursor":
+        return None
+    cursor_type = content.get("cursorType")
+    if cursor_type not in {"Bottom", "ShowMore", "ShowMoreThreads"}:
+        return None
+    value = content.get("value")
+    return str(value) if value else None
 
 
 def _extract_from_entry(entry: dict[str, Any]) -> list[dict[str, Any]]:
@@ -299,7 +376,9 @@ async def main_async(args: argparse.Namespace) -> int:
     cursor = None if args.full else read_cursor()
 
     print(
-        f"[scrape] target=@{handle}  cursor={cursor or '(none)'}  limit={args.limit}"
+        f"[scrape] target=@{handle}  cursor={cursor or '(none)'}  "
+        f"limit={args.limit}  days_back={args.days_back if args.days_back else 'all'}  "
+        f"max_pages={args.max_pages}"
     )
 
     headers = build_headers(cookies["ct0"])
@@ -313,7 +392,13 @@ async def main_async(args: argparse.Namespace) -> int:
             return 2
 
         try:
-            tweets = await fetch_user_tweets(client, user_id, args.limit)
+            tweets = await fetch_user_tweets(
+                client,
+                user_id,
+                args.limit,
+                args.days_back,
+                args.max_pages,
+            )
         except httpx.HTTPError as exc:
             print(f"ERROR: network failure fetching tweets: {exc}", file=sys.stderr)
             return 2
@@ -329,7 +414,7 @@ async def main_async(args: argparse.Namespace) -> int:
         {
             "handle": handle,
             "user_id": user_id,
-            "fetched_at": dt.datetime.utcnow().isoformat(),
+            "fetched_at": dt.datetime.now(dt.timezone.utc).isoformat(),
             "tweets": new_tweets,
         },
     )
@@ -350,6 +435,18 @@ def main() -> int:
     parser.add_argument("--handle", default=None, help="Override TWITTER_HANDLE env.")
     parser.add_argument(
         "--limit", type=int, default=200, help="Max tweets to pull per run."
+    )
+    parser.add_argument(
+        "--days-back",
+        type=int,
+        default=365,
+        help="Only keep tweets from the last N days. Use 0 for no cutoff.",
+    )
+    parser.add_argument(
+        "--max-pages",
+        type=int,
+        default=40,
+        help="Maximum timeline pages to request when paginating.",
     )
     parser.add_argument(
         "--full",

@@ -1,7 +1,7 @@
 {
   "handle": "aleabitoreddit",
   "follower_count": 206000,
-  "current_thesis_md": "**Supply Chain Chokepoint Theory:** Find narrow nodes the big players _must_ depend on. Current obsession is **photonics / Co-Packaged Optics (CPO)** — InP substrates, CW laser light sources, optical transceivers.\n\n**His claimed YTD (as of Apr 17, 2026): +1,525%.** Core wins: IQE +837%, SIVE +385%, AXTI 5x+, AAOI 5x, ALRIB +250%, SOI +208%, RPI +107%, LITE/AEHR/CRCL 2x+. Rotation framework: HBM/memory → optical transceivers → external light sources (now).",
+  "current_thesis_md": "Author's current framework (late Mar-early Apr 2026): rotation into photonics/CPO/ELS supply chains as institutions chase multi-year bottlenecks. Core stack: (1) CW laser chokepoints - SIVE, AAOI, MTSI, LITE, COHR + Chinese/TW names; (2) CPO foundries - TSEM, Win Semi (3105.TWO); (3) Substrates/epitaxy - AXTI; (4) Testing - AEHR, FORM; (5) NeoCloud - NBIS/CRWV (not IREN); (6) Energy bottleneck - Hammond HPS.A; (7) Rare earths/critical minerals - USAR, MP, ALM, MSR. Hedged 15% cash. Bearish IREN (dilution), VCX (private NAV premium), NKE (share loss), VELO (ATM).",
   "claimed_ytd_pct": 1525,
-  "last_updated": "2026-04-17"
+  "last_updated": "2026-04-21"
 }

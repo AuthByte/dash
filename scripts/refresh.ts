@@ -55,6 +55,17 @@ function jan1ISO(): Date {
   return new Date(Date.UTC(now.getUTCFullYear(), 0, 1));
 }
 
+function yearsAgoISO(years: number): Date {
+  const now = new Date();
+  return new Date(
+    Date.UTC(
+      now.getUTCFullYear() - years,
+      now.getUTCMonth(),
+      now.getUTCDate(),
+    ),
+  );
+}
+
 function parseArgs(argv: string[]): { ticker?: string; person?: string } {
   const out: { ticker?: string; person?: string } = {};
   for (let i = 0; i < argv.length; i++) {
@@ -240,10 +251,11 @@ async function refreshOne(ticker: string): Promise<PriceEntry> {
 
   let ytdPct = 0;
   let history: { date: string; close: number }[] = [];
+  const jan1Ms = jan1ISO().getTime();
 
   try {
     const chart = await yahooFinance.chart(ticker, {
-      period1: jan1ISO(),
+      period1: yearsAgoISO(5),
       interval: "1d",
     });
     const quotes = chart.quotes ?? [];
@@ -254,7 +266,12 @@ async function refreshOne(ticker: string): Promise<PriceEntry> {
         close: q.close as number,
       }));
     if (history.length > 1 && price != null) {
-      const start = history[0].close;
+      const ytdStart =
+        history.find((point) => {
+          const ms = Date.parse(point.date);
+          return !Number.isNaN(ms) && ms >= jan1Ms;
+        }) ?? history[history.length - 1];
+      const start = ytdStart.close;
       if (start && start > 0) {
         ytdPct = ((price - start) / start) * 100;
       }
