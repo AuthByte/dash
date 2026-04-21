@@ -56,6 +56,22 @@ type FmpQuote = {
 };
 
 type FmpProfile = {
+  symbol?: unknown;
+  price?: unknown;
+  marketCap?: unknown;
+  currency?: unknown;
+  previousClose?: unknown;
+  open?: unknown;
+  dayHigh?: unknown;
+  dayLow?: unknown;
+  changePercentage?: unknown;
+  volume?: unknown;
+  averageVolume?: unknown;
+  yearHigh?: unknown;
+  yearLow?: unknown;
+  priceAvg50?: unknown;
+  priceAvg200?: unknown;
+  exchange?: unknown;
   beta?: unknown;
   lastDividend?: unknown;
   sector?: unknown;
@@ -256,28 +272,41 @@ async function refreshViaFmp(ticker: string): Promise<PriceEntry> {
     );
   }
 
-  let quote: FmpQuote;
+  const profile = await fetchFmpProfile(ticker);
+  let quote: FmpQuote | null = null;
   try {
     quote = await fetchFmpQuote(ticker);
   } catch (err) {
-    if (err instanceof FmpUnsupportedSymbolError) {
+    if (!(err instanceof FmpUnsupportedSymbolError)) {
+      throw err;
+    }
+    if (profile == null) {
       throw new FmpUnsupportedSymbolError(ticker, err.message);
     }
-    throw err;
   }
-  const [history, profile] = await Promise.all([
-    fetchFmpHistory(ticker),
-    fetchFmpProfile(ticker),
-  ]);
 
-  const price = num(quote.price);
-  const currency = str(quote.currency) ?? inferCurrency(ticker);
+  let history: { date: string; close: number }[] = [];
+  try {
+    history = await fetchFmpHistory(ticker);
+  } catch (err) {
+    if (!(err instanceof FmpUnsupportedSymbolError)) {
+      throw err;
+    }
+  }
+
+  const quoteLike = (quote ?? profile) as FmpQuote | null;
+  if (quoteLike == null) {
+    throw new Error(`No quote/profile rows returned for ${ticker}`);
+  }
+
+  const price = num(quoteLike.price);
+  const currency = str(quoteLike.currency) ?? inferCurrency(ticker);
   const ytdPct = calculateYtdPct(price, history);
-  const metrics = buildFmpMetrics(quote, profile);
+  const metrics = buildFmpMetrics(quoteLike, profile);
 
   return {
     price,
-    market_cap: num(quote.marketCap),
+    market_cap: num(quoteLike.marketCap),
     currency,
     ytd_pct: ytdPct,
     history,
@@ -334,6 +363,18 @@ async function refreshPerson(slug: string, tickerFilter?: string) {
     process.stdout.write(`  - ${ticker.padEnd(12)} `);
     try {
       const entry = await refreshOne(ticker);
+      const prev = out[ticker];
+      if (entry.history.length === 0 && prev?.history?.length) {
+        entry.history = prev.history;
+      }
+      if (
+        entry.history.length === 0 &&
+        entry.ytd_pct === 0 &&
+        prev != null &&
+        prev.ytd_pct !== 0
+      ) {
+        entry.ytd_pct = prev.ytd_pct;
+      }
       out[ticker] = entry;
       ok++;
       fmp++;
