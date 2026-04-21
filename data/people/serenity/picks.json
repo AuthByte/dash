@@ -7,11 +7,23 @@
     "conviction": "medium",
     "thesis_short": "Electro-optic polymer modulators for next-gen optical transceivers.",
     "thesis_long": "Pure-play on electro-optic polymer technology that could replace lithium niobate in high-speed optical modulators. Long road to commercialization but the IP moat is real and the CPO ramp creates urgency for any drop-in modulator improvement.",
-    "first_mentioned_at": "2026-04-11",
-    "tweet_url": "https://x.com/aleabitoreddit/status/1",
-    "tweet_id": "1",
+    "first_mentioned_at": "2026-04-13",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2043708829570072606",
+    "tweet_id": "2043708829570072606",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2043708829570072606",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043708829570072606",
+        "tweeted_at": "2026-04-13T15:12:09+00:00"
+      },
+      {
+        "tweet_id": "2044830468299010144",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044830468299010144",
+        "tweeted_at": "2026-04-16T17:29:09+00:00"
+      }
+    ]
   },
   {
     "ticker": "POWL",
@@ -22,10 +34,17 @@
     "thesis_short": "US alt to GE Vernova — switchgear for data center and grid build-out.",
     "thesis_long": "Custom electrical equipment supplier benefiting from data center power demand and grid hardening capex. Backlog visibility is multi-year and the stock is still under-owned vs the obvious GEV/ETN names.",
     "first_mentioned_at": "2026-04-09",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2",
-    "tweet_id": "2",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2042345236354265271",
+    "tweet_id": "2042345236354265271",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2042345236354265271",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042345236354265271",
+        "tweeted_at": "2026-04-09T20:53:43+00:00"
+      }
+    ]
   },
   {
     "ticker": "ALRIB.ST",
@@ -63,11 +82,158 @@
     "conviction": "high",
     "thesis_short": "Largest 1.6T optical transceiver capacity in US; hyperscaler orders accelerating.",
     "thesis_long": "AAOI expects to have the largest production capacity of 1.6T optical transceivers in America. Received new $71M hyperscaler order. $6.69B MC. Went from $25 to $104. Core photonics pick despite Jane Street-driven volatility.",
-    "first_mentioned_at": "2026-04-03",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2039887575520026653",
-    "tweet_id": "2039887575520026653",
+    "first_mentioned_at": "2026-03-30",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+    "tweet_id": "2038440978777034988",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038440978777034988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+        "tweeted_at": "2026-03-30T02:19:36+00:00"
+      },
+      {
+        "tweet_id": "2038454646902272155",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038454646902272155",
+        "tweeted_at": "2026-03-30T03:13:55+00:00"
+      },
+      {
+        "tweet_id": "2038971821635326368",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038971821635326368",
+        "tweeted_at": "2026-03-31T13:28:59+00:00"
+      },
+      {
+        "tweet_id": "2039248989946794374",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039248989946794374",
+        "tweeted_at": "2026-04-01T07:50:21+00:00"
+      },
+      {
+        "tweet_id": "2039635527402664030",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039635527402664030",
+        "tweeted_at": "2026-04-02T09:26:18+00:00"
+      },
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02T14:20:46+00:00"
+      },
+      {
+        "tweet_id": "2039729176144711989",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039729176144711989",
+        "tweeted_at": "2026-04-02T15:38:26+00:00"
+      },
+      {
+        "tweet_id": "2039755414318039256",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039755414318039256",
+        "tweeted_at": "2026-04-02T17:22:42+00:00"
+      },
+      {
+        "tweet_id": "2039887575520026653",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039887575520026653",
+        "tweeted_at": "2026-04-03T02:07:51+00:00"
+      },
+      {
+        "tweet_id": "2041545598164443378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041545598164443378",
+        "tweeted_at": "2026-04-07T15:56:15+00:00"
+      },
+      {
+        "tweet_id": "2041654477812592756",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041654477812592756",
+        "tweeted_at": "2026-04-07T23:08:54+00:00"
+      },
+      {
+        "tweet_id": "2041706026068799877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041706026068799877",
+        "tweeted_at": "2026-04-08T02:33:44+00:00"
+      },
+      {
+        "tweet_id": "2041740090691698750",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041740090691698750",
+        "tweeted_at": "2026-04-08T04:49:05+00:00"
+      },
+      {
+        "tweet_id": "2041879203323297966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041879203323297966",
+        "tweeted_at": "2026-04-08T14:01:53+00:00"
+      },
+      {
+        "tweet_id": "2041916656944083188",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041916656944083188",
+        "tweeted_at": "2026-04-08T16:30:42+00:00"
+      },
+      {
+        "tweet_id": "2042335200110322131",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042335200110322131",
+        "tweeted_at": "2026-04-09T20:13:51+00:00"
+      },
+      {
+        "tweet_id": "2042400195607216431",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042400195607216431",
+        "tweeted_at": "2026-04-10T00:32:07+00:00"
+      },
+      {
+        "tweet_id": "2042476441196241094",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042476441196241094",
+        "tweeted_at": "2026-04-10T05:35:05+00:00"
+      },
+      {
+        "tweet_id": "2042549185095045231",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042549185095045231",
+        "tweeted_at": "2026-04-10T10:24:09+00:00"
+      },
+      {
+        "tweet_id": "2042634402480689355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042634402480689355",
+        "tweeted_at": "2026-04-10T16:02:46+00:00"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10T20:30:52+00:00"
+      },
+      {
+        "tweet_id": "2042856101939712444",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042856101939712444",
+        "tweeted_at": "2026-04-11T06:43:43+00:00"
+      },
+      {
+        "tweet_id": "2043096081060504057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043096081060504057",
+        "tweeted_at": "2026-04-11T22:37:19+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2043810610169978988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043810610169978988",
+        "tweeted_at": "2026-04-13T21:56:36+00:00"
+      },
+      {
+        "tweet_id": "2044183312533770427",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044183312533770427",
+        "tweeted_at": "2026-04-14T22:37:35+00:00"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16T19:36:43+00:00"
+      },
+      {
+        "tweet_id": "2045182633647456355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045182633647456355",
+        "tweeted_at": "2026-04-17T16:48:32+00:00"
+      },
+      {
+        "tweet_id": "2045965735386820934",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045965735386820934",
+        "tweeted_at": "2026-04-19T20:40:18+00:00"
+      }
+    ]
   },
   {
     "ticker": "AXTI",
@@ -77,11 +243,113 @@
     "conviction": "medium",
     "thesis_short": "InP/GaAs substrate supplier; up 400% in 4 months but potential 50M share dilution risk.",
     "thesis_long": "Core substrate/epitaxy photonics pick. Board proposing 50M new shares (70m->120m, up to $2B dilution) for April 14 vote. Author flagged similar caution as IREN dilution. Still long as AI supply chain bottleneck.",
-    "first_mentioned_at": "2026-04-02",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2039375950509748678",
-    "tweet_id": "2039375950509748678",
+    "first_mentioned_at": "2026-03-30",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+    "tweet_id": "2038440978777034988",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038440978777034988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+        "tweeted_at": "2026-03-30T02:19:36+00:00"
+      },
+      {
+        "tweet_id": "2038876668765610085",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038876668765610085",
+        "tweeted_at": "2026-03-31T07:10:52+00:00"
+      },
+      {
+        "tweet_id": "2038934006734135572",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038934006734135572",
+        "tweeted_at": "2026-03-31T10:58:43+00:00"
+      },
+      {
+        "tweet_id": "2039375950509748678",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039375950509748678",
+        "tweeted_at": "2026-04-01T16:14:51+00:00"
+      },
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02T14:20:46+00:00"
+      },
+      {
+        "tweet_id": "2040114262358839644",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040114262358839644",
+        "tweeted_at": "2026-04-03T17:08:38+00:00"
+      },
+      {
+        "tweet_id": "2041249789195813291",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041249789195813291",
+        "tweeted_at": "2026-04-06T20:20:48+00:00"
+      },
+      {
+        "tweet_id": "2041598580608389233",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041598580608389233",
+        "tweeted_at": "2026-04-07T19:26:47+00:00"
+      },
+      {
+        "tweet_id": "2041706026068799877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041706026068799877",
+        "tweeted_at": "2026-04-08T02:33:44+00:00"
+      },
+      {
+        "tweet_id": "2042526193375940878",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042526193375940878",
+        "tweeted_at": "2026-04-10T08:52:47+00:00"
+      },
+      {
+        "tweet_id": "2042549185095045231",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042549185095045231",
+        "tweeted_at": "2026-04-10T10:24:09+00:00"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10T20:30:52+00:00"
+      },
+      {
+        "tweet_id": "2042950601550762021",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042950601550762021",
+        "tweeted_at": "2026-04-11T12:59:14+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2043906518026989817",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043906518026989817",
+        "tweeted_at": "2026-04-14T04:17:42+00:00"
+      },
+      {
+        "tweet_id": "2044682729128874210",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+        "tweeted_at": "2026-04-16T07:42:05+00:00"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16T19:36:43+00:00"
+      },
+      {
+        "tweet_id": "2045160542256656611",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045160542256656611",
+        "tweeted_at": "2026-04-17T15:20:45+00:00"
+      },
+      {
+        "tweet_id": "2045182633647456355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045182633647456355",
+        "tweeted_at": "2026-04-17T16:48:32+00:00"
+      },
+      {
+        "tweet_id": "2045723587966107858",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045723587966107858",
+        "tweeted_at": "2026-04-19T04:38:05+00:00"
+      }
+    ]
   },
   {
     "ticker": "LITE",
@@ -91,11 +359,158 @@
     "conviction": "high",
     "thesis_short": "Hidden monopoly in AI optical; InP/laser chokepoint for every GPU/TPU deployment.",
     "thesis_long": "Author's long-running thesis: Lumentum sits at the center of every TPU/GPU deployment via InP fab and optical components. Stock ran from $371 to $836 in 4 months. Part of NVDA's $2B optical investments. Core CW laser chokepoint pick along with COHR.",
-    "first_mentioned_at": "2026-04-07",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2041650903305089389",
-    "tweet_id": "2041650903305089389",
+    "first_mentioned_at": "2026-03-30",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038436546412769560",
+    "tweet_id": "2038436546412769560",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038436546412769560",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038436546412769560",
+        "tweeted_at": "2026-03-30T02:01:59+00:00"
+      },
+      {
+        "tweet_id": "2038440978777034988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+        "tweeted_at": "2026-03-30T02:19:36+00:00"
+      },
+      {
+        "tweet_id": "2038454646902272155",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038454646902272155",
+        "tweeted_at": "2026-03-30T03:13:55+00:00"
+      },
+      {
+        "tweet_id": "2038777289115345200",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038777289115345200",
+        "tweeted_at": "2026-03-31T00:35:59+00:00"
+      },
+      {
+        "tweet_id": "2038876668765610085",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038876668765610085",
+        "tweeted_at": "2026-03-31T07:10:52+00:00"
+      },
+      {
+        "tweet_id": "2038934006734135572",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038934006734135572",
+        "tweeted_at": "2026-03-31T10:58:43+00:00"
+      },
+      {
+        "tweet_id": "2039011647264903382",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039011647264903382",
+        "tweeted_at": "2026-03-31T16:07:14+00:00"
+      },
+      {
+        "tweet_id": "2040114262358839644",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040114262358839644",
+        "tweeted_at": "2026-04-03T17:08:38+00:00"
+      },
+      {
+        "tweet_id": "2041363738327204264",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041363738327204264",
+        "tweeted_at": "2026-04-07T03:53:36+00:00"
+      },
+      {
+        "tweet_id": "2041519692985344500",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041519692985344500",
+        "tweeted_at": "2026-04-07T14:13:19+00:00"
+      },
+      {
+        "tweet_id": "2041545598164443378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041545598164443378",
+        "tweeted_at": "2026-04-07T15:56:15+00:00"
+      },
+      {
+        "tweet_id": "2041650903305089389",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041650903305089389",
+        "tweeted_at": "2026-04-07T22:54:42+00:00"
+      },
+      {
+        "tweet_id": "2041694240766619966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041694240766619966",
+        "tweeted_at": "2026-04-08T01:46:54+00:00"
+      },
+      {
+        "tweet_id": "2041740090691698750",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041740090691698750",
+        "tweeted_at": "2026-04-08T04:49:05+00:00"
+      },
+      {
+        "tweet_id": "2041916656944083188",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041916656944083188",
+        "tweeted_at": "2026-04-08T16:30:42+00:00"
+      },
+      {
+        "tweet_id": "2042476441196241094",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042476441196241094",
+        "tweeted_at": "2026-04-10T05:35:05+00:00"
+      },
+      {
+        "tweet_id": "2042507141618004372",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042507141618004372",
+        "tweeted_at": "2026-04-10T07:37:05+00:00"
+      },
+      {
+        "tweet_id": "2042533797405823299",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042533797405823299",
+        "tweeted_at": "2026-04-10T09:23:00+00:00"
+      },
+      {
+        "tweet_id": "2042634402480689355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042634402480689355",
+        "tweeted_at": "2026-04-10T16:02:46+00:00"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10T20:30:52+00:00"
+      },
+      {
+        "tweet_id": "2042797823574634991",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042797823574634991",
+        "tweeted_at": "2026-04-11T02:52:09+00:00"
+      },
+      {
+        "tweet_id": "2042856101939712444",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042856101939712444",
+        "tweeted_at": "2026-04-11T06:43:43+00:00"
+      },
+      {
+        "tweet_id": "2043005647424491596",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043005647424491596",
+        "tweeted_at": "2026-04-11T16:37:58+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2044183312533770427",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044183312533770427",
+        "tweeted_at": "2026-04-14T22:37:35+00:00"
+      },
+      {
+        "tweet_id": "2044312072780165440",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044312072780165440",
+        "tweeted_at": "2026-04-15T07:09:14+00:00"
+      },
+      {
+        "tweet_id": "2044675765267214753",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044675765267214753",
+        "tweeted_at": "2026-04-16T07:14:25+00:00"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16T19:36:43+00:00"
+      },
+      {
+        "tweet_id": "2046302180001673341",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046302180001673341",
+        "tweeted_at": "2026-04-20T18:57:12+00:00"
+      }
+    ]
   },
   {
     "ticker": "AEHR",
@@ -105,11 +520,108 @@
     "conviction": "high",
     "thesis_short": "Silicon photonics testing bottleneck; early TER+AAOI stage at $1.1B MC.",
     "thesis_long": "Author sees $420 inevitable in 2 years. Multiple hyperscalers qualifying AEHR for silicon photonics/optical transceiver testing. Sonoma production win for hyperscaler AI ASIC processors. Backlog $38.7M effective $50.9M; H2 FY26 guide $25-30M reiterated.",
-    "first_mentioned_at": "2026-04-01",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2039388766083944750",
-    "tweet_id": "2039388766083944750",
+    "first_mentioned_at": "2026-03-31",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038971821635326368",
+    "tweet_id": "2038971821635326368",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038971821635326368",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038971821635326368",
+        "tweeted_at": "2026-03-31T13:28:59+00:00"
+      },
+      {
+        "tweet_id": "2039248989946794374",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039248989946794374",
+        "tweeted_at": "2026-04-01T07:50:21+00:00"
+      },
+      {
+        "tweet_id": "2039388766083944750",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039388766083944750",
+        "tweeted_at": "2026-04-01T17:05:46+00:00"
+      },
+      {
+        "tweet_id": "2039906072291611057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039906072291611057",
+        "tweeted_at": "2026-04-03T03:21:21+00:00"
+      },
+      {
+        "tweet_id": "2040842953883840770",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040842953883840770",
+        "tweeted_at": "2026-04-05T17:24:11+00:00"
+      },
+      {
+        "tweet_id": "2041038963859931593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041038963859931593",
+        "tweeted_at": "2026-04-06T06:23:04+00:00"
+      },
+      {
+        "tweet_id": "2041612047058924009",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041612047058924009",
+        "tweeted_at": "2026-04-07T20:20:17+00:00"
+      },
+      {
+        "tweet_id": "2041706026068799877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041706026068799877",
+        "tweeted_at": "2026-04-08T02:33:44+00:00"
+      },
+      {
+        "tweet_id": "2041879203323297966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041879203323297966",
+        "tweeted_at": "2026-04-08T14:01:53+00:00"
+      },
+      {
+        "tweet_id": "2042324781916438621",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042324781916438621",
+        "tweeted_at": "2026-04-09T19:32:27+00:00"
+      },
+      {
+        "tweet_id": "2042400195607216431",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042400195607216431",
+        "tweeted_at": "2026-04-10T00:32:07+00:00"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10T20:30:52+00:00"
+      },
+      {
+        "tweet_id": "2043096081060504057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043096081060504057",
+        "tweeted_at": "2026-04-11T22:37:19+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2044094868079906990",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044094868079906990",
+        "tweeted_at": "2026-04-14T16:46:08+00:00"
+      },
+      {
+        "tweet_id": "2044794468193476955",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044794468193476955",
+        "tweeted_at": "2026-04-16T15:06:06+00:00"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16T19:36:43+00:00"
+      },
+      {
+        "tweet_id": "2045182633647456355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045182633647456355",
+        "tweeted_at": "2026-04-17T16:48:32+00:00"
+      },
+      {
+        "tweet_id": "2046290739727098166",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046290739727098166",
+        "tweeted_at": "2026-04-20T18:11:45+00:00"
+      }
+    ]
   },
   {
     "ticker": "SIVE.ST",
@@ -119,11 +631,213 @@
     "conviction": "high",
     "thesis_short": "Swedish photonics IDM — ICs for optical networks and 5G mmWave.",
     "thesis_long": "Stockholm-listed photonics specialist with a wafer fab in the UK. Optical product line is a direct CPO play. Tagged at +385% YTD in his framework.",
-    "first_mentioned_at": "2025-09-30",
-    "tweet_url": "https://x.com/aleabitoreddit/status/9",
-    "tweet_id": "9",
+    "first_mentioned_at": "2026-03-30",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038502143154331677",
+    "tweet_id": "2038502143154331677",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038502143154331677",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038502143154331677",
+        "tweeted_at": "2026-03-30T06:22:39+00:00"
+      },
+      {
+        "tweet_id": "2038543801174896719",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038543801174896719",
+        "tweeted_at": "2026-03-30T09:08:11+00:00"
+      },
+      {
+        "tweet_id": "2038943956697059637",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038943956697059637",
+        "tweeted_at": "2026-03-31T11:38:15+00:00"
+      },
+      {
+        "tweet_id": "2038954532944875733",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038954532944875733",
+        "tweeted_at": "2026-03-31T12:20:17+00:00"
+      },
+      {
+        "tweet_id": "2038959008514801969",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038959008514801969",
+        "tweeted_at": "2026-03-31T12:38:04+00:00"
+      },
+      {
+        "tweet_id": "2039248989946794374",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039248989946794374",
+        "tweeted_at": "2026-04-01T07:50:21+00:00"
+      },
+      {
+        "tweet_id": "2039259000336949457",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039259000336949457",
+        "tweeted_at": "2026-04-01T08:30:07+00:00"
+      },
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02T14:20:46+00:00"
+      },
+      {
+        "tweet_id": "2039906072291611057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039906072291611057",
+        "tweeted_at": "2026-04-03T03:21:21+00:00"
+      },
+      {
+        "tweet_id": "2041038963859931593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041038963859931593",
+        "tweeted_at": "2026-04-06T06:23:04+00:00"
+      },
+      {
+        "tweet_id": "2041545598164443378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041545598164443378",
+        "tweeted_at": "2026-04-07T15:56:15+00:00"
+      },
+      {
+        "tweet_id": "2041598580608389233",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041598580608389233",
+        "tweeted_at": "2026-04-07T19:26:47+00:00"
+      },
+      {
+        "tweet_id": "2041706026068799877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041706026068799877",
+        "tweeted_at": "2026-04-08T02:33:44+00:00"
+      },
+      {
+        "tweet_id": "2041774512904294595",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041774512904294595",
+        "tweeted_at": "2026-04-08T07:05:52+00:00"
+      },
+      {
+        "tweet_id": "2041791434525962584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041791434525962584",
+        "tweeted_at": "2026-04-08T08:13:07+00:00"
+      },
+      {
+        "tweet_id": "2042507141618004372",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042507141618004372",
+        "tweeted_at": "2026-04-10T07:37:05+00:00"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10T20:30:52+00:00"
+      },
+      {
+        "tweet_id": "2042819960301588910",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042819960301588910",
+        "tweeted_at": "2026-04-11T04:20:06+00:00"
+      },
+      {
+        "tweet_id": "2043096081060504057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043096081060504057",
+        "tweeted_at": "2026-04-11T22:37:19+00:00"
+      },
+      {
+        "tweet_id": "2043602257292534014",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043602257292534014",
+        "tweeted_at": "2026-04-13T08:08:41+00:00"
+      },
+      {
+        "tweet_id": "2043708829570072606",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043708829570072606",
+        "tweeted_at": "2026-04-13T15:12:09+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2044077799338881108",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044077799338881108",
+        "tweeted_at": "2026-04-14T15:38:19+00:00"
+      },
+      {
+        "tweet_id": "2044287196300226960",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044287196300226960",
+        "tweeted_at": "2026-04-15T05:30:23+00:00"
+      },
+      {
+        "tweet_id": "2044312072780165440",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044312072780165440",
+        "tweeted_at": "2026-04-15T07:09:14+00:00"
+      },
+      {
+        "tweet_id": "2044331395561206116",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044331395561206116",
+        "tweeted_at": "2026-04-15T08:26:01+00:00"
+      },
+      {
+        "tweet_id": "2044483730027503987",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044483730027503987",
+        "tweeted_at": "2026-04-15T18:31:20+00:00"
+      },
+      {
+        "tweet_id": "2044553960431014359",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044553960431014359",
+        "tweeted_at": "2026-04-15T23:10:24+00:00"
+      },
+      {
+        "tweet_id": "2044597208860016877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044597208860016877",
+        "tweeted_at": "2026-04-16T02:02:16+00:00"
+      },
+      {
+        "tweet_id": "2044675765267214753",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044675765267214753",
+        "tweeted_at": "2026-04-16T07:14:25+00:00"
+      },
+      {
+        "tweet_id": "2044682729128874210",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+        "tweeted_at": "2026-04-16T07:42:05+00:00"
+      },
+      {
+        "tweet_id": "2045682728432185713",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045682728432185713",
+        "tweeted_at": "2026-04-19T01:55:44+00:00"
+      },
+      {
+        "tweet_id": "2045723587966107858",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045723587966107858",
+        "tweeted_at": "2026-04-19T04:38:05+00:00"
+      },
+      {
+        "tweet_id": "2045932788218794257",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045932788218794257",
+        "tweeted_at": "2026-04-19T18:29:22+00:00"
+      },
+      {
+        "tweet_id": "2046003874553901188",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046003874553901188",
+        "tweeted_at": "2026-04-19T23:11:51+00:00"
+      },
+      {
+        "tweet_id": "2046043070538633618",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046043070538633618",
+        "tweeted_at": "2026-04-20T01:47:36+00:00"
+      },
+      {
+        "tweet_id": "2046125620728566235",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046125620728566235",
+        "tweeted_at": "2026-04-20T07:15:37+00:00"
+      },
+      {
+        "tweet_id": "2046134751279591632",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046134751279591632",
+        "tweeted_at": "2026-04-20T07:51:54+00:00"
+      },
+      {
+        "tweet_id": "2046302180001673341",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046302180001673341",
+        "tweeted_at": "2026-04-20T18:57:12+00:00"
+      },
+      {
+        "tweet_id": "2046363533471035793",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046363533471035793",
+        "tweeted_at": "2026-04-20T23:01:00+00:00"
+      }
+    ]
   },
   {
     "ticker": "SOI",
@@ -137,7 +851,64 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2041038963859931593",
     "tweet_id": "2041038963859931593",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2041038963859931593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041038963859931593",
+        "tweeted_at": "2026-04-06T06:23:04+00:00"
+      },
+      {
+        "tweet_id": "2041791434525962584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041791434525962584",
+        "tweeted_at": "2026-04-08T08:13:07+00:00"
+      },
+      {
+        "tweet_id": "2042526193375940878",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042526193375940878",
+        "tweeted_at": "2026-04-10T08:52:47+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2044077799338881108",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044077799338881108",
+        "tweeted_at": "2026-04-14T15:38:19+00:00"
+      },
+      {
+        "tweet_id": "2044483730027503987",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044483730027503987",
+        "tweeted_at": "2026-04-15T18:31:20+00:00"
+      },
+      {
+        "tweet_id": "2044682729128874210",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+        "tweeted_at": "2026-04-16T07:42:05+00:00"
+      },
+      {
+        "tweet_id": "2044822095931306149",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044822095931306149",
+        "tweeted_at": "2026-04-16T16:55:53+00:00"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16T19:36:43+00:00"
+      },
+      {
+        "tweet_id": "2046134751279591632",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046134751279591632",
+        "tweeted_at": "2026-04-20T07:51:54+00:00"
+      },
+      {
+        "tweet_id": "2046333897202692142",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046333897202692142",
+        "tweeted_at": "2026-04-20T21:03:14+00:00"
+      }
+    ]
   },
   {
     "ticker": "CRCL",
@@ -151,7 +922,29 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2040469708739375399",
     "tweet_id": "2040469708739375399",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2040469708739375399",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040469708739375399",
+        "tweeted_at": "2026-04-04T16:41:03+00:00"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10T20:30:52+00:00"
+      },
+      {
+        "tweet_id": "2043499958134022631",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043499958134022631",
+        "tweeted_at": "2026-04-13T01:22:11+00:00"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16T19:36:43+00:00"
+      }
+    ]
   },
   {
     "ticker": "RPI",
@@ -162,10 +955,52 @@
     "thesis_short": "Hoarding + robotics demand driving 58% growth; cheap 2027/2028 forward P/E.",
     "thesis_long": "Author projected 48-55% forward growth while analysts said 14-17% ('meme'). Thesis validated: +44.76% post-earnings, analysts revised 2026 to $511M. 2026 P/E 20.6x, 2027 13.2x, 2028 9.5x. Benefit from OpenClaw/robotics hoarding.",
     "first_mentioned_at": "2026-03-31",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2038965788724560093",
-    "tweet_id": "2038965788724560093",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038913900582998087",
+    "tweet_id": "2038913900582998087",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038913900582998087",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038913900582998087",
+        "tweeted_at": "2026-03-31T09:38:49+00:00"
+      },
+      {
+        "tweet_id": "2038919845623017874",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038919845623017874",
+        "tweeted_at": "2026-03-31T10:02:27+00:00"
+      },
+      {
+        "tweet_id": "2038965788724560093",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038965788724560093",
+        "tweeted_at": "2026-03-31T13:05:00+00:00"
+      },
+      {
+        "tweet_id": "2038998103177728246",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038998103177728246",
+        "tweeted_at": "2026-03-31T15:13:25+00:00"
+      },
+      {
+        "tweet_id": "2044183312533770427",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044183312533770427",
+        "tweeted_at": "2026-04-14T22:37:35+00:00"
+      },
+      {
+        "tweet_id": "2044483730027503987",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044483730027503987",
+        "tweeted_at": "2026-04-15T18:31:20+00:00"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16T19:36:43+00:00"
+      },
+      {
+        "tweet_id": "2046333897202692142",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046333897202692142",
+        "tweeted_at": "2026-04-20T21:03:14+00:00"
+      }
+    ]
   },
   {
     "ticker": "RDDT",
@@ -175,11 +1010,43 @@
     "conviction": "medium",
     "thesis_short": "Worst performer in book — engagement deceleration vs sky-high multiple.",
     "thesis_long": "Tagged as the worst performer in the tracker at -32% YTD. Concerns around DAU growth, ad load saturation, and the Google search-traffic dependency.",
-    "first_mentioned_at": "2026-01-15",
-    "tweet_url": "https://x.com/aleabitoreddit/status/13",
-    "tweet_id": "13",
+    "first_mentioned_at": "2026-04-01",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2039176628727939472",
+    "tweet_id": "2039176628727939472",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2039176628727939472",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039176628727939472",
+        "tweeted_at": "2026-04-01T03:02:49+00:00"
+      },
+      {
+        "tweet_id": "2040269140855083041",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040269140855083041",
+        "tweeted_at": "2026-04-04T03:24:04+00:00"
+      },
+      {
+        "tweet_id": "2041650903305089389",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041650903305089389",
+        "tweeted_at": "2026-04-07T22:54:42+00:00"
+      },
+      {
+        "tweet_id": "2041752476542759313",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041752476542759313",
+        "tweeted_at": "2026-04-08T05:38:18+00:00"
+      },
+      {
+        "tweet_id": "2042400195607216431",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042400195607216431",
+        "tweeted_at": "2026-04-10T00:32:07+00:00"
+      },
+      {
+        "tweet_id": "2044507444962070817",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044507444962070817",
+        "tweeted_at": "2026-04-15T20:05:34+00:00"
+      }
+    ]
   },
   {
     "ticker": "RKLB",
@@ -189,14 +1056,31 @@
     "conviction": "medium",
     "thesis_short": "Space/defense beneficiary of ceasefire rally and space buildout.",
     "thesis_long": "Mentioned as benefiting from Iran ceasefire rally alongside AAOI. Previously referenced as front-run space/fintech rally pick.",
-    "first_mentioned_at": "2026-04-07",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2041654477812592756",
-    "tweet_id": "2041654477812592756",
+    "first_mentioned_at": "2026-04-01",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2039176628727939472",
+    "tweet_id": "2039176628727939472",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2039176628727939472",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039176628727939472",
+        "tweeted_at": "2026-04-01T03:02:49+00:00"
+      },
+      {
+        "tweet_id": "2040023134095471044",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040023134095471044",
+        "tweeted_at": "2026-04-03T11:06:31+00:00"
+      },
+      {
+        "tweet_id": "2041654477812592756",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041654477812592756",
+        "tweeted_at": "2026-04-07T23:08:54+00:00"
+      }
+    ]
   },
   {
-    "ticker": "SIVE",
+    "ticker": "SIVE.ST",
     "name": "Sivers Semiconductors",
     "theme": "photonics",
     "stance": "long",
@@ -207,7 +1091,209 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2038502143154331677",
     "tweet_id": "2038502143154331677",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038502143154331677",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038502143154331677",
+        "tweeted_at": "2026-03-30T06:22:39+00:00"
+      },
+      {
+        "tweet_id": "2038543801174896719",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038543801174896719",
+        "tweeted_at": "2026-03-30T09:08:11+00:00"
+      },
+      {
+        "tweet_id": "2038943956697059637",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038943956697059637",
+        "tweeted_at": "2026-03-31T11:38:15+00:00"
+      },
+      {
+        "tweet_id": "2038954532944875733",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038954532944875733",
+        "tweeted_at": "2026-03-31T12:20:17+00:00"
+      },
+      {
+        "tweet_id": "2038959008514801969",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038959008514801969",
+        "tweeted_at": "2026-03-31T12:38:04+00:00"
+      },
+      {
+        "tweet_id": "2039248989946794374",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039248989946794374",
+        "tweeted_at": "2026-04-01T07:50:21+00:00"
+      },
+      {
+        "tweet_id": "2039259000336949457",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039259000336949457",
+        "tweeted_at": "2026-04-01T08:30:07+00:00"
+      },
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02T14:20:46+00:00"
+      },
+      {
+        "tweet_id": "2039906072291611057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039906072291611057",
+        "tweeted_at": "2026-04-03T03:21:21+00:00"
+      },
+      {
+        "tweet_id": "2041038963859931593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041038963859931593",
+        "tweeted_at": "2026-04-06T06:23:04+00:00"
+      },
+      {
+        "tweet_id": "2041545598164443378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041545598164443378",
+        "tweeted_at": "2026-04-07T15:56:15+00:00"
+      },
+      {
+        "tweet_id": "2041598580608389233",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041598580608389233",
+        "tweeted_at": "2026-04-07T19:26:47+00:00"
+      },
+      {
+        "tweet_id": "2041706026068799877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041706026068799877",
+        "tweeted_at": "2026-04-08T02:33:44+00:00"
+      },
+      {
+        "tweet_id": "2041774512904294595",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041774512904294595",
+        "tweeted_at": "2026-04-08T07:05:52+00:00"
+      },
+      {
+        "tweet_id": "2041791434525962584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041791434525962584",
+        "tweeted_at": "2026-04-08T08:13:07+00:00"
+      },
+      {
+        "tweet_id": "2042507141618004372",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042507141618004372",
+        "tweeted_at": "2026-04-10T07:37:05+00:00"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10T20:30:52+00:00"
+      },
+      {
+        "tweet_id": "2042819960301588910",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042819960301588910",
+        "tweeted_at": "2026-04-11T04:20:06+00:00"
+      },
+      {
+        "tweet_id": "2043096081060504057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043096081060504057",
+        "tweeted_at": "2026-04-11T22:37:19+00:00"
+      },
+      {
+        "tweet_id": "2043602257292534014",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043602257292534014",
+        "tweeted_at": "2026-04-13T08:08:41+00:00"
+      },
+      {
+        "tweet_id": "2043708829570072606",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043708829570072606",
+        "tweeted_at": "2026-04-13T15:12:09+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2044077799338881108",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044077799338881108",
+        "tweeted_at": "2026-04-14T15:38:19+00:00"
+      },
+      {
+        "tweet_id": "2044287196300226960",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044287196300226960",
+        "tweeted_at": "2026-04-15T05:30:23+00:00"
+      },
+      {
+        "tweet_id": "2044312072780165440",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044312072780165440",
+        "tweeted_at": "2026-04-15T07:09:14+00:00"
+      },
+      {
+        "tweet_id": "2044331395561206116",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044331395561206116",
+        "tweeted_at": "2026-04-15T08:26:01+00:00"
+      },
+      {
+        "tweet_id": "2044483730027503987",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044483730027503987",
+        "tweeted_at": "2026-04-15T18:31:20+00:00"
+      },
+      {
+        "tweet_id": "2044553960431014359",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044553960431014359",
+        "tweeted_at": "2026-04-15T23:10:24+00:00"
+      },
+      {
+        "tweet_id": "2044597208860016877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044597208860016877",
+        "tweeted_at": "2026-04-16T02:02:16+00:00"
+      },
+      {
+        "tweet_id": "2044675765267214753",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044675765267214753",
+        "tweeted_at": "2026-04-16T07:14:25+00:00"
+      },
+      {
+        "tweet_id": "2044682729128874210",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+        "tweeted_at": "2026-04-16T07:42:05+00:00"
+      },
+      {
+        "tweet_id": "2045682728432185713",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045682728432185713",
+        "tweeted_at": "2026-04-19T01:55:44+00:00"
+      },
+      {
+        "tweet_id": "2045723587966107858",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045723587966107858",
+        "tweeted_at": "2026-04-19T04:38:05+00:00"
+      },
+      {
+        "tweet_id": "2045932788218794257",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045932788218794257",
+        "tweeted_at": "2026-04-19T18:29:22+00:00"
+      },
+      {
+        "tweet_id": "2046003874553901188",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046003874553901188",
+        "tweeted_at": "2026-04-19T23:11:51+00:00"
+      },
+      {
+        "tweet_id": "2046043070538633618",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046043070538633618",
+        "tweeted_at": "2026-04-20T01:47:36+00:00"
+      },
+      {
+        "tweet_id": "2046125620728566235",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046125620728566235",
+        "tweeted_at": "2026-04-20T07:15:37+00:00"
+      },
+      {
+        "tweet_id": "2046134751279591632",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046134751279591632",
+        "tweeted_at": "2026-04-20T07:51:54+00:00"
+      },
+      {
+        "tweet_id": "2046302180001673341",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046302180001673341",
+        "tweeted_at": "2026-04-20T18:57:12+00:00"
+      },
+      {
+        "tweet_id": "2046363533471035793",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046363533471035793",
+        "tweeted_at": "2026-04-20T23:01:00+00:00"
+      }
+    ]
   },
   {
     "ticker": "3105.TWO",
@@ -231,11 +1317,48 @@
     "conviction": "high",
     "thesis_short": "The TSMC of photonics; CPO foundry with NVDA collaboration on 1.6T.",
     "thesis_long": "Top CPO pick alongside SOI. Directly collaborates with NVDA on 1.6T scaling. Stock nearly doubled from $115 to $200 in 3 weeks. $22B+ MC. Forward P/E compressed to 16-18x.",
-    "first_mentioned_at": "2026-04-06",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2041062144884797685",
-    "tweet_id": "2041062144884797685",
+    "first_mentioned_at": "2026-03-30",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038480499425923375",
+    "tweet_id": "2038480499425923375",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038480499425923375",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038480499425923375",
+        "tweeted_at": "2026-03-30T04:56:38+00:00"
+      },
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02T14:20:46+00:00"
+      },
+      {
+        "tweet_id": "2041038963859931593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041038963859931593",
+        "tweeted_at": "2026-04-06T06:23:04+00:00"
+      },
+      {
+        "tweet_id": "2041062144884797685",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041062144884797685",
+        "tweeted_at": "2026-04-06T07:55:11+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2045175383210000444",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045175383210000444",
+        "tweeted_at": "2026-04-17T16:19:43+00:00"
+      },
+      {
+        "tweet_id": "2045228954584481951",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045228954584481951",
+        "tweeted_at": "2026-04-17T19:52:35+00:00"
+      }
+    ]
   },
   {
     "ticker": "NBIS",
@@ -245,11 +1368,68 @@
     "conviction": "high",
     "thesis_short": "NeoCloud beneficiary of hyperscaler buildout delays; NVDA-endorsed.",
     "thesis_long": "Jensen Huang publicly said 'NBIS will take care of you.' Confirmed NVDA funding plus convertibles. Differentiated from IREN by securing hyperscaler deals without excessive dilution. Benefits from META $27B deal spillover.",
-    "first_mentioned_at": "2026-04-06",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2041056589088702781",
-    "tweet_id": "2041056589088702781",
+    "first_mentioned_at": "2026-03-30",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038672101717274941",
+    "tweet_id": "2038672101717274941",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038672101717274941",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038672101717274941",
+        "tweeted_at": "2026-03-30T17:38:00+00:00"
+      },
+      {
+        "tweet_id": "2039248989946794374",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039248989946794374",
+        "tweeted_at": "2026-04-01T07:50:21+00:00"
+      },
+      {
+        "tweet_id": "2039657844392202498",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039657844392202498",
+        "tweeted_at": "2026-04-02T10:54:59+00:00"
+      },
+      {
+        "tweet_id": "2041056589088702781",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041056589088702781",
+        "tweeted_at": "2026-04-06T07:33:06+00:00"
+      },
+      {
+        "tweet_id": "2041062144884797685",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041062144884797685",
+        "tweeted_at": "2026-04-06T07:55:11+00:00"
+      },
+      {
+        "tweet_id": "2041553933664145620",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041553933664145620",
+        "tweeted_at": "2026-04-07T16:29:22+00:00"
+      },
+      {
+        "tweet_id": "2041907945500504466",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041907945500504466",
+        "tweeted_at": "2026-04-08T15:56:05+00:00"
+      },
+      {
+        "tweet_id": "2042988968149684305",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042988968149684305",
+        "tweeted_at": "2026-04-11T15:31:41+00:00"
+      },
+      {
+        "tweet_id": "2043724212159025534",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043724212159025534",
+        "tweeted_at": "2026-04-13T16:13:17+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2046374163338912200",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046374163338912200",
+        "tweeted_at": "2026-04-20T23:43:14+00:00"
+      }
+    ]
   },
   {
     "ticker": "CRWV",
@@ -259,11 +1439,23 @@
     "conviction": "medium",
     "thesis_short": "NeoCloud beneficiary of hyperscaler buildout delay spillover.",
     "thesis_long": "Grouped with NBIS as neocloud beneficiary. Benefits from hyperscaler capacity constraints.",
-    "first_mentioned_at": "2026-04-06",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2041056589088702781",
-    "tweet_id": "2041056589088702781",
+    "first_mentioned_at": "2026-04-01",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2039359732457357453",
+    "tweet_id": "2039359732457357453",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2039359732457357453",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039359732457357453",
+        "tweeted_at": "2026-04-01T15:10:24+00:00"
+      },
+      {
+        "tweet_id": "2041056589088702781",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041056589088702781",
+        "tweeted_at": "2026-04-06T07:33:06+00:00"
+      }
+    ]
   },
   {
     "ticker": "IREN",
@@ -277,7 +1469,54 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2038672101717274941",
     "tweet_id": "2038672101717274941",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038672101717274941",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038672101717274941",
+        "tweeted_at": "2026-03-30T17:38:00+00:00"
+      },
+      {
+        "tweet_id": "2039927381914489301",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039927381914489301",
+        "tweeted_at": "2026-04-03T04:46:02+00:00"
+      },
+      {
+        "tweet_id": "2040674046405419148",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040674046405419148",
+        "tweeted_at": "2026-04-05T06:13:01+00:00"
+      },
+      {
+        "tweet_id": "2041249789195813291",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041249789195813291",
+        "tweeted_at": "2026-04-06T20:20:48+00:00"
+      },
+      {
+        "tweet_id": "2041879203323297966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041879203323297966",
+        "tweeted_at": "2026-04-08T14:01:53+00:00"
+      },
+      {
+        "tweet_id": "2041907945500504466",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041907945500504466",
+        "tweeted_at": "2026-04-08T15:56:05+00:00"
+      },
+      {
+        "tweet_id": "2042988968149684305",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042988968149684305",
+        "tweeted_at": "2026-04-11T15:31:41+00:00"
+      },
+      {
+        "tweet_id": "2043315043455176826",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043315043455176826",
+        "tweeted_at": "2026-04-12T13:07:23+00:00"
+      },
+      {
+        "tweet_id": "2043399761253085257",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043399761253085257",
+        "tweeted_at": "2026-04-12T18:44:02+00:00"
+      }
+    ]
   },
   {
     "ticker": "HPS.A.TO",
@@ -287,11 +1526,43 @@
     "conviction": "high",
     "thesis_short": "Transformer/switchgear multi-year bottleneck play; ~$1.5B USD at 184 CAD.",
     "thesis_long": "Dominates transformers (dry, multi-year bottleneck, ~23% of market), switchgear (2-3Y bottleneck), and liquid transformers. Multi-year bottleneck lets you sleep easier despite volatility.",
-    "first_mentioned_at": "2026-04-06",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2041168871168545115",
-    "tweet_id": "2041168871168545115",
+    "first_mentioned_at": "2026-04-07",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2041519692985344500",
+    "tweet_id": "2041519692985344500",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2041519692985344500",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041519692985344500",
+        "tweeted_at": "2026-04-07T14:13:19+00:00"
+      },
+      {
+        "tweet_id": "2042345236354265271",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042345236354265271",
+        "tweeted_at": "2026-04-09T20:53:43+00:00"
+      },
+      {
+        "tweet_id": "2043701659621290047",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043701659621290047",
+        "tweeted_at": "2026-04-13T14:43:40+00:00"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13T16:53:54+00:00"
+      },
+      {
+        "tweet_id": "2045182633647456355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045182633647456355",
+        "tweeted_at": "2026-04-17T16:48:32+00:00"
+      },
+      {
+        "tweet_id": "2046288211136442856",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046288211136442856",
+        "tweeted_at": "2026-04-20T18:01:42+00:00"
+      }
+    ]
   },
   {
     "ticker": "SNDK",
@@ -301,11 +1572,43 @@
     "conviction": "high",
     "thesis_short": "Memory supercycle pick; 1350%+ 1Y return with multi-year bottleneck.",
     "thesis_long": "Caught tail end of memory rotation alongside Samsung, SK Hynix, MU. Multi-year bottleneck gives conviction. Named alongside AXTI as candidates for next hyperbolic growth.",
-    "first_mentioned_at": "2026-04-02",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2039685700044628243",
-    "tweet_id": "2039685700044628243",
+    "first_mentioned_at": "2026-03-30",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+    "tweet_id": "2038440978777034988",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038440978777034988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+        "tweeted_at": "2026-03-30T02:19:36+00:00"
+      },
+      {
+        "tweet_id": "2039685700044628243",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039685700044628243",
+        "tweeted_at": "2026-04-02T12:45:41+00:00"
+      },
+      {
+        "tweet_id": "2039894556871913726",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039894556871913726",
+        "tweeted_at": "2026-04-03T02:35:36+00:00"
+      },
+      {
+        "tweet_id": "2041519692985344500",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041519692985344500",
+        "tweeted_at": "2026-04-07T14:13:19+00:00"
+      },
+      {
+        "tweet_id": "2042663323427311858",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042663323427311858",
+        "tweeted_at": "2026-04-10T17:57:41+00:00"
+      },
+      {
+        "tweet_id": "2043810610169978988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043810610169978988",
+        "tweeted_at": "2026-04-13T21:56:36+00:00"
+      }
+    ]
   },
   {
     "ticker": "MSR.HM",
@@ -343,11 +1646,138 @@
     "conviction": "medium",
     "thesis_short": "Compounder with NVDA $2B investment for joint silicon photonics/Celestial CPO.",
     "thesis_long": "Favorite compounder alongside SMTC. NVDA invested $2B validating MRVL/Celestial AI optical fabric CPO roadmap. Light source powered by SIVE.",
-    "first_mentioned_at": "2026-04-02",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
-    "tweet_id": "2039709630217994270",
+    "first_mentioned_at": "2026-03-30",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038436546412769560",
+    "tweet_id": "2038436546412769560",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038436546412769560",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038436546412769560",
+        "tweeted_at": "2026-03-30T02:01:59+00:00"
+      },
+      {
+        "tweet_id": "2038502143154331677",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038502143154331677",
+        "tweeted_at": "2026-03-30T06:22:39+00:00"
+      },
+      {
+        "tweet_id": "2038543801174896719",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038543801174896719",
+        "tweeted_at": "2026-03-30T09:08:11+00:00"
+      },
+      {
+        "tweet_id": "2038943956697059637",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038943956697059637",
+        "tweeted_at": "2026-03-31T11:38:15+00:00"
+      },
+      {
+        "tweet_id": "2038954532944875733",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038954532944875733",
+        "tweeted_at": "2026-03-31T12:20:17+00:00"
+      },
+      {
+        "tweet_id": "2038959008514801969",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038959008514801969",
+        "tweeted_at": "2026-03-31T12:38:04+00:00"
+      },
+      {
+        "tweet_id": "2038980162214347005",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038980162214347005",
+        "tweeted_at": "2026-03-31T14:02:07+00:00"
+      },
+      {
+        "tweet_id": "2039011647264903382",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039011647264903382",
+        "tweeted_at": "2026-03-31T16:07:14+00:00"
+      },
+      {
+        "tweet_id": "2039259000336949457",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039259000336949457",
+        "tweeted_at": "2026-04-01T08:30:07+00:00"
+      },
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02T14:20:46+00:00"
+      },
+      {
+        "tweet_id": "2041963517071519963",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041963517071519963",
+        "tweeted_at": "2026-04-08T19:36:54+00:00"
+      },
+      {
+        "tweet_id": "2042187668931616964",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042187668931616964",
+        "tweeted_at": "2026-04-09T10:27:36+00:00"
+      },
+      {
+        "tweet_id": "2042335200110322131",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042335200110322131",
+        "tweeted_at": "2026-04-09T20:13:51+00:00"
+      },
+      {
+        "tweet_id": "2042507141618004372",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042507141618004372",
+        "tweeted_at": "2026-04-10T07:37:05+00:00"
+      },
+      {
+        "tweet_id": "2042797823574634991",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042797823574634991",
+        "tweeted_at": "2026-04-11T02:52:09+00:00"
+      },
+      {
+        "tweet_id": "2042819960301588910",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042819960301588910",
+        "tweeted_at": "2026-04-11T04:20:06+00:00"
+      },
+      {
+        "tweet_id": "2043508231746810000",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043508231746810000",
+        "tweeted_at": "2026-04-13T01:55:03+00:00"
+      },
+      {
+        "tweet_id": "2043602257292534014",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043602257292534014",
+        "tweeted_at": "2026-04-13T08:08:41+00:00"
+      },
+      {
+        "tweet_id": "2044331395561206116",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044331395561206116",
+        "tweeted_at": "2026-04-15T08:26:01+00:00"
+      },
+      {
+        "tweet_id": "2044553960431014359",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044553960431014359",
+        "tweeted_at": "2026-04-15T23:10:24+00:00"
+      },
+      {
+        "tweet_id": "2044830468299010144",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044830468299010144",
+        "tweeted_at": "2026-04-16T17:29:09+00:00"
+      },
+      {
+        "tweet_id": "2045932788218794257",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045932788218794257",
+        "tweeted_at": "2026-04-19T18:29:22+00:00"
+      },
+      {
+        "tweet_id": "2045965735386820934",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045965735386820934",
+        "tweeted_at": "2026-04-19T20:40:18+00:00"
+      },
+      {
+        "tweet_id": "2046125620728566235",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046125620728566235",
+        "tweeted_at": "2026-04-20T07:15:37+00:00"
+      },
+      {
+        "tweet_id": "2046147321927450700",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046147321927450700",
+        "tweeted_at": "2026-04-20T08:41:51+00:00"
+      }
+    ]
   },
   {
     "ticker": "COHR",
@@ -357,11 +1787,58 @@
     "conviction": "high",
     "thesis_short": "CW laser chokepoint; NVDA invested $2B into optical roadmap.",
     "thesis_long": "NVDA invested $2B into COHR for optical, same playbook as LITE. Core CPO laser source pick on author's photonics tierlist at $49.2B MC.",
-    "first_mentioned_at": "2026-03-31",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2039011647264903382",
-    "tweet_id": "2039011647264903382",
+    "first_mentioned_at": "2026-03-30",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2038436546412769560",
+    "tweet_id": "2038436546412769560",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038436546412769560",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038436546412769560",
+        "tweeted_at": "2026-03-30T02:01:59+00:00"
+      },
+      {
+        "tweet_id": "2038777289115345200",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038777289115345200",
+        "tweeted_at": "2026-03-31T00:35:59+00:00"
+      },
+      {
+        "tweet_id": "2039011647264903382",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039011647264903382",
+        "tweeted_at": "2026-03-31T16:07:14+00:00"
+      },
+      {
+        "tweet_id": "2041545598164443378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041545598164443378",
+        "tweeted_at": "2026-04-07T15:56:15+00:00"
+      },
+      {
+        "tweet_id": "2041774512904294595",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041774512904294595",
+        "tweeted_at": "2026-04-08T07:05:52+00:00"
+      },
+      {
+        "tweet_id": "2041916656944083188",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041916656944083188",
+        "tweeted_at": "2026-04-08T16:30:42+00:00"
+      },
+      {
+        "tweet_id": "2041963517071519963",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041963517071519963",
+        "tweeted_at": "2026-04-08T19:36:54+00:00"
+      },
+      {
+        "tweet_id": "2042187668931616964",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042187668931616964",
+        "tweeted_at": "2026-04-09T10:27:36+00:00"
+      },
+      {
+        "tweet_id": "2042476441196241094",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042476441196241094",
+        "tweeted_at": "2026-04-10T05:35:05+00:00"
+      }
+    ]
   },
   {
     "ticker": "MTSI",
@@ -375,7 +1852,19 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
     "tweet_id": "2039709630217994270",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02T14:20:46+00:00"
+      },
+      {
+        "tweet_id": "2041545598164443378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041545598164443378",
+        "tweeted_at": "2026-04-07T15:56:15+00:00"
+      }
+    ]
   },
   {
     "ticker": "POET",
@@ -389,7 +1878,19 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2039259000336949457",
     "tweet_id": "2039259000336949457",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2039259000336949457",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039259000336949457",
+        "tweeted_at": "2026-04-01T08:30:07+00:00"
+      },
+      {
+        "tweet_id": "2041650903305089389",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041650903305089389",
+        "tweeted_at": "2026-04-07T22:54:42+00:00"
+      }
+    ]
   },
   {
     "ticker": "USAR",
@@ -403,7 +1904,14 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2038556249592119671",
     "tweet_id": "2038556249592119671",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038556249592119671",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038556249592119671",
+        "tweeted_at": "2026-03-30T09:57:39+00:00"
+      }
+    ]
   },
   {
     "ticker": "MP",
@@ -417,7 +1925,14 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2038556249592119671",
     "tweet_id": "2038556249592119671",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038556249592119671",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038556249592119671",
+        "tweeted_at": "2026-03-30T09:57:39+00:00"
+      }
+    ]
   },
   {
     "ticker": "TEM",
@@ -431,7 +1946,14 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2038281177124245842",
     "tweet_id": "2038281177124245842",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038281177124245842",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038281177124245842",
+        "tweeted_at": "2026-03-29T15:44:36+00:00"
+      }
+    ]
   },
   {
     "ticker": "HIMS",
@@ -445,7 +1967,34 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2038281177124245842",
     "tweet_id": "2038281177124245842",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038281177124245842",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038281177124245842",
+        "tweeted_at": "2026-03-29T15:44:36+00:00"
+      },
+      {
+        "tweet_id": "2044544090549981244",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044544090549981244",
+        "tweeted_at": "2026-04-15T22:31:11+00:00"
+      },
+      {
+        "tweet_id": "2044843391348056489",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044843391348056489",
+        "tweeted_at": "2026-04-16T18:20:30+00:00"
+      },
+      {
+        "tweet_id": "2045196575010587104",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045196575010587104",
+        "tweeted_at": "2026-04-17T17:43:56+00:00"
+      },
+      {
+        "tweet_id": "2046282147036909941",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046282147036909941",
+        "tweeted_at": "2026-04-20T17:37:36+00:00"
+      }
+    ]
   },
   {
     "ticker": "NKE",
@@ -459,7 +2008,14 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2039370303302963209",
     "tweet_id": "2039370303302963209",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2039370303302963209",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039370303302963209",
+        "tweeted_at": "2026-04-01T15:52:24+00:00"
+      }
+    ]
   },
   {
     "ticker": "VCX",
@@ -515,7 +2071,14 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2038785650632397005",
     "tweet_id": "2038785650632397005",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2038785650632397005",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038785650632397005",
+        "tweeted_at": "2026-03-31T01:09:12+00:00"
+      }
+    ]
   },
   {
     "ticker": "FORM",
@@ -529,7 +2092,19 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2040842953883840770",
     "tweet_id": "2040842953883840770",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2040842953883840770",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040842953883840770",
+        "tweeted_at": "2026-04-05T17:24:11+00:00"
+      },
+      {
+        "tweet_id": "2044094868079906990",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044094868079906990",
+        "tweeted_at": "2026-04-14T16:46:08+00:00"
+      }
+    ]
   },
   {
     "ticker": "SMTC",
@@ -543,6 +2118,13 @@
     "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
     "tweet_id": "2039709630217994270",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02T14:20:46+00:00"
+      }
+    ]
   }
 ]
