@@ -5,6 +5,10 @@ const SUPABASE_URL = process.env.SUPABASE_URL?.trim() ?? "";
 const SUPABASE_SERVICE_ROLE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ?? "";
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY?.trim() ?? "";
+const SUPABASE_PEOPLE_TABLE =
+  process.env.SUPABASE_PEOPLE_TABLE?.trim() || "tracker_people";
+const SUPABASE_PROFILE_TABLE =
+  process.env.SUPABASE_PROFILE_TABLE?.trim() || "person_datasets";
 
 export function hasSupabaseConfig(): boolean {
   return Boolean(SUPABASE_URL) && Boolean(
@@ -38,7 +42,7 @@ export async function readSupabasePeople(): Promise<unknown> {
   }
 
   const { data, error } = await client
-    .from("tracker_people")
+    .from(SUPABASE_PEOPLE_TABLE)
     .select("slug,name,handle,tagline,accent,active")
     .order("slug", { ascending: true });
 
@@ -54,10 +58,15 @@ export async function readSupabasePersonDataset(
     throw new Error("Supabase is not configured.");
   }
 
+  const isTrackerProfiles = SUPABASE_PROFILE_TABLE === "tracker_profiles";
+  const slugColumn = isTrackerProfiles ? "slug" : "person_slug";
+  const selectCols = isTrackerProfiles
+    ? "picks,prices,themes,site_meta"
+    : "picks,prices,themes,site_meta";
   const { data, error } = await client
-    .from("tracker_profiles")
-    .select("picks,prices,themes,site_meta")
-    .eq("slug", slug)
+    .from(SUPABASE_PROFILE_TABLE)
+    .select(selectCols)
+    .eq(slugColumn, slug)
     .maybeSingle();
 
   if (error) {

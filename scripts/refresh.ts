@@ -24,7 +24,10 @@ import {
   type SiteMeta,
   type Theme,
 } from "../lib/schema";
-import { getSupabaseAdminClient } from "./supabase_client";
+import {
+  getSupabaseAdminClient,
+  getSupabaseDataTableName,
+} from "./supabase_client";
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -648,16 +651,17 @@ async function maybeSyncPersonDatasetToSupabase({
   const client = getSupabaseAdminClient();
   if (!client) return;
   const payload = {
-    person_slug: slug,
+    slug,
     picks,
     prices,
     themes,
     site_meta: siteMeta,
     updated_at: new Date().toISOString(),
   };
+  const table = getSupabaseDataTableName();
   const { error } = await client
-    .from("person_datasets")
-    .upsert(payload, { onConflict: "person_slug" });
+    .from(table)
+    .upsert(payload, { onConflict: "slug" });
   if (error) {
     // Keep local refresh resilient even if remote sync fails.
     console.warn(`[refresh] ${slug}: supabase sync skipped: ${error.message}`);
