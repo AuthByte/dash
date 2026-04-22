@@ -20,9 +20,11 @@ const STANCE_VALUES: (Stance | "all")[] = [
 export function PicksSection({
   picks,
   themes,
+  personSlug,
 }: {
   picks: EnrichedPick[];
   themes: Theme[];
+  personSlug: string;
 }) {
   const params = useSearchParams();
   const themeFilter = params.get("theme") ?? "all";
@@ -102,6 +104,7 @@ export function PicksSection({
       <PickDrawer
         pick={activePick}
         theme={activeTheme}
+        personSlug={personSlug}
         onClose={() => setActiveTicker(null)}
       />
     </section>

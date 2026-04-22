@@ -99,9 +99,13 @@ export function getTweetMarkersForPick(pick: Pick): TweetMarker[] {
   ];
 }
 
-export function getEnrichedPicks(personSlug: string): EnrichedPick[] {
+export function getEnrichedPicks(
+  personSlug: string,
+  options?: { includeHistory?: boolean },
+): EnrichedPick[] {
   const picks = getPicks(personSlug);
   const prices = getPrices(personSlug);
+  const includeHistory = options?.includeHistory ?? true;
   return picks.map((p) => {
     const px = prices[p.ticker];
     return {
@@ -110,11 +114,32 @@ export function getEnrichedPicks(personSlug: string): EnrichedPick[] {
       market_cap: px?.market_cap ?? null,
       currency: px?.currency ?? "USD",
       ytd_pct: px?.ytd_pct ?? 0,
-      history: px?.history ?? [],
+      history: includeHistory ? (px?.history ?? []) : [],
       metrics: px?.metrics ?? {},
       updated_at: px?.updated_at ?? null,
     };
   });
+}
+
+export function getEnrichedPick(
+  personSlug: string,
+  ticker: string,
+): EnrichedPick | null {
+  const picks = getPicks(personSlug);
+  const pick = picks.find((p) => p.ticker === ticker);
+  if (!pick) return null;
+  const prices = getPrices(personSlug);
+  const px = prices[ticker];
+  return {
+    ...pick,
+    price: px?.price ?? null,
+    market_cap: px?.market_cap ?? null,
+    currency: px?.currency ?? "USD",
+    ytd_pct: px?.ytd_pct ?? 0,
+    history: px?.history ?? [],
+    metrics: px?.metrics ?? {},
+    updated_at: px?.updated_at ?? null,
+  };
 }
 
 export type ThemeStats = {

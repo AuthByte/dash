@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import type { EnrichedPick } from "@/lib/data";
 import type { Theme } from "@/lib/schema";
@@ -35,6 +35,9 @@ export function PickDrawer({
   theme: Theme | null;
   onClose: () => void;
 }) {
+  const [resolvedPick, setResolvedPick] = useState<EnrichedPick | null>(null);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+
   useEffect(() => {
     if (!pick) return;
     const onKey = (e: KeyboardEvent) => {
@@ -48,28 +51,62 @@ export function PickDrawer({
     };
   }, [pick, onClose]);
 
+  useEffect(() => {
+    let cancelled = false;
+    if (!pick) {
+      setResolvedPick(null);
+      setIsLoadingHistory(false);
+      return;
+    }
+
+    setResolvedPick(pick);
+    setIsLoadingHistory(true);
+
+    void fetch(
+      `/api/person/${encodeURIComponent(pick.person_slug ?? "serenity")}/pick/${encodeURIComponent(pick.ticker)}`,
+      { cache: "no-store" },
+    )
+      .then(async (res) => {
+        if (!res.ok) return null;
+        return (await res.json()) as EnrichedPick | null;
+      })
+      .then((fullPick) => {
+        if (cancelled || !fullPick) return;
+        setResolvedPick(fullPick);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setIsLoadingHistory(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [pick]);
+
   if (!pick) return null;
+  const activePick = resolvedPick ?? pick;
 
   const tweetMarkers: TweetMarker[] =
-    pick.tweet_events && pick.tweet_events.length > 0
-      ? pick.tweet_events.map((event) => ({
+    activePick.tweet_events && activePick.tweet_events.length > 0
+      ? activePick.tweet_events.map((event) => ({
           tweet_id: event.tweet_id,
           tweet_url: event.tweet_url,
           tweeted_at: event.tweeted_at,
         }))
-      : pick.first_mentioned_at
+      : activePick.first_mentioned_at
         ? [
             {
-              tweet_id: pick.tweet_id,
-              tweet_url: pick.tweet_url,
-              tweeted_at: pick.first_mentioned_at,
+              tweet_id: activePick.tweet_id,
+              tweet_url: activePick.tweet_url,
+              tweeted_at: activePick.first_mentioned_at,
             },
           ]
         : [];
 
-  const m = pick.metrics ?? {};
+  const m = activePick.metrics ?? {};
   const ytdTone =
-    pick.ytd_pct >= 0 ? "text-[var(--color-up)]" : "text-[var(--color-down)]";
+    activePick.ytd_pct >= 0 ? "text-[var(--color-up)]" : "text-[var(--color-down)]";
   const dayTone =
     m.day_change_pct == null
       ? "text-[var(--color-text-dim)]"
@@ -79,8 +116,8 @@ export function PickDrawer({
 
   // Upside vs analyst mean target
   const upsidePct =
-    pick.price != null && m.target_mean_price != null && pick.price > 0
-      ? ((m.target_mean_price - pick.price) / pick.price) * 100
+    activePick.price != null && m.target_mean_price != null && activePick.price > 0
+      ? ((m.target_mean_price - activePick.price) / activePick.price) * 100
       : null;
 
   const recTone = recommendationTone(m.recommendation_key);
@@ -130,10 +167,10 @@ export function PickDrawer({
                 )}
               </p>
               <h2 className="mt-2 font-mono text-3xl font-semibold text-white">
-                {pick.ticker}
+                {activePick.ticker}
               </h2>
               <p className="truncate text-sm text-[var(--color-text-dim)]">
-                {pick.name}
+                {activePick.name}
               </p>
               {m.industry && (
                 <p className="mt-1 truncate font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
@@ -153,7 +190,7 @@ export function PickDrawer({
 
         {/* Top stats: price / day / YTD / mkt cap */}
         <div className="grid grid-cols-2 gap-px border-b border-[var(--color-border)] bg-[var(--color-border)] sm:grid-cols-4">
-          <Stat label="Price" value={formatPrice(pick.price, pick.currency)} />
+          <Stat label="Price" value={formatPrice(activePick.price, activePick.currency)} />
           <Stat
             label="Day"
             value={formatPctNullable(m.day_change_pct, { sign: true })}
@@ -161,31 +198,33 @@ export function PickDrawer({
           />
           <Stat
             label="YTD"
-            value={formatPct(pick.ytd_pct, { sign: true })}
+            value={formatPct(activePick.ytd_pct, { sign: true })}
             tone={ytdTone}
           />
           <Stat
             label="Mkt Cap"
-            value={formatLargeNumber(pick.market_cap, { currency: "USD" })}
+            value={formatLargeNumber(activePick.market_cap, { currency: "USD" })}
           />
         </div>
 
         {/* Price history chart */}
         <Section title="Price History">
           <div className="mt-3 h-40">
-            {pick.history.length > 1 ? (
+            {activePick.history.length > 1 ? (
               <Sparkline
-                data={pick.history}
-                positive={pick.ytd_pct >= 0}
+                data={activePick.history}
+                positive={activePick.ytd_pct >= 0}
                 tweetMarkers={tweetMarkers}
               />
             ) : (
               <div className="flex h-full flex-col items-center justify-center rounded-sm border border-dashed border-[var(--color-border-strong)] px-4 text-center">
                 <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-muted)]">
-                  Historical candles unavailable
+                  {isLoadingHistory
+                    ? "Loading full history…"
+                    : "Historical candles unavailable"}
                 </p>
                 <p className="mt-1 font-mono text-lg text-white">
-                  Spot {formatPrice(pick.price, pick.currency)}
+                  Spot {formatPrice(activePick.price, activePick.currency)}
                 </p>
                 {m.day_change_pct != null && (
                   <p
@@ -199,15 +238,22 @@ export function PickDrawer({
                   </p>
                 )}
                 <p className="mt-2 text-[11px] text-[var(--color-text-muted)]">
-                  Run <code className="text-[var(--color-gold)]">npm run refresh</code>{" "}
-                  after plan upgrade to load full history.
+                  {isLoadingHistory
+                    ? "Fetching the latest candle data for this ticker."
+                    : "Run "}
+                  {!isLoadingHistory && (
+                    <>
+                      <code className="text-[var(--color-gold)]">npm run refresh</code>{" "}
+                      after plan upgrade to load full history.
+                    </>
+                  )}
                 </p>
               </div>
             )}
           </div>
-          {pick.updated_at && (
+          {activePick.updated_at && (
             <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-              Updated {pick.updated_at}
+              Updated {activePick.updated_at}
             </p>
           )}
         </Section>
@@ -217,19 +263,19 @@ export function PickDrawer({
           <Grid cols={3}>
             <MiniStat
               label="Open"
-              value={formatPrice(m.open ?? null, pick.currency)}
+              value={formatPrice(m.open ?? null, activePick.currency)}
             />
             <MiniStat
               label="Day High"
-              value={formatPrice(m.day_high ?? null, pick.currency)}
+              value={formatPrice(m.day_high ?? null, activePick.currency)}
             />
             <MiniStat
               label="Day Low"
-              value={formatPrice(m.day_low ?? null, pick.currency)}
+              value={formatPrice(m.day_low ?? null, activePick.currency)}
             />
             <MiniStat
               label="Prev Close"
-              value={formatPrice(m.prev_close ?? null, pick.currency)}
+              value={formatPrice(m.prev_close ?? null, activePick.currency)}
             />
             <MiniStat label="Volume" value={formatVolume(m.volume)} />
             <MiniStat label="Avg Vol" value={formatVolume(m.avg_volume)} />
@@ -239,19 +285,19 @@ export function PickDrawer({
         {/* 52-Week range */}
         <Section title="52-Week Range">
           <RangeBar
-            current={pick.price}
+            current={activePick.price}
             low={m.fifty_two_week_low ?? null}
             high={m.fifty_two_week_high ?? null}
-            currency={pick.currency}
+            currency={activePick.currency}
           />
           <Grid cols={3} className="mt-4">
             <MiniStat
               label="52W Low"
-              value={formatPrice(m.fifty_two_week_low ?? null, pick.currency)}
+              value={formatPrice(m.fifty_two_week_low ?? null, activePick.currency)}
             />
             <MiniStat
               label="52W High"
-              value={formatPrice(m.fifty_two_week_high ?? null, pick.currency)}
+              value={formatPrice(m.fifty_two_week_high ?? null, activePick.currency)}
             />
             <MiniStat
               label="52W Change"
@@ -266,11 +312,11 @@ export function PickDrawer({
             />
             <MiniStat
               label="50D Avg"
-              value={formatPrice(m.fifty_day_avg ?? null, pick.currency)}
+              value={formatPrice(m.fifty_day_avg ?? null, activePick.currency)}
             />
             <MiniStat
               label="200D Avg"
-              value={formatPrice(m.two_hundred_day_avg ?? null, pick.currency)}
+              value={formatPrice(m.two_hundred_day_avg ?? null, activePick.currency)}
             />
             <MiniStat
               label="Beta"
@@ -403,15 +449,15 @@ export function PickDrawer({
             />
             <MiniStat
               label="Target Low"
-              value={formatPrice(m.target_low_price ?? null, pick.currency)}
+              value={formatPrice(m.target_low_price ?? null, activePick.currency)}
             />
             <MiniStat
               label="Target Mean"
-              value={formatPrice(m.target_mean_price ?? null, pick.currency)}
+              value={formatPrice(m.target_mean_price ?? null, activePick.currency)}
             />
             <MiniStat
               label="Target High"
-              value={formatPrice(m.target_high_price ?? null, pick.currency)}
+              value={formatPrice(m.target_high_price ?? null, activePick.currency)}
             />
             <MiniStat
               label="Implied Upside"
@@ -438,7 +484,7 @@ export function PickDrawer({
             />
             <MiniStat
               label="Dividend Rate"
-              value={formatPrice(m.dividend_rate ?? null, pick.currency)}
+              value={formatPrice(m.dividend_rate ?? null, activePick.currency)}
             />
             <MiniStat
               label="Payout Ratio"
@@ -456,7 +502,7 @@ export function PickDrawer({
             />
             <MiniStat
               label="Currency"
-              value={pick.currency}
+              value={activePick.currency}
             />
           </Grid>
         </Section>
@@ -464,7 +510,7 @@ export function PickDrawer({
         {/* Thesis */}
         <Section title="Thesis">
           <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-dim)]">
-            {pick.thesis_long}
+            {activePick.thesis_long}
           </p>
         </Section>
 
@@ -472,35 +518,35 @@ export function PickDrawer({
         <div className="grid grid-cols-2 gap-px border-b border-[var(--color-border)] bg-[var(--color-border)]">
           <Stat
             label="Stance"
-            value={pick.stance.toUpperCase()}
+            value={activePick.stance.toUpperCase()}
             tone={
-              pick.stance === "long"
+              activePick.stance === "long"
                 ? "text-[var(--color-long)]"
-                : pick.stance === "bearish"
+                : activePick.stance === "bearish"
                   ? "text-[var(--color-bearish)]"
                   : "text-[var(--color-text-dim)]"
             }
           />
           <Stat
             label="Conviction"
-            value={pick.conviction.toUpperCase()}
+            value={activePick.conviction.toUpperCase()}
             tone={
-              pick.conviction === "high"
+              activePick.conviction === "high"
                 ? "text-[var(--color-conv-high)]"
-                : pick.conviction === "medium"
+                : activePick.conviction === "medium"
                   ? "text-[var(--color-conv-medium)]"
                   : "text-[var(--color-text-dim)]"
             }
           />
           <Stat
             label="Theme"
-            value={theme?.label ?? pick.theme}
+            value={theme?.label ?? activePick.theme}
             tone={theme ? undefined : "text-[var(--color-text-dim)]"}
             color={theme?.accent}
           />
           <Stat
             label="First Mentioned"
-            value={formatDate(pick.first_mentioned_at)}
+            value={formatDate(activePick.first_mentioned_at)}
           />
         </div>
 

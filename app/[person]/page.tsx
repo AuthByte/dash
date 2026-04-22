@@ -32,7 +32,7 @@ export default async function PersonDashboardPage({
   const person = getPersonBySlug(slug);
   if (!person) notFound();
 
-  const picks = getEnrichedPicks(slug);
+  const picks = getEnrichedPicks(slug, { includeHistory: false });
   const themes = getThemes(slug);
   const themeStats = getThemeStats(slug, picks);
   const headline = getHeadlineStats(picks);
@@ -57,7 +57,7 @@ export default async function PersonDashboardPage({
         </div>
         <div className="mt-10">
           <Suspense fallback={null}>
-            <PicksSection picks={picks} themes={themes} />
+            <PicksSection personSlug={slug} picks={picks} themes={themes} />
           </Suspense>
         </div>
         <Footer meta={meta} />
