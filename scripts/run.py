@@ -75,6 +75,17 @@ def main() -> int:
     parser.add_argument("--skip-scrape", action="store_true", help="Reuse latest raw-*.json")
     parser.add_argument("--full", action="store_true", help="Forward --full to scrape")
     parser.add_argument("--model", default=None, help="Forward --model to digest")
+    parser.add_argument(
+        "--since-date",
+        default="2026-01-01",
+        help="Forward --since-date to scrape (YYYY-MM-DD).",
+    )
+    parser.add_argument(
+        "--max-pages",
+        type=int,
+        default=80,
+        help="Forward --max-pages to scrape pagination.",
+    )
     args = parser.parse_args()
 
     load_env()
@@ -83,6 +94,10 @@ def main() -> int:
         scrape_cmd = [sys.executable, str(SCRIPTS_DIR / "scrape.py")]
         if args.full:
             scrape_cmd.append("--full")
+        if args.since_date:
+            scrape_cmd += ["--since-date", args.since_date]
+        if args.max_pages:
+            scrape_cmd += ["--max-pages", str(args.max_pages)]
         rc = run_step("scrape", scrape_cmd)
         if rc == 1:
             print("\n[run] no new tweets — exiting cleanly.")

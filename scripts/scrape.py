@@ -22,6 +22,7 @@ import datetime as dt
 import json
 import os
 import sys
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
 
@@ -61,6 +62,18 @@ USER_BY_SCREEN_NAME_URL = (
     "https://x.com/i/api/graphql/G3KGOASz96M-Qu0nwmGXNg/UserByScreenName"
 )
 USER_TWEETS_URL = "https://x.com/i/api/graphql/E3opETHurmVJflFsUBVuUQ/UserTweets"
+
+
+def parse_tweet_datetime(raw: str | None) -> dt.datetime | None:
+    if not raw:
+        return None
+    try:
+        parsed = parsedate_to_datetime(raw)
+    except (TypeError, ValueError):
+        return None
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=dt.timezone.utc)
+    return parsed.astimezone(dt.timezone.utc)
 
 
 def require_cookies() -> dict[str, str]:
@@ -142,16 +155,12 @@ async def resolve_user_id(client: httpx.AsyncClient, handle: str) -> str:
 
 
 async def fetch_user_tweets(
-    client: httpx.AsyncClient, user_id: str, limit: int
+    client: httpx.AsyncClient,
+    user_id: str,
+    limit: int,
+    max_pages: int,
+    since_date: dt.date,
 ) -> list[dict[str, Any]]:
-    variables = {
-        "userId": user_id,
-        "count": min(limit, 200),
-        "includePromotedContent": False,
-        "withQuickPromoteEligibilityTweetFields": False,
-        "withVoice": True,
-        "withV2Timeline": True,
-    }
     features = {
         "rweb_tipjar_consumption_enabled": True,
         "responsive_web_graphql_exclude_directive_enabled": True,
@@ -178,14 +187,70 @@ async def fetch_user_tweets(
         "longform_notetweets_inline_media_enabled": True,
         "responsive_web_enhance_cards_enabled": False,
     }
-    params = {
-        "variables": json.dumps(variables, separators=(",", ":")),
-        "features": json.dumps(features, separators=(",", ":")),
-    }
-    r = await client.get(USER_TWEETS_URL, params=params)
-    if r.status_code != 200:
-        auth_error(r.status_code, r.text)
-    return _flatten_timeline(r.json())
+
+    seen_ids: set[str] = set()
+    out: list[dict[str, Any]] = []
+    cursor: str | None = None
+    since_dt = dt.datetime.combine(since_date, dt.time.min, tzinfo=dt.timezone.utc)
+
+    for page in range(max_pages):
+        if len(out) >= limit:
+            break
+
+        variables: dict[str, Any] = {
+            "userId": user_id,
+            "count": min(200, limit - len(out)),
+            "includePromotedContent": False,
+            "withQuickPromoteEligibilityTweetFields": False,
+            "withVoice": True,
+            "withV2Timeline": True,
+        }
+        if cursor:
+            variables["cursor"] = cursor
+
+        params = {
+            "variables": json.dumps(variables, separators=(",", ":")),
+            "features": json.dumps(features, separators=(",", ":")),
+        }
+        r = await client.get(USER_TWEETS_URL, params=params)
+        if r.status_code != 200:
+            auth_error(r.status_code, r.text)
+
+        payload = r.json()
+        tweets = _flatten_timeline(payload)
+        if not tweets:
+            break
+
+        oldest_on_page: dt.datetime | None = None
+        for tweet in tweets:
+            tid = str(tweet.get("id") or "")
+            if not tid or tid in seen_ids:
+                continue
+            seen_ids.add(tid)
+
+            tdt = parse_tweet_datetime(tweet.get("date"))
+            if tdt is not None:
+                oldest_on_page = (
+                    tdt
+                    if oldest_on_page is None
+                    else min(oldest_on_page, tdt)
+                )
+                if tdt < since_dt:
+                    continue
+
+            out.append(tweet)
+
+        cursor = _extract_bottom_cursor(payload)
+        print(
+            f"[scrape] page={page + 1} tweets={len(tweets)} kept={len(out)} "
+            f"cursor={'yes' if cursor else 'no'}"
+        )
+        if not cursor:
+            break
+        if oldest_on_page is not None and oldest_on_page < since_dt:
+            break
+
+    return out
 
 
 def _flatten_timeline(payload: dict[str, Any]) -> list[dict[str, Any]]:
@@ -201,6 +266,22 @@ def _flatten_timeline(payload: dict[str, Any]) -> list[dict[str, Any]]:
         for entry in instr.get("entries", []) or []:
             out.extend(_extract_from_entry(entry))
     return out
+
+
+def _extract_bottom_cursor(payload: dict[str, Any]) -> str | None:
+    try:
+        instructions = payload["data"]["user"]["result"]["timeline_v2"]["timeline"][
+            "instructions"
+        ]
+    except KeyError:
+        return None
+    for instr in instructions:
+        for entry in instr.get("entries", []) or []:
+            content = entry.get("content", {}) or {}
+            if content.get("entryType") == "TimelineTimelineCursor":
+                if content.get("cursorType") == "Bottom" and content.get("value"):
+                    return str(content["value"])
+    return None
 
 
 def _extract_from_entry(entry: dict[str, Any]) -> list[dict[str, Any]]:
@@ -297,6 +378,7 @@ async def main_async(args: argparse.Namespace) -> int:
     cookies = require_cookies()
     handle = args.handle or get_handle()
     cursor = None if args.full else read_cursor()
+    since_date = dt.date.fromisoformat(args.since_date)
 
     print(
         f"[scrape] target=@{handle}  cursor={cursor or '(none)'}  limit={args.limit}"
@@ -313,13 +395,19 @@ async def main_async(args: argparse.Namespace) -> int:
             return 2
 
         try:
-            tweets = await fetch_user_tweets(client, user_id, args.limit)
+            tweets = await fetch_user_tweets(
+                client=client,
+                user_id=user_id,
+                limit=args.limit,
+                max_pages=args.max_pages,
+                since_date=since_date,
+            )
         except httpx.HTTPError as exc:
             print(f"ERROR: network failure fetching tweets: {exc}", file=sys.stderr)
             return 2
 
-    print(f"[scrape] fetched {len(tweets)} tweets")
-    new_tweets = filter_new(tweets, cursor)
+    print(f"[scrape] fetched {len(tweets)} tweets since {args.since_date}")
+    new_tweets = tweets if args.full else filter_new(tweets, cursor)
     print(f"[scrape] {len(new_tweets)} new tweets since cursor")
 
     today = dt.date.today().isoformat()
@@ -349,12 +437,23 @@ def main() -> int:
     )
     parser.add_argument("--handle", default=None, help="Override TWITTER_HANDLE env.")
     parser.add_argument(
-        "--limit", type=int, default=200, help="Max tweets to pull per run."
+        "--limit", type=int, default=5000, help="Max tweets to pull per run."
     )
     parser.add_argument(
         "--full",
         action="store_true",
         help="Ignore stored cursor and pull the full window.",
+    )
+    parser.add_argument(
+        "--since-date",
+        default="2026-01-01",
+        help="Keep tweets on/after this date (YYYY-MM-DD).",
+    )
+    parser.add_argument(
+        "--max-pages",
+        type=int,
+        default=80,
+        help="Maximum timeline pages to request while paginating.",
     )
     args = parser.parse_args()
     return asyncio.run(main_async(args))
