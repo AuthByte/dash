@@ -3,13 +3,13 @@
     "ticker": "LWLG",
     "name": "LightWave Logic",
     "theme": "photonics",
-    "stance": "long",
+    "stance": "bearish",
     "conviction": "medium",
-    "thesis_short": "Electro-optic polymer modulators for next-gen optical transceivers.",
-    "thesis_long": "Pure-play on electro-optic polymer technology that could replace lithium niobate in high-speed optical modulators. Long road to commercialization but the IP moat is real and the CPO ramp creates urgency for any drop-in modulator improvement.",
+    "thesis_short": "LWLG is the current RGTI of photonics \u2014 valued at $1.8B while real laser suppliers like SIVE trade at a fraction.",
+    "thesis_long": "Author turned explicitly bearish on LWLG, comparing it to RGTI (implying speculative overvaluation). Key argument: 'Sorry but I'm convinced $LWLG is the current $RGTI of photonics. I have zero clue\u2026 How they're valued at $1.8B. Foxconn's optical arm Shunsin, for $NVDA CPO packaging, assembly, and testing\u2026 Is valued less at $1.4B? $SIVEF, the laser source for $JBL and $MRVL was 1/3rd [the valuation].' Author sees LWLG as massively overvalued relative to companies with confirmed hyperscaler supply chain positions.",
     "first_mentioned_at": "2026-03-20",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
-    "tweet_id": "2034916899021365725",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2044830468299010144",
+    "tweet_id": "2044830468299010144",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -36,8 +36,8 @@
     "theme": "energy",
     "stance": "long",
     "conviction": "medium",
-    "thesis_short": "US alt to GE Vernova — switchgear for data center and grid build-out.",
-    "thesis_long": "Custom electrical equipment supplier benefiting from data center power demand and grid hardening capex. Backlog visibility is multi-year and the stock is still under-owned vs the obvious GEV/ETN names.",
+    "thesis_short": "Good switchgear long alongside HPS.A for DC transformer/switchgear bottleneck thesis.",
+    "thesis_long": "Author mentioned POWL as 'another good switchgear long' alongside HPS.A in the context of the transformer/switchgear DC bottleneck thesis. Author: 'Hammond was my pick for the transformers/switchgear DC bottleneck since it had a lower MC but high dry transformer market share. $POWL was another good switchgear long that I came [across].' No material change to conviction but confirmed as part of the energy infrastructure bottleneck basket.",
     "first_mentioned_at": "2026-04-09",
     "tweet_url": "https://x.com/aleabitoreddit/status/2042345236354265271",
     "tweet_id": "2042345236354265271",
@@ -57,11 +57,11 @@
     "theme": "photonics",
     "stance": "long",
     "conviction": "high",
-    "thesis_short": "Swedish specialty steel — grouped with photonics chokepoint theme.",
-    "thesis_long": "Specialty stainless and alloy supplier into industrial and energy end markets. Tagged into the chokepoint framework as a sole-source supplier on several niche tubing applications.",
+    "thesis_short": "MSFT Quantum secret buyer confirmed; profitable MBE duopoly with VECO; up 258% YTD; 15th 100%+ return.",
+    "thesis_long": "ALRIB thesis validated with 113%+ gains and up 258% YTD. Key update: Author confirmed MSFT Quantum is an undisclosed hyperscaler customer of Riber (ALRIB) via LinkedIn photo easter egg \u2014 Microsoft Quantum posted photos with Riber machines visible. Author: 'Turns out markets like it when they find out $MSFT is your secret customer? I don't know many companies under $1B supply directly to hyperscalers. $ALRIB looks like it's on a slow victory march upward after information discovery.' ALRIB is a profitable duopoly with VECO in MBE equipment, serves QD Laser, IQE, and IntelliEPI as customers. Paying dividends.",
     "first_mentioned_at": "2026-04-08",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2041929392331616431",
-    "tweet_id": "2041929392331616431",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2044695311764099291",
+    "tweet_id": "2044695311764099291",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -138,11 +138,11 @@
     "theme": "photonics",
     "stance": "long",
     "conviction": "high",
-    "thesis_short": "InP epitaxial wafer supplier — the substrate floor of the CPO laser stack.",
-    "thesis_long": "World leader in indium phosphide and gallium arsenide epitaxial wafers. As CPO ramps, every external light source needs InP substrates and IQE is one of a small handful of qualified suppliers. Best performer in his book — claimed +837% YTD.",
+    "thesis_short": "Up 316-837% YTD; Point72 aggressively buying at ATHs; largest latent InP reactor capacity in the West.",
+    "thesis_long": "Author's IQE thesis has been validated with massive gains. IQE is up 316%+ since author's thesis, with Point72 and other institutions now aggressively buying at ATHs. Author: 'My $IQE call\u2026 might actually outperform my legendary $AXTI thesis soon? It's only been 2 months: Now it's up over +316% after institutions started publicly buying.' IQE is a known LITE supplier and sits on the most latent merchant InP reactor capacity in the West. Author noted IQE up 837% YTD by late April. Thesis: LITE <- IQE <- AXTI supply chain mapping to Google TPU/hyperscaler ASICs.",
     "first_mentioned_at": "2026-02-25",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2026638711941902461",
-    "tweet_id": "2026638711941902461",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+    "tweet_id": "2044682729128874210",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -364,11 +364,11 @@
     "theme": "photonics",
     "stance": "long",
     "conviction": "high",
-    "thesis_short": "Optical transceiver supplier riding the data center upgrade cycle.",
-    "thesis_long": "Vertically integrated transceiver maker with hyperscaler exposure. Margins were structurally bad for years; the AI capex cycle has flipped utilization and pricing power. Up ~5x in his book.",
+    "thesis_short": "Largest 800G/1.6T capacity in US; $71M+ hyperscaler orders flowing; $4.35B ARR projection by H2 2027 at ~$8B MC.",
+    "thesis_long": "Author's AAOI thesis continues to play out with the stock up 5x+ since initial mention. Key updates: AAOI received a $71M order from hyperscaler, then a $200M volume order for 1.6T transceivers. AAOI expects to have the largest production capacity for 800G and 1.6T transceivers in America. Revenue projections: Q2 2026 ~$312M, Q4 2026 ~$1.41B, Q4 2027 ~$1.97B. Author: 'AAOI expects to have the largest production capacity of 1.6T optical transceivers in America. Just as optical TAM is expected to ramp to $100B in a bull case.' LITE backlog into 2028 signals demand spillover to AAOI. Author maintained high conviction through macro volatility.",
     "first_mentioned_at": "2026-02-27",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2027275242628948103",
-    "tweet_id": "2027275242628948103",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2039887575520026653",
+    "tweet_id": "2039887575520026653",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -860,11 +860,11 @@
     "theme": "photonics",
     "stance": "long",
     "conviction": "high",
-    "thesis_short": "InP and GaAs substrate maker — direct CPO substrate beneficiary.",
-    "thesis_long": "Compound semiconductor substrate supplier with InP capacity that maps directly to external light source demand. Has been left for dead for years; the photonics ramp finally gives it a real catalyst.",
+    "thesis_short": "1000%+ unrealized gains; InP substrate monopoly bottleneck; potential dilution risk flagged but thesis intact.",
+    "thesis_long": "Author's most legendary thesis with 1000%+ unrealized gains. AXTI went from ~$7 to $69.69+ during this period. Key update: Board proposed adding 50M more shares (70M -> 120M) for shareholder vote, which author flagged as a concern similar to IREN's ATM. Author: 'If you're curious about $AXTI: It's down 21% on the new potential dilution news. Board wanted to add 50M more shares (up to $2B worth to dilute) for shareholders vote.' However author maintained the underlying thesis is intact \u2014 hyperscalers would pay $10B+ to control InP supply. AXTI is the Strait of Hormuz for photonics. LITE CEO confirmed substrates keep them up at night.",
     "first_mentioned_at": "2026-02-07",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2019946788233617526",
-    "tweet_id": "2019946788233617526",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2041249789195813291",
+    "tweet_id": "2041249789195813291",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -1376,11 +1376,11 @@
     "theme": "photonics",
     "stance": "long",
     "conviction": "high",
-    "thesis_short": "Optical components incumbent levered to CPO transceiver upgrade.",
-    "thesis_long": "Larger, established photonics supplier — diversified across telecom, datacom and 3D sensing. The datacom segment is the AI play; CPO and 1.6T transceivers are pulling forward demand.",
+    "thesis_short": "$371->$836 in 4 months; sold out until end of 2027; NVDA invested $2B; backlog into 2028 signals extreme demand.",
+    "thesis_long": "LITE thesis fully validated. Stock went from $371 to $836 in 4 months. NVDA invested $2B into LITE for R&D and new US fab. LITE CEO: 'We're sold out really until the end of 2027. We see no end in sight.' Backlog order fill into 2028 signals extreme demand and lack of capacity. LITE added to S&P 500. Author: 'I get a sense of pride when I see a thesis playing out well real time. $LITE $371 -> $836 in the last 4 months.' LITE is in every single Google TPU and benefits from NVDA + all ASICs via OCS. Demand spillover to AAOI as second-order effect.",
     "first_mentioned_at": "2026-02-04",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2019181182026686661",
-    "tweet_id": "2019181182026686661",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2041650903305089389",
+    "tweet_id": "2041650903305089389",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -1996,12 +1996,12 @@
     "name": "Aehr Test Systems",
     "theme": "photonics",
     "stance": "long",
-    "conviction": "medium",
-    "thesis_short": "Wafer-level burn-in test — critical for SiC and now silicon photonics.",
-    "thesis_long": "Specialty test equipment for silicon carbide and silicon photonics yield qualification. Lumpy quarter-to-quarter, but the photonics test opportunity is real.",
+    "conviction": "high",
+    "thesis_short": "$41M production order from lead hyperscaler; volume ramp inflection point hit; 'cooking' per author.",
+    "thesis_long": "AEHR thesis inflecting. Key update: AEHR received a $41M production order from lead hyperscaler customer \u2014 the volume ramp author predicted 'shortly after' earnings. Stock up +13% on the news, then continued to near triple-digit returns in one week. Author: '$AEHR receives $41M production order from lead hyperscaler customer. As I said after earnings, they indicated volume ramp shortly after. This is it.' Also received new qualification orders from a leading optical transceiver company. Author upgraded conviction to high given the production order confirmation. 'Told ya. $AEHR is cooking.'",
     "first_mentioned_at": "2026-02-11",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2021599607294484734",
-    "tweet_id": "2021599607294484734",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2044794468193476955",
+    "tweet_id": "2044794468193476955",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -2168,11 +2168,11 @@
     "theme": "photonics",
     "stance": "long",
     "conviction": "high",
-    "thesis_short": "Swedish photonics IDM — ICs for optical networks and 5G mmWave.",
-    "thesis_long": "Stockholm-listed photonics specialist with a wafer fab in the UK. Optical product line is a direct CPO play. Tagged at +385% YTD in his framework.",
+    "thesis_short": "Primary laser supplier for AMD/GFS CPO, JBL 1.6T transceivers, MRVL Celestial; NASDAQ listing imminent; target $2B+ MC.",
+    "thesis_long": "Author's conviction on SIVE has dramatically increased across dozens of tweets. Key developments: (1) JBL officially confirmed using SIVE lasers for 1.6T LRO optical transceivers. (2) GFS gave first direct confirmation of SIVE as laser supplier for their CPO ecosystem. (3) AMD announced CPO collaboration with GFS \u2014 author says SIVE is likely the primary laser supplier via Enosemi/Ayar route. (4) SIVE executing US NASDAQ listing. (5) SIVE raised $13.5M+ from long-term institutional investors. (6) LITE and MTSI were silently removed from Ayar's website. Author: 'Sivers looks like the primary laser supplier to $AMD's CPO program if AMD goes the Ayar route at $GFS.' Personal bull case: $10B+. Author bought ~0.5-1% of the company. Stock went from ~$140M MC to $950M+ MC during this period.",
     "first_mentioned_at": "2026-03-16",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2033466880661606646",
-    "tweet_id": "2033466880661606646",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2046696582696083634",
+    "tweet_id": "2046696582696083634",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -2679,11 +2679,11 @@
     "theme": "photonics",
     "stance": "long",
     "conviction": "high",
-    "thesis_short": "SOI wafer leader with photonics SOI exposure.",
-    "thesis_long": "Engineered substrate maker — photonics SOI is the premium product line that sells into silicon photonics foundries. Tagged at +208% YTD.",
+    "thesis_short": "Up 140% since thesis, +302% YTD; genuine monopoly over CPO substrates; 'Soitec's Photonics-SOI in 100% of next-gen AI DCs.'",
+    "thesis_long": "SOI thesis fully validated. Up 140% since author's thesis post and +302% YTD. Author: 'This is what happens when you find a true monopoly. Did you listen anon? $SOI up +140% since my thesis 1M ago and +302% YTD. Just a friendly reminder: Soitec's Photonics-SOI products are deployed in 100% of next-generation AI data centers. - EVP Soitec.' SOI is the Western monopoly over silicon photonics and CPO substrates. Author maintained position through Iran macro volatility, noting the thesis hasn't changed. Institutional buying confirmed with $4B+ MC companies going up 10%+ per day.",
     "first_mentioned_at": "2026-03-01",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2028203665430057068",
-    "tweet_id": "2028203665430057068",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2046408704573292659",
+    "tweet_id": "2046408704573292659",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -2915,11 +2915,11 @@
     "theme": "fintech",
     "stance": "long",
     "conviction": "medium",
-    "thesis_short": "USDC issuer — interest-rate income on stablecoin reserves.",
-    "thesis_long": "Pure-play on stablecoin adoption. Earnings are basically T-bill yield on reserves, so it screens as a fintech but acts like a leveraged short-rates trade. 2x+ in his book.",
+    "thesis_short": "Up 148% since $54 entry; USDC supply $70B+; AI agent payments growing; Clarity Act bank lobbying risk flagged.",
+    "thesis_long": "CRCL thesis playing out with stock up 148% from author's $54 entry. Key updates: Circle's Global Markets Head noted AI agents completed 140M payments with $43B+ transaction volume in 9 months. Author flagged Clarity Act as a bank lobbyist bill that could hurt CRCL and stablecoins. Author: 'Let's get this straight: The Clarity Act is a bank lobbyist bill. Where JPM and others lobbied both sides to get control over digital assets / $CRCL stablecoins.' Author maintained long position but flagged regulatory risk. Also noted X charging foreign subscribers 46% premium as evidence of stablecoin utility.",
     "first_mentioned_at": "2026-02-03",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2018724759262085467",
-    "tweet_id": "2018724759262085467",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2043499958134022631",
+    "tweet_id": "2043499958134022631",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -3026,11 +3026,11 @@
     "theme": "consumer",
     "stance": "long",
     "conviction": "medium",
-    "thesis_short": "UK-listed compute platform — industrial and education flywheel.",
-    "thesis_long": "Single-board computer maker with embedded enterprise pull. Tagged +107% YTD; the institutional float story is still early.",
+    "thesis_short": "Hit triple-digit return 2 months after thesis; 58% forward growth vs 14% analyst estimates; 14th 100%+ call YTD.",
+    "thesis_long": "RPI thesis validated with triple-digit returns. Author: '$RPI hit triple digit % return intraday today, just 2 months later. That's 14 different stocks I've called YTD from $AAOI to $LITE that hit 100%+ returns.' RPI earnings blew away analyst estimates with 58% Y/Y growth vs 14% expected. Forward P/E: 20.6x (2026), 13.2x (2027), 9.5x (2028) on author's projections. Author defended thesis against media calling it a 'meme stock' \u2014 Reuters, Bloomberg, Guardian, and Economic Times all cited his OpenClaw thesis. ALRIB and RPI were the most recent two of 16 stocks to hit 100%+ returns YTD.",
     "first_mentioned_at": "2026-02-16",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2023415224372756782",
-    "tweet_id": "2023415224372756782",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2044183312533770427",
+    "tweet_id": "2044183312533770427",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -3160,13 +3160,13 @@
     "ticker": "RDDT",
     "name": "Reddit Inc.",
     "theme": "consumer",
-    "stance": "bearish",
+    "stance": "long",
     "conviction": "medium",
-    "thesis_short": "Worst performer in book — engagement deceleration vs sky-high multiple.",
-    "thesis_long": "Tagged as the worst performer in the tracker at -32% YTD. Concerns around DAU growth, ad load saturation, and the Google search-traffic dependency.",
+    "thesis_short": "Flipped to long at $139-$140 after -44% drop; 70% Y/Y growth, 91% gross margins, deeply mispriced at $26.5B MC.",
+    "thesis_long": "Author reversed stance from bearish to long on RDDT. Previously bearish, author went long at $139 after the stock dropped 44%+. Thesis: Reddit is growing 70% Y/Y with 91.5% gross margins and ~34% net profit margin. Forward P/E of ~27-30x for a company growing 50%+ Y/Y is compelling. Author: '$RDDT is probably the most compelling dip buy at $138, ~$26.5B MC. You don't get more profitable + high growth than Reddit.' Also noted extreme user engagement during wartime as a catalyst. Stock recovered to $163+ by late April. Author mentioned going long around $140 and posting thesis on the way down to $125.",
     "first_mentioned_at": "2026-02-05",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2019248496797532285",
-    "tweet_id": "2019248496797532285",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2029977266541953094",
+    "tweet_id": "2029977266541953094",
     "exited_at": null,
     "exit_price": null,
     "tweet_events": [
@@ -3424,6 +3424,174 @@
         "tweet_id": "2046296091461869737",
         "tweet_url": "https://x.com/aleabitoreddit/status/2046296091461869737",
         "tweeted_at": "2026-04-20"
+      }
+    ]
+  },
+  {
+    "ticker": "HPS.A",
+    "name": "Hammond Power Solutions",
+    "theme": "energy",
+    "stance": "long",
+    "conviction": "medium",
+    "thesis_short": "Transformer/switchgear bottleneck play; Hammond dominates dry transformer market (~23% share) with multi-year supply crunch.",
+    "thesis_long": "Author initiated a long on Hammond Power Solutions (HPS.A) at ~184 CAD (~$1.5B USD MC), citing a multi-year bottleneck in transformers and switchgear for AI data center buildout. Hammond dominates the dry transformer market with ~23% share and also serves switchgear (2-3Y bottleneck) and manufactures liquid transformers. A new Presidential Action explicitly named transformer capacity as a national security concern. Author noted: 'LOL what did i say about transformer bottlenecks and upstream supply chains like $HPS.A?' The stock moved from ~$186 to $241 in two weeks, and author reiterated the thesis multiple times. 'Boring names like $HPS.A end up cooking hardest.'",
+    "first_mentioned_at": "2026-04-06",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2041168871168545115",
+    "tweet_id": "2041168871168545115",
+    "exited_at": null,
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2041168871168545115",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041168871168545115",
+        "tweeted_at": "2026-04-06"
+      }
+    ]
+  },
+  {
+    "ticker": "ARM",
+    "name": "ARM Holdings",
+    "theme": "ai-semi",
+    "stance": "long",
+    "conviction": "medium",
+    "thesis_short": "Long ARM at $139; inference shift to CPUs and ARM's new AGI CPU targeting $15B+ annual revenue in 5 years.",
+    "thesis_long": "Author went long ARM at $139, citing the market shift from training to inference where ARM AI CPUs can cannibalize NVDA market share. ARM announced a new 'AGI CPU' (136 Neoverse V3 cores, 3nm TSM) targeting $15B+ annual revenue within 5 years. Author: 'Bullish on $ARM, given the new bottleneck shifting back to CPUs... I'm predicting parts of localized inference to be handled by CPUs more and more as models like Gemma get lightweight in the future.' Conviction medium as author noted it is not every robot use case.",
+    "first_mentioned_at": "2026-03-25",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2036746039588434165",
+    "tweet_id": "2036746039588434165",
+    "exited_at": null,
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2036746039588434165",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036746039588434165",
+        "tweeted_at": "2026-03-25"
+      }
+    ]
+  },
+  {
+    "ticker": "HIMS",
+    "name": "Hims & Hers Health",
+    "theme": "consumer",
+    "stance": "long",
+    "conviction": "medium",
+    "thesis_short": "HIMS deeply oversold at $25 vs $70 highs; NVO partnership, global acquisitions, peptide arc, and 40%+ short interest create squeeze setup.",
+    "thesis_long": "Author has been building a bull case on HIMS across multiple tweets. Key thesis: HIMS's main moat is network capture of retail audiences with latent revenue monetization potential similar to early META and HOOD. Catalysts include: NVO lawsuit dropped + partnership announced, multiple global acquisitions (Zava/Europe, Livewell/Canada, Eucalyptus/Australia), peptide arc with Huberman endorsement, and 40%+ short interest creating squeeze potential. Author: 'It's still pretty incredible $HIMS is down 44% even after: $NVO de-risking + partnership, Multiple global acquisitions expanding DTC distribution network, Peptide arc.' Stock recovered from $22 lows. Author sees parallels to META's early acquisition strategy.",
+    "first_mentioned_at": "2026-03-09",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2031152993886941656",
+    "tweet_id": "2031152993886941656",
+    "exited_at": null,
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2031152993886941656",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031152993886941656",
+        "tweeted_at": "2026-03-09"
+      }
+    ]
+  },
+  {
+    "ticker": "NBIS",
+    "name": "Nebius Group",
+    "theme": "neocloud",
+    "stance": "long",
+    "conviction": "high",
+    "thesis_short": "Top neocloud pick; $27B META deal, $2B NVDA investment, derisked vs IREN's $6B ATM dilution. Next AWS candidate.",
+    "thesis_long": "Author has repeatedly called NBIS his top neocloud pick, contrasting it favorably against IREN. Key thesis: Nebius is 5 companies growing triple digits Y/Y (Nebius AI Cloud targeting $7-9B ARR, Clickhouse, etc.). NVDA invested $2B into NBIS (convertible, not ATM dilution). META signed $27B cumulative AI spend contract. Citi initiated at $169 PT. Jensen Huang said '$NBIS will take care of you.' Author: 'My thoughts on $NBIS... My guess it's Nebius [that becomes the next AWS].' Conviction high given repeated multi-tweet emphasis and explicit contrast with IREN's dilutive structure.",
+    "first_mentioned_at": "2026-03-11",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2031744017201848397",
+    "tweet_id": "2031744017201848397",
+    "exited_at": null,
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2031744017201848397",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031744017201848397",
+        "tweeted_at": "2026-03-11"
+      }
+    ]
+  },
+  {
+    "ticker": "TSEM",
+    "name": "Tower Semiconductor",
+    "theme": "photonics",
+    "stance": "long",
+    "conviction": "high",
+    "thesis_short": "The TSM of photonics; top CPO pick alongside SOI, NVDA collaboration for 1.6T scale, 16th 100%+ return YTD.",
+    "thesis_long": "Author went long TSEM calling it 'the $TSM of photonics' and one of his top two CPO picks alongside SOI. NVDA directly collaborated with Tower to scale 1.6T silicon photonics. Author projected a huge catalyst from NVDA GTC. TSEM went from ~$115 to $226 in 40 days (100%+ return). Author: 'Wow, my 16th 100%+ return this year alone: $TSEM ($113 -> $226). Timeline: 40 days.' Forward P/E compressed to 16-18x with growth scenarios going to 10-12x. Author noted institutions likely started copy trading after his post.",
+    "first_mentioned_at": "2026-03-11",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2031820871170736570",
+    "tweet_id": "2031820871170736570",
+    "exited_at": null,
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2031820871170736570",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031820871170736570",
+        "tweeted_at": "2026-03-11"
+      }
+    ]
+  },
+  {
+    "ticker": "TTD",
+    "name": "The Trade Desk",
+    "theme": "consumer",
+    "stance": "long",
+    "conviction": "low",
+    "thesis_short": "Short-term mean reversion play at $22; ChatGPT monetization angle undervalued, potential 40-50% upside to low $30s.",
+    "thesis_long": "Author took short-term positions in TTD at $22 as a potential mean reversion trade. Thesis: TTD was once $139 and the short-term ChatGPT monetization angle is undervalued given they're moving to ads. Author: 'Think the short-term ChatGPT monetization angle is undervalued given they're moving to ads. I do have short term positions at $22 as a potential mean reversion the bottom, but this is not high conviction by any means.' Low conviction explicitly stated by author.",
+    "first_mentioned_at": "2026-04-20",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2046296091461869737",
+    "tweet_id": "2046296091461869737",
+    "exited_at": null,
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2046296091461869737",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046296091461869737",
+        "tweeted_at": "2026-04-20"
+      }
+    ]
+  },
+  {
+    "ticker": "GLW",
+    "name": "Corning Inc.",
+    "theme": "photonics",
+    "stance": "long",
+    "conviction": "medium",
+    "thesis_short": "GLW leads glass core substrate market vs KCC and LX Glass; key to next-gen advanced semiconductor packaging.",
+    "thesis_long": "Author highlighted GLW as the leader in glass core substrates per Digitimes, noting 'Glass core substrates are key to next-generation advanced semiconductor packaging' and that commercialization timelines are accelerating. GLW appeared in the GlobalFoundries CPO ecosystem list at $141.2B MC. Author also noted GLW in the CPO value chain for optical cable/fiber. Multiple references to GLW as a chokepoint for glass core packaging alongside $ONTO for LIDE metrology.",
+    "first_mentioned_at": "2026-04-20",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2046173276473614388",
+    "tweet_id": "2046173276473614388",
+    "exited_at": null,
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2046173276473614388",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046173276473614388",
+        "tweeted_at": "2026-04-20"
+      }
+    ]
+  },
+  {
+    "ticker": "IREN",
+    "name": "IREN Limited",
+    "theme": "neocloud",
+    "stance": "bearish",
+    "conviction": "high",
+    "thesis_short": "F-tier neocloud with $6B ATM dilution at $11.7B MC; management history of destroying shareholder value via ATMs.",
+    "thesis_long": "Author has been consistently bearish on IREN, calling it an 'F-tier Neocloud.' Core thesis: IREN filed to dilute $6B at an $11.7B MC, which is nearly half their market cap sold into the open market. Management has a history of destroying shareholder value via ATMs (same team behind BKKT and ASST which crashed 99%). Author: 'How are there people still long on an F-tier Neocloud like $IREN. Amid a $6,000,000,000 dilution? When $NBIS is up there with $ORCL and $MSFT looking derisked?' IREN down -7.9% YTD vs NBIS up 61%+ YTD as of mid-April.",
+    "first_mentioned_at": "2026-03-06",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2029993746658643978",
+    "tweet_id": "2029993746658643978",
+    "exited_at": null,
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2029993746658643978",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029993746658643978",
+        "tweeted_at": "2026-03-06"
       }
     ]
   }
