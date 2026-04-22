@@ -6,11 +6,12 @@
  *   pnpm refresh -- --person serenity     # only one person
  *   pnpm refresh -- --ticker IQE.L        # only one ticker (across all people)
  *
- * Uses FMP stable endpoints only. Any unsupported symbols fail clearly so
- * subscription coverage issues are visible immediately.
+ * FMP is primary source; yfinance can enrich missing fields/history.
  */
 import fs from "node:fs";
 import path from "node:path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import {
   PeopleFileSchema,
   PicksFileSchema,
@@ -27,6 +28,9 @@ const PEOPLE_FILE = path.join(DATA_DIR, "people.json");
 const RATE_LIMIT_MS = 350;
 const FMP_BASE_URL = "https://financialmodelingprep.com/stable";
 const FMP_API_KEY = process.env.FMP_API_KEY?.trim() ?? "";
+const PYTHON_BIN = process.env.PYTHON_BIN?.trim() || "python3";
+const YFINANCE_ENABLED = process.env.YFINANCE_ENABLED !== "0";
+const execFileAsync = promisify(execFile);
 
 const DEFAULT_CURRENCY: Record<string, string> = {
   ".L": "GBp",
@@ -84,6 +88,21 @@ type FmpHistoryPoint = {
   price?: unknown;
 };
 
+type RefreshSource = "fmp" | "fmp+yfinance" | "yfinance";
+
+type YfinancePayload = {
+  price: number | null;
+  market_cap: number | null;
+  currency: string | null;
+  history: { date: string; close: number }[];
+  metrics: Partial<FinancialMetrics>;
+};
+
+type RefreshResult = {
+  entry: PriceEntry;
+  source: RefreshSource;
+};
+
 class FmpUnsupportedSymbolError extends Error {
   constructor(ticker: string, detail: string) {
     super(`FMP unsupported symbol ${ticker}: ${detail}`);
@@ -133,7 +152,6 @@ function num(v: unknown): number | null {
     const parsed = Number(v);
     if (Number.isFinite(parsed)) return parsed;
   }
-  // Some providers return { raw, fmt } shapes
   if (typeof v === "object" && v !== null && "raw" in v) {
     const raw = (v as { raw: unknown }).raw;
     if (typeof raw === "number" && Number.isFinite(raw)) return raw;
@@ -224,6 +242,92 @@ function buildFmpMetrics(
   };
 }
 
+function fillMissingMetrics(
+  base: FinancialMetrics | undefined,
+  fallback: Partial<FinancialMetrics>,
+): FinancialMetrics {
+  const merged: FinancialMetrics = { ...(base ?? {}) };
+  for (const [key, value] of Object.entries(fallback)) {
+    const current = (merged as Record<string, unknown>)[key];
+    if ((current == null || current === "") && value != null) {
+      (merged as Record<string, unknown>)[key] = value;
+    }
+  }
+  return merged;
+}
+
+function shouldUseYfinanceEnrichment(entry: PriceEntry): boolean {
+  const metricsCount = Object.keys(entry.metrics ?? {}).length;
+  return (
+    entry.history.length === 0 ||
+    entry.price == null ||
+    entry.market_cap == null ||
+    metricsCount < 10 ||
+    !entry.metrics?.sector ||
+    !entry.metrics?.industry
+  );
+}
+
+function normalizeYfinancePayload(payload: unknown): YfinancePayload {
+  if (!payload || typeof payload !== "object") {
+    throw new Error("Invalid yfinance payload: expected object.");
+  }
+  const obj = payload as Record<string, unknown>;
+  const rawHistory = Array.isArray(obj.history) ? obj.history : [];
+  const history = rawHistory
+    .map((row) => {
+      if (!row || typeof row !== "object") return null;
+      const item = row as Record<string, unknown>;
+      const day = dateOnly(item.date);
+      const close = num(item.close);
+      if (!day || close == null) return null;
+      return { date: day, close };
+    })
+    .filter(
+      (row): row is { date: string; close: number } =>
+        row != null && row.close != null,
+    )
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  const rawMetrics =
+    obj.metrics && typeof obj.metrics === "object"
+      ? (obj.metrics as Record<string, unknown>)
+      : {};
+  const metrics = Object.fromEntries(
+    Object.entries(rawMetrics).filter(([, value]) => value != null),
+  ) as Partial<FinancialMetrics>;
+
+  return {
+    price: num(obj.price),
+    market_cap: num(obj.market_cap),
+    currency: str(obj.currency),
+    history,
+    metrics,
+  };
+}
+
+async function fetchYfinance(ticker: string): Promise<YfinancePayload> {
+  const scriptPath = path.join(ROOT, "scripts", "yfinance_fetch.py");
+  try {
+    const { stdout, stderr } = await execFileAsync(
+      PYTHON_BIN,
+      [scriptPath, "--ticker", ticker, "--years", "5"],
+      {
+        cwd: ROOT,
+        maxBuffer: 5 * 1024 * 1024,
+      },
+    );
+    if (!stdout || stdout.trim().length === 0) {
+      throw new Error(stderr?.trim() || "yfinance returned empty output.");
+    }
+    return normalizeYfinancePayload(JSON.parse(stdout));
+  } catch (err) {
+    const msg =
+      err instanceof Error ? err.message : "Unknown yfinance execution error";
+    throw new Error(`yfinance fetch failed for ${ticker}: ${msg}`);
+  }
+}
+
 async function fetchFmpQuote(ticker: string): Promise<FmpQuote> {
   const url = withFmpKey(`/quote?symbol=${encodeURIComponent(ticker)}`);
   const rows = await fetchJson<FmpQuote[] | { "Error Message"?: string }>(url);
@@ -267,9 +371,7 @@ async function fetchFmpHistory(
 
 async function refreshViaFmp(ticker: string): Promise<PriceEntry> {
   if (!FMP_API_KEY) {
-    throw new Error(
-      "FMP_API_KEY is not set. Provide FMP_API_KEY to use Financial Modeling Prep.",
-    );
+    throw new Error("FMP_API_KEY is not set.");
   }
 
   const profile = await fetchFmpProfile(ticker);
@@ -315,8 +417,102 @@ async function refreshViaFmp(ticker: string): Promise<PriceEntry> {
   };
 }
 
-async function refreshOne(ticker: string): Promise<PriceEntry> {
-  return refreshViaFmp(ticker);
+function buildEntryFromYfinance(
+  ticker: string,
+  yf: YfinancePayload,
+  prev?: PriceEntry,
+): PriceEntry {
+  const history =
+    yf.history.length > 0 ? yf.history : (prev?.history ?? []);
+  const price = yf.price ?? prev?.price ?? null;
+  return {
+    price,
+    market_cap: yf.market_cap ?? prev?.market_cap ?? null,
+    currency: yf.currency ?? prev?.currency ?? inferCurrency(ticker),
+    ytd_pct: calculateYtdPct(price, history),
+    history,
+    updated_at: new Date().toISOString().slice(0, 10),
+    metrics: fillMissingMetrics(prev?.metrics, yf.metrics),
+  };
+}
+
+function enrichFmpEntryWithYfinance(
+  ticker: string,
+  fmpEntry: PriceEntry,
+  yf: YfinancePayload,
+): RefreshResult {
+  let usedYf = false;
+  const entry: PriceEntry = {
+    ...fmpEntry,
+    metrics: { ...(fmpEntry.metrics ?? {}) },
+  };
+
+  if (entry.price == null && yf.price != null) {
+    entry.price = yf.price;
+    usedYf = true;
+  }
+  if (entry.market_cap == null && yf.market_cap != null) {
+    entry.market_cap = yf.market_cap;
+    usedYf = true;
+  }
+  if (entry.history.length === 0 && yf.history.length > 0) {
+    entry.history = yf.history;
+    usedYf = true;
+  }
+  if (
+    yf.currency &&
+    (entry.currency === inferCurrency(ticker) || !entry.currency)
+  ) {
+    entry.currency = yf.currency;
+    usedYf = true;
+  }
+  const beforeMetrics = Object.keys(entry.metrics ?? {}).length;
+  entry.metrics = fillMissingMetrics(entry.metrics, yf.metrics);
+  if (Object.keys(entry.metrics ?? {}).length > beforeMetrics) {
+    usedYf = true;
+  }
+  entry.ytd_pct = calculateYtdPct(entry.price, entry.history);
+
+  return { entry, source: usedYf ? "fmp+yfinance" : "fmp" };
+}
+
+async function refreshOne(ticker: string, prev?: PriceEntry): Promise<RefreshResult> {
+  let fmpEntry: PriceEntry | null = null;
+  let fmpErr: Error | null = null;
+  if (FMP_API_KEY) {
+    try {
+      fmpEntry = await refreshViaFmp(ticker);
+    } catch (err) {
+      fmpErr = err as Error;
+    }
+  } else {
+    fmpErr = new Error("FMP_API_KEY is not set.");
+  }
+
+  let yf: YfinancePayload | null = null;
+  if (
+    YFINANCE_ENABLED &&
+    (fmpEntry == null || shouldUseYfinanceEnrichment(fmpEntry))
+  ) {
+    try {
+      yf = await fetchYfinance(ticker);
+    } catch (err) {
+      if (fmpEntry == null) {
+        throw err;
+      }
+    }
+  }
+
+  if (fmpEntry && yf) {
+    return enrichFmpEntryWithYfinance(ticker, fmpEntry, yf);
+  }
+  if (fmpEntry) {
+    return { entry: fmpEntry, source: "fmp" };
+  }
+  if (yf) {
+    return { entry: buildEntryFromYfinance(ticker, yf, prev), source: "yfinance" };
+  }
+  throw fmpErr ?? new Error(`Failed to refresh ${ticker} from all providers.`);
 }
 
 async function refreshPerson(slug: string, tickerFilter?: string) {
@@ -326,7 +522,7 @@ async function refreshPerson(slug: string, tickerFilter?: string) {
 
   if (!fs.existsSync(picksPath)) {
     console.warn(`[refresh] ${slug}: no picks.json at ${picksPath}, skipping`);
-    return { ok: 0, fail: 0, fmp: 0 };
+    return { ok: 0, fail: 0, fmp: 0, mixed: 0, yfin: 0 };
   }
 
   const picks = PicksFileSchema.parse(
@@ -339,7 +535,7 @@ async function refreshPerson(slug: string, tickerFilter?: string) {
 
   if (targets.length === 0) {
     console.log(`[refresh] ${slug}: no tickers to process`);
-    return { ok: 0, fail: 0, fmp: 0 };
+    return { ok: 0, fail: 0, fmp: 0, mixed: 0, yfin: 0 };
   }
 
   let existing: Record<string, PriceEntry> = {};
@@ -357,13 +553,16 @@ async function refreshPerson(slug: string, tickerFilter?: string) {
   let ok = 0;
   let fail = 0;
   let fmp = 0;
+  let mixed = 0;
+  let yfin = 0;
 
   console.log(`\n[refresh] ${slug}: ${targets.length} ticker(s)`);
   for (const ticker of targets) {
     process.stdout.write(`  - ${ticker.padEnd(12)} `);
     try {
-      const entry = await refreshOne(ticker);
       const prev = out[ticker];
+      const { entry, source } = await refreshOne(ticker, prev);
+
       if (entry.history.length === 0 && prev?.history?.length) {
         entry.history = prev.history;
       }
@@ -375,16 +574,20 @@ async function refreshPerson(slug: string, tickerFilter?: string) {
       ) {
         entry.ytd_pct = prev.ytd_pct;
       }
+
       out[ticker] = entry;
       ok++;
-      fmp++;
+      if (source === "fmp") fmp++;
+      if (source === "fmp+yfinance") mixed++;
+      if (source === "yfinance") yfin++;
+
       const ytd = entry.ytd_pct >= 0 ? `+${entry.ytd_pct}%` : `${entry.ytd_pct}%`;
       const day =
         entry.metrics?.day_change_pct != null
           ? ` day=${entry.metrics.day_change_pct >= 0 ? "+" : ""}${entry.metrics.day_change_pct.toFixed(2)}%`
           : "";
       console.log(
-        `${entry.price ?? "—"} ${entry.currency}  ytd=${ytd}${day}  hist=${entry.history.length}d [fmp]`,
+        `${entry.price ?? "—"} ${entry.currency}  ytd=${ytd}${day}  hist=${entry.history.length}d [${source}]`,
       );
     } catch (err) {
       fail++;
@@ -396,9 +599,9 @@ async function refreshPerson(slug: string, tickerFilter?: string) {
   PricesFileSchema.parse(out);
   fs.writeFileSync(pricesPath, JSON.stringify(out, null, 2) + "\n");
   console.log(
-    `[refresh] ${slug}: ok=${ok} fail=${fail} fmp=${fmp}  ->  ${path.relative(ROOT, pricesPath)}`,
+    `[refresh] ${slug}: ok=${ok} fail=${fail} fmp=${fmp} fmp+yf=${mixed} yfinance=${yfin}  ->  ${path.relative(ROOT, pricesPath)}`,
   );
-  return { ok, fail, fmp };
+  return { ok, fail, fmp, mixed, yfin };
 }
 
 async function main() {
@@ -418,14 +621,23 @@ async function main() {
   let totalOk = 0;
   let totalFail = 0;
   let totalFmp = 0;
+  let totalMixed = 0;
+  let totalYf = 0;
   for (const person of targetPeople) {
-    const { ok, fail, fmp } = await refreshPerson(person.slug, args.ticker);
+    const { ok, fail, fmp, mixed, yfin } = await refreshPerson(
+      person.slug,
+      args.ticker,
+    );
     totalOk += ok;
     totalFail += fail;
     totalFmp += fmp;
+    totalMixed += mixed;
+    totalYf += yfin;
   }
 
-  console.log(`\n[refresh] DONE ok=${totalOk} fail=${totalFail} fmp=${totalFmp}`);
+  console.log(
+    `\n[refresh] DONE ok=${totalOk} fail=${totalFail} fmp=${totalFmp} fmp+yf=${totalMixed} yfinance=${totalYf}`,
+  );
 }
 
 main().catch((err) => {
