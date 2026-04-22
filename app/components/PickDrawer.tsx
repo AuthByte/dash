@@ -29,10 +29,12 @@ type TweetMarker = {
 export function PickDrawer({
   pick,
   theme,
+  personSlug,
   onClose,
 }: {
   pick: EnrichedPick | null;
   theme: Theme | null;
+  personSlug: string;
   onClose: () => void;
 }) {
   const [resolvedPick, setResolvedPick] = useState<EnrichedPick | null>(null);
@@ -63,7 +65,7 @@ export function PickDrawer({
     setIsLoadingHistory(true);
 
     void fetch(
-      `/api/person/${encodeURIComponent(pick.person_slug ?? "serenity")}/pick/${encodeURIComponent(pick.ticker)}`,
+      `/api/person/${encodeURIComponent(personSlug)}/pick/${encodeURIComponent(pick.ticker)}`,
       { cache: "no-store" },
     )
       .then(async (res) => {
@@ -82,7 +84,7 @@ export function PickDrawer({
     return () => {
       cancelled = true;
     };
-  }, [pick]);
+  }, [pick, personSlug]);
 
   if (!pick) return null;
   const activePick = resolvedPick ?? pick;
