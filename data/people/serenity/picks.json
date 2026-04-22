@@ -7,11 +7,28 @@
     "conviction": "medium",
     "thesis_short": "Electro-optic polymer modulators for next-gen optical transceivers.",
     "thesis_long": "Pure-play on electro-optic polymer technology that could replace lithium niobate in high-speed optical modulators. Long road to commercialization but the IP moat is real and the CPO ramp creates urgency for any drop-in modulator improvement.",
-    "first_mentioned_at": "2026-04-11",
-    "tweet_url": "https://x.com/aleabitoreddit/status/1",
-    "tweet_id": "1",
+    "first_mentioned_at": "2026-03-20",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
+    "tweet_id": "2034916899021365725",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2034916899021365725",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2043708829570072606",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043708829570072606",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2044830468299010144",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044830468299010144",
+        "tweeted_at": "2026-04-16"
+      }
+    ]
   },
   {
     "ticker": "POWL",
@@ -22,10 +39,17 @@
     "thesis_short": "US alt to GE Vernova — switchgear for data center and grid build-out.",
     "thesis_long": "Custom electrical equipment supplier benefiting from data center power demand and grid hardening capex. Backlog visibility is multi-year and the stock is still under-owned vs the obvious GEV/ETN names.",
     "first_mentioned_at": "2026-04-09",
-    "tweet_url": "https://x.com/aleabitoreddit/status/2",
-    "tweet_id": "2",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2042345236354265271",
+    "tweet_id": "2042345236354265271",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2042345236354265271",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042345236354265271",
+        "tweeted_at": "2026-04-09"
+      }
+    ]
   },
   {
     "ticker": "ALRIB.ST",
@@ -36,10 +60,77 @@
     "thesis_short": "Swedish specialty steel — grouped with photonics chokepoint theme.",
     "thesis_long": "Specialty stainless and alloy supplier into industrial and energy end markets. Tagged into the chokepoint framework as a sole-source supplier on several niche tubing applications.",
     "first_mentioned_at": "2026-04-08",
-    "tweet_url": "https://x.com/aleabitoreddit/status/3",
-    "tweet_id": "3",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2041929392331616431",
+    "tweet_id": "2041929392331616431",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2041929392331616431",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041929392331616431",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2042161215968051652",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042161215968051652",
+        "tweeted_at": "2026-04-09"
+      },
+      {
+        "tweet_id": "2042967133160902679",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042967133160902679",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043590018078531632",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043590018078531632",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043977582564229249",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043977582564229249",
+        "tweeted_at": "2026-04-14"
+      },
+      {
+        "tweet_id": "2044460526017941554",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044460526017941554",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044483730027503987",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044483730027503987",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044682729128874210",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044695311764099291",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044695311764099291",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044822095931306149",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044822095931306149",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2045160542256656611",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045160542256656611",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2046134751279591632",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046134751279591632",
+        "tweeted_at": "2026-04-20"
+      }
+    ]
   },
   {
     "ticker": "IQE.L",
@@ -49,11 +140,223 @@
     "conviction": "high",
     "thesis_short": "InP epitaxial wafer supplier — the substrate floor of the CPO laser stack.",
     "thesis_long": "World leader in indium phosphide and gallium arsenide epitaxial wafers. As CPO ramps, every external light source needs InP substrates and IQE is one of a small handful of qualified suppliers. Best performer in his book — claimed +837% YTD.",
-    "first_mentioned_at": "2025-09-12",
-    "tweet_url": "https://x.com/aleabitoreddit/status/4",
-    "tweet_id": "4",
+    "first_mentioned_at": "2026-02-25",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2026638711941902461",
+    "tweet_id": "2026638711941902461",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2026638711941902461",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026638711941902461",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026663975145164937",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026663975145164937",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026755002514157818",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026755002514157818",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026934223416734052",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026934223416734052",
+        "tweeted_at": "2026-02-26"
+      },
+      {
+        "tweet_id": "2027318568728273305",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027318568728273305",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027830093247300016",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027830093247300016",
+        "tweeted_at": "2026-02-28"
+      },
+      {
+        "tweet_id": "2028423645098610839",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028423645098610839",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028464631195574674",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028464631195574674",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028465538444427584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028465538444427584",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028470130628514077",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028470130628514077",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028511702288085093",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028511702288085093",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028754498710290457",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028754498710290457",
+        "tweeted_at": "2026-03-03"
+      },
+      {
+        "tweet_id": "2029189271572365661",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029189271572365661",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029659552141246661",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029659552141246661",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2031567544751108436",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031567544751108436",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2032679725873901593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032679725873901593",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2032943522891051319",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032943522891051319",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2034224630429630974",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034224630429630974",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034422243594530857",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034422243594530857",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034916899021365725",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2036329557444403424",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036329557444403424",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036342519727006000",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036342519727006000",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036792154463551658",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036792154463551658",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2037027934125346976",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037027934125346976",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037201137515061370",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037201137515061370",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037352339154280568",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037352339154280568",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2041791434525962584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041791434525962584",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2042549185095045231",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042549185095045231",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2043005647424491596",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043005647424491596",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043315043455176826",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043315043455176826",
+        "tweeted_at": "2026-04-12"
+      },
+      {
+        "tweet_id": "2043592728270061741",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043592728270061741",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043599807487652112",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043599807487652112",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043977582564229249",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043977582564229249",
+        "tweeted_at": "2026-04-14"
+      },
+      {
+        "tweet_id": "2044483730027503987",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044483730027503987",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044491122161160517",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044491122161160517",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044682729128874210",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044695311764099291",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044695311764099291",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2045723587966107858",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045723587966107858",
+        "tweeted_at": "2026-04-19"
+      },
+      {
+        "tweet_id": "2046134751279591632",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046134751279591632",
+        "tweeted_at": "2026-04-20"
+      }
+    ]
   },
   {
     "ticker": "AAOI",
@@ -63,11 +366,493 @@
     "conviction": "high",
     "thesis_short": "Optical transceiver supplier riding the data center upgrade cycle.",
     "thesis_long": "Vertically integrated transceiver maker with hyperscaler exposure. Margins were structurally bad for years; the AI capex cycle has flipped utilization and pricing power. Up ~5x in his book.",
-    "first_mentioned_at": "2025-08-20",
-    "tweet_url": "https://x.com/aleabitoreddit/status/5",
-    "tweet_id": "5",
+    "first_mentioned_at": "2026-02-27",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2027275242628948103",
+    "tweet_id": "2027275242628948103",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2027275242628948103",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027275242628948103",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027435474793730240",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027435474793730240",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027447224188473736",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027447224188473736",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027480850397573567",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027480850397573567",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027488567971443170",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027488567971443170",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027830093247300016",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027830093247300016",
+        "tweeted_at": "2026-02-28"
+      },
+      {
+        "tweet_id": "2027839956765515961",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027839956765515961",
+        "tweeted_at": "2026-02-28"
+      },
+      {
+        "tweet_id": "2028380960954413389",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028380960954413389",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028423645098610839",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028423645098610839",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028464631195574674",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028464631195574674",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028465538444427584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028465538444427584",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028470130628514077",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028470130628514077",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028511702288085093",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028511702288085093",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028520248891392461",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028520248891392461",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028754498710290457",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028754498710290457",
+        "tweeted_at": "2026-03-03"
+      },
+      {
+        "tweet_id": "2029160940604739625",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029160940604739625",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029189271572365661",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029189271572365661",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029208699471053061",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029208699471053061",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029219794025644382",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029219794025644382",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029337803369349293",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029337803369349293",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029492958550949893",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029492958550949893",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2029659552141246661",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029659552141246661",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2029950298492715170",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029950298492715170",
+        "tweeted_at": "2026-03-06"
+      },
+      {
+        "tweet_id": "2030973822514712627",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030973822514712627",
+        "tweeted_at": "2026-03-09"
+      },
+      {
+        "tweet_id": "2030982945264333141",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030982945264333141",
+        "tweeted_at": "2026-03-09"
+      },
+      {
+        "tweet_id": "2031014187401650192",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031014187401650192",
+        "tweeted_at": "2026-03-09"
+      },
+      {
+        "tweet_id": "2031206834879737894",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031206834879737894",
+        "tweeted_at": "2026-03-10"
+      },
+      {
+        "tweet_id": "2031410155297058844",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031410155297058844",
+        "tweeted_at": "2026-03-10"
+      },
+      {
+        "tweet_id": "2031567544751108436",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031567544751108436",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2032198562877227199",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032198562877227199",
+        "tweeted_at": "2026-03-12"
+      },
+      {
+        "tweet_id": "2032929794275553400",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032929794275553400",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2032973550056014182",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032973550056014182",
+        "tweeted_at": "2026-03-15"
+      },
+      {
+        "tweet_id": "2033885603423785170",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033885603423785170",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2034056688693875036",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034056688693875036",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2034095067586326982",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034095067586326982",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034186487672328657",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034186487672328657",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034422243594530857",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034422243594530857",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034634272733343835",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034634272733343835",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034916899021365725",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2036039743721628024",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036039743721628024",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036216008802029738",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036216008802029738",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036329557444403424",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036329557444403424",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036458844793217133",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036458844793217133",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036467416218108244",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036467416218108244",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036493814656106744",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036493814656106744",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036512077960061176",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036512077960061176",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036732940064080007",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036732940064080007",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2037201137515061370",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037201137515061370",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037352339154280568",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037352339154280568",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037698708612210693",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037698708612210693",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2037715698592719312",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037715698592719312",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2037915721435587028",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037915721435587028",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2038440978777034988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+        "tweeted_at": "2026-03-30"
+      },
+      {
+        "tweet_id": "2038454646902272155",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038454646902272155",
+        "tweeted_at": "2026-03-30"
+      },
+      {
+        "tweet_id": "2038617810738520159",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038617810738520159",
+        "tweeted_at": "2026-03-30"
+      },
+      {
+        "tweet_id": "2038971821635326368",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038971821635326368",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2039248989946794374",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039248989946794374",
+        "tweeted_at": "2026-04-01"
+      },
+      {
+        "tweet_id": "2039388766083944750",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039388766083944750",
+        "tweeted_at": "2026-04-01"
+      },
+      {
+        "tweet_id": "2039635527402664030",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039635527402664030",
+        "tweeted_at": "2026-04-02"
+      },
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02"
+      },
+      {
+        "tweet_id": "2039729176144711989",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039729176144711989",
+        "tweeted_at": "2026-04-02"
+      },
+      {
+        "tweet_id": "2039755414318039256",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039755414318039256",
+        "tweeted_at": "2026-04-02"
+      },
+      {
+        "tweet_id": "2039887575520026653",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039887575520026653",
+        "tweeted_at": "2026-04-03"
+      },
+      {
+        "tweet_id": "2040023134095471044",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040023134095471044",
+        "tweeted_at": "2026-04-03"
+      },
+      {
+        "tweet_id": "2041157377928700262",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041157377928700262",
+        "tweeted_at": "2026-04-06"
+      },
+      {
+        "tweet_id": "2041545598164443378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041545598164443378",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041654477812592756",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041654477812592756",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041706026068799877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041706026068799877",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041725026630820186",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041725026630820186",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041740090691698750",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041740090691698750",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041752476542759313",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041752476542759313",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041774512904294595",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041774512904294595",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041872946424377430",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041872946424377430",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041879203323297966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041879203323297966",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041916656944083188",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041916656944083188",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2042187668931616964",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042187668931616964",
+        "tweeted_at": "2026-04-09"
+      },
+      {
+        "tweet_id": "2042324781916438621",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042324781916438621",
+        "tweeted_at": "2026-04-09"
+      },
+      {
+        "tweet_id": "2042335200110322131",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042335200110322131",
+        "tweeted_at": "2026-04-09"
+      },
+      {
+        "tweet_id": "2042400195607216431",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042400195607216431",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042476441196241094",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042476441196241094",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042526193375940878",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042526193375940878",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042533797405823299",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042533797405823299",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042549185095045231",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042549185095045231",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042634402480689355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042634402480689355",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042663323427311858",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042663323427311858",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042856101939712444",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042856101939712444",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043096081060504057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043096081060504057",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043810610169978988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043810610169978988",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2044183312533770427",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044183312533770427",
+        "tweeted_at": "2026-04-14"
+      },
+      {
+        "tweet_id": "2044620997266186546",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044620997266186546",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2045182633647456355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045182633647456355",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2045965735386820934",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045965735386820934",
+        "tweeted_at": "2026-04-19"
+      },
+      {
+        "tweet_id": "2046290739727098166",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046290739727098166",
+        "tweeted_at": "2026-04-20"
+      }
+    ]
   },
   {
     "ticker": "AXTI",
@@ -77,11 +862,513 @@
     "conviction": "high",
     "thesis_short": "InP and GaAs substrate maker — direct CPO substrate beneficiary.",
     "thesis_long": "Compound semiconductor substrate supplier with InP capacity that maps directly to external light source demand. Has been left for dead for years; the photonics ramp finally gives it a real catalyst.",
-    "first_mentioned_at": "2025-10-04",
-    "tweet_url": "https://x.com/aleabitoreddit/status/6",
-    "tweet_id": "6",
+    "first_mentioned_at": "2026-02-07",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2019946788233617526",
+    "tweet_id": "2019946788233617526",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2019946788233617526",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2019946788233617526",
+        "tweeted_at": "2026-02-07"
+      },
+      {
+        "tweet_id": "2020917443565388085",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2020917443565388085",
+        "tweeted_at": "2026-02-09"
+      },
+      {
+        "tweet_id": "2020926882624176300",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2020926882624176300",
+        "tweeted_at": "2026-02-09"
+      },
+      {
+        "tweet_id": "2021028247476289890",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2021028247476289890",
+        "tweeted_at": "2026-02-10"
+      },
+      {
+        "tweet_id": "2021599607294484734",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2021599607294484734",
+        "tweeted_at": "2026-02-11"
+      },
+      {
+        "tweet_id": "2024322169376035019",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2024322169376035019",
+        "tweeted_at": "2026-02-19"
+      },
+      {
+        "tweet_id": "2024653987224702986",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2024653987224702986",
+        "tweeted_at": "2026-02-20"
+      },
+      {
+        "tweet_id": "2024858041078911142",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2024858041078911142",
+        "tweeted_at": "2026-02-20"
+      },
+      {
+        "tweet_id": "2025473355777016175",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2025473355777016175",
+        "tweeted_at": "2026-02-22"
+      },
+      {
+        "tweet_id": "2026308296743997714",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026308296743997714",
+        "tweeted_at": "2026-02-24"
+      },
+      {
+        "tweet_id": "2026500828606116348",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026500828606116348",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026638711941902461",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026638711941902461",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026663975145164937",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026663975145164937",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026670930966229323",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026670930966229323",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026755002514157818",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026755002514157818",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026934223416734052",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026934223416734052",
+        "tweeted_at": "2026-02-26"
+      },
+      {
+        "tweet_id": "2027106275881079067",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027106275881079067",
+        "tweeted_at": "2026-02-26"
+      },
+      {
+        "tweet_id": "2027275242628948103",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027275242628948103",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027318568728273305",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027318568728273305",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2028203665430057068",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028203665430057068",
+        "tweeted_at": "2026-03-01"
+      },
+      {
+        "tweet_id": "2028423645098610839",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028423645098610839",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028464631195574674",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028464631195574674",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028465538444427584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028465538444427584",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028470130628514077",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028470130628514077",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028511702288085093",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028511702288085093",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028520248891392461",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028520248891392461",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028581366510870627",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028581366510870627",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028810725398053326",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028810725398053326",
+        "tweeted_at": "2026-03-03"
+      },
+      {
+        "tweet_id": "2029189271572365661",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029189271572365661",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029492958550949893",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029492958550949893",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2029632678350426448",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029632678350426448",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2029659552141246661",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029659552141246661",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2029700836755132507",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029700836755132507",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2030303709675360520",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030303709675360520",
+        "tweeted_at": "2026-03-07"
+      },
+      {
+        "tweet_id": "2031014187401650192",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031014187401650192",
+        "tweeted_at": "2026-03-09"
+      },
+      {
+        "tweet_id": "2031206834879737894",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031206834879737894",
+        "tweeted_at": "2026-03-10"
+      },
+      {
+        "tweet_id": "2031410155297058844",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031410155297058844",
+        "tweeted_at": "2026-03-10"
+      },
+      {
+        "tweet_id": "2031415909336887682",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031415909336887682",
+        "tweeted_at": "2026-03-10"
+      },
+      {
+        "tweet_id": "2031567544751108436",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031567544751108436",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2032045719167934775",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032045719167934775",
+        "tweeted_at": "2026-03-12"
+      },
+      {
+        "tweet_id": "2032239138980905334",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032239138980905334",
+        "tweeted_at": "2026-03-12"
+      },
+      {
+        "tweet_id": "2032476428005220449",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032476428005220449",
+        "tweeted_at": "2026-03-13"
+      },
+      {
+        "tweet_id": "2032679725873901593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032679725873901593",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2032929794275553400",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032929794275553400",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2033002597955903862",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033002597955903862",
+        "tweeted_at": "2026-03-15"
+      },
+      {
+        "tweet_id": "2033501241758949863",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033501241758949863",
+        "tweeted_at": "2026-03-16"
+      },
+      {
+        "tweet_id": "2033792436892570083",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033792436892570083",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2034224630429630974",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034224630429630974",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034422243594530857",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034422243594530857",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034743349337628803",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034743349337628803",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034752613246542215",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034752613246542215",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034916899021365725",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2034932278032564264",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034932278032564264",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2035739495031792031",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2035739495031792031",
+        "tweeted_at": "2026-03-22"
+      },
+      {
+        "tweet_id": "2036016177940680819",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036016177940680819",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036085968319680677",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036085968319680677",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036089423990042630",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036089423990042630",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036108082531664159",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036108082531664159",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036458844793217133",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036458844793217133",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036467416218108244",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036467416218108244",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036638807496499687",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036638807496499687",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036674779399545279",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036674779399545279",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036732940064080007",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036732940064080007",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036792154463551658",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036792154463551658",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036801199073382422",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036801199073382422",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2037027934125346976",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037027934125346976",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037201137515061370",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037201137515061370",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037352339154280568",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037352339154280568",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037493017209450673",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037493017209450673",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037503648520179834",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037503648520179834",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037698708612210693",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037698708612210693",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2037715698592719312",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037715698592719312",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2038440978777034988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+        "tweeted_at": "2026-03-30"
+      },
+      {
+        "tweet_id": "2038876668765610085",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038876668765610085",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038934006734135572",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038934006734135572",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038943956697059637",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038943956697059637",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2039375950509748678",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039375950509748678",
+        "tweeted_at": "2026-04-01"
+      },
+      {
+        "tweet_id": "2039685700044628243",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039685700044628243",
+        "tweeted_at": "2026-04-02"
+      },
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02"
+      },
+      {
+        "tweet_id": "2039906072291611057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039906072291611057",
+        "tweeted_at": "2026-04-03"
+      },
+      {
+        "tweet_id": "2040114262358839644",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040114262358839644",
+        "tweeted_at": "2026-04-03"
+      },
+      {
+        "tweet_id": "2041249789195813291",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041249789195813291",
+        "tweeted_at": "2026-04-06"
+      },
+      {
+        "tweet_id": "2041598580608389233",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041598580608389233",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041694240766619966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041694240766619966",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041706026068799877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041706026068799877",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041725026630820186",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041725026630820186",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2042526193375940878",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042526193375940878",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042549185095045231",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042549185095045231",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042950601550762021",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042950601550762021",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043005647424491596",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043005647424491596",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043592728270061741",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043592728270061741",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043906518026989817",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043906518026989817",
+        "tweeted_at": "2026-04-14"
+      },
+      {
+        "tweet_id": "2044682729128874210",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044796702218215832",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044796702218215832",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2045160542256656611",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045160542256656611",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2045182633647456355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045182633647456355",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2045723587966107858",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045723587966107858",
+        "tweeted_at": "2026-04-19"
+      }
+    ]
   },
   {
     "ticker": "LITE",
@@ -91,11 +1378,618 @@
     "conviction": "high",
     "thesis_short": "Optical components incumbent levered to CPO transceiver upgrade.",
     "thesis_long": "Larger, established photonics supplier — diversified across telecom, datacom and 3D sensing. The datacom segment is the AI play; CPO and 1.6T transceivers are pulling forward demand.",
-    "first_mentioned_at": "2025-07-18",
-    "tweet_url": "https://x.com/aleabitoreddit/status/7",
-    "tweet_id": "7",
+    "first_mentioned_at": "2026-02-04",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2019181182026686661",
+    "tweet_id": "2019181182026686661",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2019181182026686661",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2019181182026686661",
+        "tweeted_at": "2026-02-04"
+      },
+      {
+        "tweet_id": "2019203090931675298",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2019203090931675298",
+        "tweeted_at": "2026-02-05"
+      },
+      {
+        "tweet_id": "2019216672004141282",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2019216672004141282",
+        "tweeted_at": "2026-02-05"
+      },
+      {
+        "tweet_id": "2020088575203721520",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2020088575203721520",
+        "tweeted_at": "2026-02-07"
+      },
+      {
+        "tweet_id": "2020131529389928947",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2020131529389928947",
+        "tweeted_at": "2026-02-07"
+      },
+      {
+        "tweet_id": "2021420335699198329",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2021420335699198329",
+        "tweeted_at": "2026-02-11"
+      },
+      {
+        "tweet_id": "2021783355076026581",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2021783355076026581",
+        "tweeted_at": "2026-02-12"
+      },
+      {
+        "tweet_id": "2026341976942195152",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026341976942195152",
+        "tweeted_at": "2026-02-24"
+      },
+      {
+        "tweet_id": "2026565774857613477",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026565774857613477",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026663975145164937",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026663975145164937",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026670930966229323",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026670930966229323",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2026934223416734052",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026934223416734052",
+        "tweeted_at": "2026-02-26"
+      },
+      {
+        "tweet_id": "2027275242628948103",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027275242628948103",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027318568728273305",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027318568728273305",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027435474793730240",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027435474793730240",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027447224188473736",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027447224188473736",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027480850397573567",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027480850397573567",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027488567971443170",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027488567971443170",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027839956765515961",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027839956765515961",
+        "tweeted_at": "2026-02-28"
+      },
+      {
+        "tweet_id": "2028380960954413389",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028380960954413389",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028423645098610839",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028423645098610839",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028464631195574674",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028464631195574674",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028465538444427584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028465538444427584",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028470130628514077",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028470130628514077",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028511702288085093",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028511702288085093",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028581366510870627",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028581366510870627",
+        "tweeted_at": "2026-03-02"
+      },
+      {
+        "tweet_id": "2028754498710290457",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028754498710290457",
+        "tweeted_at": "2026-03-03"
+      },
+      {
+        "tweet_id": "2029160940604739625",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029160940604739625",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029189271572365661",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029189271572365661",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029219794025644382",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029219794025644382",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029337803369349293",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029337803369349293",
+        "tweeted_at": "2026-03-04"
+      },
+      {
+        "tweet_id": "2029659552141246661",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029659552141246661",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2029698209199837354",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029698209199837354",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2029950298492715170",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029950298492715170",
+        "tweeted_at": "2026-03-06"
+      },
+      {
+        "tweet_id": "2030020673570275618",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030020673570275618",
+        "tweeted_at": "2026-03-06"
+      },
+      {
+        "tweet_id": "2030024185490329799",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030024185490329799",
+        "tweeted_at": "2026-03-06"
+      },
+      {
+        "tweet_id": "2030056728650469846",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030056728650469846",
+        "tweeted_at": "2026-03-06"
+      },
+      {
+        "tweet_id": "2030303709675360520",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030303709675360520",
+        "tweeted_at": "2026-03-07"
+      },
+      {
+        "tweet_id": "2030390988808785948",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030390988808785948",
+        "tweeted_at": "2026-03-07"
+      },
+      {
+        "tweet_id": "2030418917592903895",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030418917592903895",
+        "tweeted_at": "2026-03-07"
+      },
+      {
+        "tweet_id": "2030855466696495396",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030855466696495396",
+        "tweeted_at": "2026-03-09"
+      },
+      {
+        "tweet_id": "2031014187401650192",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031014187401650192",
+        "tweeted_at": "2026-03-09"
+      },
+      {
+        "tweet_id": "2031410155297058844",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031410155297058844",
+        "tweeted_at": "2026-03-10"
+      },
+      {
+        "tweet_id": "2031567544751108436",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031567544751108436",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2032045719167934775",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032045719167934775",
+        "tweeted_at": "2026-03-12"
+      },
+      {
+        "tweet_id": "2032273412413145111",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032273412413145111",
+        "tweeted_at": "2026-03-13"
+      },
+      {
+        "tweet_id": "2032929794275553400",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032929794275553400",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2033466880661606646",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033466880661606646",
+        "tweeted_at": "2026-03-16"
+      },
+      {
+        "tweet_id": "2033535833085718996",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033535833085718996",
+        "tweeted_at": "2026-03-16"
+      },
+      {
+        "tweet_id": "2033695716938551350",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033695716938551350",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2033720895731339435",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033720895731339435",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2033820269358571800",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033820269358571800",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2033848250101616646",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033848250101616646",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2033885603423785170",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033885603423785170",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2034056688693875036",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034056688693875036",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2034087274800091401",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034087274800091401",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034127800840688097",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034127800840688097",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034224630429630974",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034224630429630974",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034237409093878030",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034237409093878030",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034331784763343333",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034331784763343333",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034422243594530857",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034422243594530857",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034524869086552292",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034524869086552292",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034531113574736053",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034531113574736053",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034584155036828052",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034584155036828052",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034634272733343835",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034634272733343835",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034916899021365725",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2034932278032564264",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034932278032564264",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2035691328382849280",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2035691328382849280",
+        "tweeted_at": "2026-03-22"
+      },
+      {
+        "tweet_id": "2036085968319680677",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036085968319680677",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036108082531664159",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036108082531664159",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036329557444403424",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036329557444403424",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036657811179155561",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036657811179155561",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036674779399545279",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036674779399545279",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036732940064080007",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036732940064080007",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036801199073382422",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036801199073382422",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036840136730935736",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036840136730935736",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2037027934125346976",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037027934125346976",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037085574813942094",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037085574813942094",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037091584563691858",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037091584563691858",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037201137515061370",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037201137515061370",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037352339154280568",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037352339154280568",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037442444367974907",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037442444367974907",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037715698592719312",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037715698592719312",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2037915721435587028",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037915721435587028",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2038092601224831103",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038092601224831103",
+        "tweeted_at": "2026-03-29"
+      },
+      {
+        "tweet_id": "2038436546412769560",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038436546412769560",
+        "tweeted_at": "2026-03-30"
+      },
+      {
+        "tweet_id": "2038440978777034988",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038440978777034988",
+        "tweeted_at": "2026-03-30"
+      },
+      {
+        "tweet_id": "2038454646902272155",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038454646902272155",
+        "tweeted_at": "2026-03-30"
+      },
+      {
+        "tweet_id": "2038777289115345200",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038777289115345200",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038876668765610085",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038876668765610085",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038934006734135572",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038934006734135572",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038943956697059637",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038943956697059637",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2039011647264903382",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039011647264903382",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2040114262358839644",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040114262358839644",
+        "tweeted_at": "2026-04-03"
+      },
+      {
+        "tweet_id": "2041363738327204264",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041363738327204264",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041519692985344500",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041519692985344500",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041545598164443378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041545598164443378",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041650903305089389",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041650903305089389",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041694240766619966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041694240766619966",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041701156771262789",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041701156771262789",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041740090691698750",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041740090691698750",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041752476542759313",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041752476542759313",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041916656944083188",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041916656944083188",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2042476441196241094",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042476441196241094",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042507141618004372",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042507141618004372",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042533797405823299",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042533797405823299",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042634402480689355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042634402480689355",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042797823574634991",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042797823574634991",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2042856101939712444",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042856101939712444",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043005647424491596",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043005647424491596",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043315043455176826",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043315043455176826",
+        "tweeted_at": "2026-04-12"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2044183312533770427",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044183312533770427",
+        "tweeted_at": "2026-04-14"
+      },
+      {
+        "tweet_id": "2044312072780165440",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044312072780165440",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044331395561206116",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044331395561206116",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044620997266186546",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044620997266186546",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044675765267214753",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044675765267214753",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2046302180001673341",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046302180001673341",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046696582696083634",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046696582696083634",
+        "tweeted_at": "2026-04-21"
+      }
+    ]
   },
   {
     "ticker": "AEHR",
@@ -105,11 +1999,168 @@
     "conviction": "medium",
     "thesis_short": "Wafer-level burn-in test — critical for SiC and now silicon photonics.",
     "thesis_long": "Specialty test equipment for silicon carbide and silicon photonics yield qualification. Lumpy quarter-to-quarter, but the photonics test opportunity is real.",
-    "first_mentioned_at": "2025-11-02",
-    "tweet_url": "https://x.com/aleabitoreddit/status/8",
-    "tweet_id": "8",
+    "first_mentioned_at": "2026-02-11",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2021599607294484734",
+    "tweet_id": "2021599607294484734",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2021599607294484734",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2021599607294484734",
+        "tweeted_at": "2026-02-11"
+      },
+      {
+        "tweet_id": "2027080026051731630",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027080026051731630",
+        "tweeted_at": "2026-02-26"
+      },
+      {
+        "tweet_id": "2028893030330318868",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028893030330318868",
+        "tweeted_at": "2026-03-03"
+      },
+      {
+        "tweet_id": "2032929794275553400",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032929794275553400",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2034916899021365725",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2038971821635326368",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038971821635326368",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2039248989946794374",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039248989946794374",
+        "tweeted_at": "2026-04-01"
+      },
+      {
+        "tweet_id": "2039388766083944750",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039388766083944750",
+        "tweeted_at": "2026-04-01"
+      },
+      {
+        "tweet_id": "2039755414318039256",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039755414318039256",
+        "tweeted_at": "2026-04-02"
+      },
+      {
+        "tweet_id": "2039906072291611057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039906072291611057",
+        "tweeted_at": "2026-04-03"
+      },
+      {
+        "tweet_id": "2040023134095471044",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040023134095471044",
+        "tweeted_at": "2026-04-03"
+      },
+      {
+        "tweet_id": "2040842953883840770",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040842953883840770",
+        "tweeted_at": "2026-04-05"
+      },
+      {
+        "tweet_id": "2041038963859931593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041038963859931593",
+        "tweeted_at": "2026-04-06"
+      },
+      {
+        "tweet_id": "2041157377928700262",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041157377928700262",
+        "tweeted_at": "2026-04-06"
+      },
+      {
+        "tweet_id": "2041612047058924009",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041612047058924009",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041706026068799877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041706026068799877",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041725026630820186",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041725026630820186",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041872946424377430",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041872946424377430",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041879203323297966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041879203323297966",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2042187668931616964",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042187668931616964",
+        "tweeted_at": "2026-04-09"
+      },
+      {
+        "tweet_id": "2042324781916438621",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042324781916438621",
+        "tweeted_at": "2026-04-09"
+      },
+      {
+        "tweet_id": "2042400195607216431",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042400195607216431",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2043096081060504057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043096081060504057",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2044094868079906990",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044094868079906990",
+        "tweeted_at": "2026-04-14"
+      },
+      {
+        "tweet_id": "2044794468193476955",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044794468193476955",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2045182633647456355",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045182633647456355",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2045965735386820934",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045965735386820934",
+        "tweeted_at": "2026-04-19"
+      },
+      {
+        "tweet_id": "2046290739727098166",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046290739727098166",
+        "tweeted_at": "2026-04-20"
+      }
+    ]
   },
   {
     "ticker": "SIVE.ST",
@@ -119,11 +2170,508 @@
     "conviction": "high",
     "thesis_short": "Swedish photonics IDM — ICs for optical networks and 5G mmWave.",
     "thesis_long": "Stockholm-listed photonics specialist with a wafer fab in the UK. Optical product line is a direct CPO play. Tagged at +385% YTD in his framework.",
-    "first_mentioned_at": "2025-09-30",
-    "tweet_url": "https://x.com/aleabitoreddit/status/9",
-    "tweet_id": "9",
+    "first_mentioned_at": "2026-03-16",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2033466880661606646",
+    "tweet_id": "2033466880661606646",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2033466880661606646",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033466880661606646",
+        "tweeted_at": "2026-03-16"
+      },
+      {
+        "tweet_id": "2033535833085718996",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033535833085718996",
+        "tweeted_at": "2026-03-16"
+      },
+      {
+        "tweet_id": "2033695716938551350",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033695716938551350",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2033720895731339435",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033720895731339435",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2033820269358571800",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033820269358571800",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2033885603423785170",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033885603423785170",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2034056688693875036",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034056688693875036",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2034087274800091401",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034087274800091401",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034127800840688097",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034127800840688097",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034186487672328657",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034186487672328657",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034331784763343333",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034331784763343333",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034524869086552292",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034524869086552292",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034531113574736053",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034531113574736053",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034543082071597422",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034543082071597422",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034584155036828052",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034584155036828052",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034634272733343835",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034634272733343835",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034916899021365725",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2034993411821117462",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034993411821117462",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2035691328382849280",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2035691328382849280",
+        "tweeted_at": "2026-03-22"
+      },
+      {
+        "tweet_id": "2035714961650131378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2035714961650131378",
+        "tweeted_at": "2026-03-22"
+      },
+      {
+        "tweet_id": "2036016177940680819",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036016177940680819",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036085968319680677",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036085968319680677",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036108082531664159",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036108082531664159",
+        "tweeted_at": "2026-03-23"
+      },
+      {
+        "tweet_id": "2036264013370368378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036264013370368378",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036289688227684729",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036289688227684729",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036329557444403424",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036329557444403424",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036342519727006000",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036342519727006000",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036375883037155802",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036375883037155802",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036458844793217133",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036458844793217133",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036467416218108244",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036467416218108244",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036657811179155561",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036657811179155561",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036674779399545279",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036674779399545279",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036732940064080007",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036732940064080007",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036801199073382422",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036801199073382422",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2036827701785587796",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036827701785587796",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2037027934125346976",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037027934125346976",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037078978696028364",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037078978696028364",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037085574813942094",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037085574813942094",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037201137515061370",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037201137515061370",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037352339154280568",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037352339154280568",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037442444367974907",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037442444367974907",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037493017209450673",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037493017209450673",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037503648520179834",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037503648520179834",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037735842316419375",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037735842316419375",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2038092601224831103",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038092601224831103",
+        "tweeted_at": "2026-03-29"
+      },
+      {
+        "tweet_id": "2038221422808760744",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038221422808760744",
+        "tweeted_at": "2026-03-29"
+      },
+      {
+        "tweet_id": "2038502143154331677",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038502143154331677",
+        "tweeted_at": "2026-03-30"
+      },
+      {
+        "tweet_id": "2038543801174896719",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038543801174896719",
+        "tweeted_at": "2026-03-30"
+      },
+      {
+        "tweet_id": "2038934006734135572",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038934006734135572",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038943956697059637",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038943956697059637",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038954532944875733",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038954532944875733",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038959008514801969",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038959008514801969",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2039248989946794374",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039248989946794374",
+        "tweeted_at": "2026-04-01"
+      },
+      {
+        "tweet_id": "2039259000336949457",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039259000336949457",
+        "tweeted_at": "2026-04-01"
+      },
+      {
+        "tweet_id": "2039709630217994270",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039709630217994270",
+        "tweeted_at": "2026-04-02"
+      },
+      {
+        "tweet_id": "2039906072291611057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039906072291611057",
+        "tweeted_at": "2026-04-03"
+      },
+      {
+        "tweet_id": "2040023134095471044",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040023134095471044",
+        "tweeted_at": "2026-04-03"
+      },
+      {
+        "tweet_id": "2041038963859931593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041038963859931593",
+        "tweeted_at": "2026-04-06"
+      },
+      {
+        "tweet_id": "2041363738327204264",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041363738327204264",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041545598164443378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041545598164443378",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041598580608389233",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041598580608389233",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041694240766619966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041694240766619966",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041701156771262789",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041701156771262789",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041706026068799877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041706026068799877",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041725026630820186",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041725026630820186",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041774512904294595",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041774512904294595",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2041791434525962584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041791434525962584",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2042187668931616964",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042187668931616964",
+        "tweeted_at": "2026-04-09"
+      },
+      {
+        "tweet_id": "2042507141618004372",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042507141618004372",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042549185095045231",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042549185095045231",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042819960301588910",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042819960301588910",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043096081060504057",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043096081060504057",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043602257292534014",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043602257292534014",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043708829570072606",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043708829570072606",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2044077799338881108",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044077799338881108",
+        "tweeted_at": "2026-04-14"
+      },
+      {
+        "tweet_id": "2044287196300226960",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044287196300226960",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044312072780165440",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044312072780165440",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044331395561206116",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044331395561206116",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044483730027503987",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044483730027503987",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044553960431014359",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044553960431014359",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044597208860016877",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044597208860016877",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044675765267214753",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044675765267214753",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044682729128874210",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2045682728432185713",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045682728432185713",
+        "tweeted_at": "2026-04-19"
+      },
+      {
+        "tweet_id": "2045723587966107858",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045723587966107858",
+        "tweeted_at": "2026-04-19"
+      },
+      {
+        "tweet_id": "2045932788218794257",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045932788218794257",
+        "tweeted_at": "2026-04-19"
+      },
+      {
+        "tweet_id": "2046003874553901188",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046003874553901188",
+        "tweeted_at": "2026-04-19"
+      },
+      {
+        "tweet_id": "2046043070538633618",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046043070538633618",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046125620728566235",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046125620728566235",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046134751279591632",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046134751279591632",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046187732800782587",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046187732800782587",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046302180001673341",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046302180001673341",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046333897202692142",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046333897202692142",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046363533471035793",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046363533471035793",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046494023297429645",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046494023297429645",
+        "tweeted_at": "2026-04-21"
+      },
+      {
+        "tweet_id": "2046507698037170575",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046507698037170575",
+        "tweeted_at": "2026-04-21"
+      },
+      {
+        "tweet_id": "2046696582696083634",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046696582696083634",
+        "tweeted_at": "2026-04-21"
+      }
+    ]
   },
   {
     "ticker": "SOI",
@@ -133,11 +2681,233 @@
     "conviction": "high",
     "thesis_short": "SOI wafer leader with photonics SOI exposure.",
     "thesis_long": "Engineered substrate maker — photonics SOI is the premium product line that sells into silicon photonics foundries. Tagged at +208% YTD.",
-    "first_mentioned_at": "2025-08-12",
-    "tweet_url": "https://x.com/aleabitoreddit/status/10",
-    "tweet_id": "10",
+    "first_mentioned_at": "2026-03-01",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2028203665430057068",
+    "tweet_id": "2028203665430057068",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2028203665430057068",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028203665430057068",
+        "tweeted_at": "2026-03-01"
+      },
+      {
+        "tweet_id": "2028810725398053326",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028810725398053326",
+        "tweeted_at": "2026-03-03"
+      },
+      {
+        "tweet_id": "2031648475310616604",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031648475310616604",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2031751619117744443",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031751619117744443",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2031782754405544335",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031782754405544335",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2031802127421751329",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031802127421751329",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2031820871170736570",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031820871170736570",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2031896692283621696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031896692283621696",
+        "tweeted_at": "2026-03-12"
+      },
+      {
+        "tweet_id": "2032178441064534389",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032178441064534389",
+        "tweeted_at": "2026-03-12"
+      },
+      {
+        "tweet_id": "2032474260179149056",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032474260179149056",
+        "tweeted_at": "2026-03-13"
+      },
+      {
+        "tweet_id": "2032577275439485080",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032577275439485080",
+        "tweeted_at": "2026-03-13"
+      },
+      {
+        "tweet_id": "2032679725873901593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032679725873901593",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2032697006586786139",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032697006586786139",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2032929794275553400",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032929794275553400",
+        "tweeted_at": "2026-03-14"
+      },
+      {
+        "tweet_id": "2032973550056014182",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032973550056014182",
+        "tweeted_at": "2026-03-15"
+      },
+      {
+        "tweet_id": "2033512244244529396",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033512244244529396",
+        "tweeted_at": "2026-03-16"
+      },
+      {
+        "tweet_id": "2033643128390095328",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033643128390095328",
+        "tweeted_at": "2026-03-16"
+      },
+      {
+        "tweet_id": "2034056688693875036",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034056688693875036",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2034212267487793348",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034212267487793348",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034740497953243439",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034740497953243439",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2034916899021365725",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034916899021365725",
+        "tweeted_at": "2026-03-20"
+      },
+      {
+        "tweet_id": "2036329557444403424",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036329557444403424",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036424304703758840",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036424304703758840",
+        "tweeted_at": "2026-03-24"
+      },
+      {
+        "tweet_id": "2036794525000274273",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036794525000274273",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2037201137515061370",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037201137515061370",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037352339154280568",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037352339154280568",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2041038963859931593",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041038963859931593",
+        "tweeted_at": "2026-04-06"
+      },
+      {
+        "tweet_id": "2041062144884797685",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041062144884797685",
+        "tweeted_at": "2026-04-06"
+      },
+      {
+        "tweet_id": "2041791434525962584",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041791434525962584",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2042526193375940878",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042526193375940878",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2044077799338881108",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044077799338881108",
+        "tweeted_at": "2026-04-14"
+      },
+      {
+        "tweet_id": "2044483730027503987",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044483730027503987",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044682729128874210",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044682729128874210",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044822095931306149",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044822095931306149",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2045160542256656611",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045160542256656611",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2045175383210000444",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045175383210000444",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2046134751279591632",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046134751279591632",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046313830784065617",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046313830784065617",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046333897202692142",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046333897202692142",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046408704573292659",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046408704573292659",
+        "tweeted_at": "2026-04-21"
+      },
+      {
+        "tweet_id": "2046507698037170575",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046507698037170575",
+        "tweeted_at": "2026-04-21"
+      },
+      {
+        "tweet_id": "2046620208387981538",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046620208387981538",
+        "tweeted_at": "2026-04-21"
+      }
+    ]
   },
   {
     "ticker": "CRCL",
@@ -147,11 +2917,108 @@
     "conviction": "medium",
     "thesis_short": "USDC issuer — interest-rate income on stablecoin reserves.",
     "thesis_long": "Pure-play on stablecoin adoption. Earnings are basically T-bill yield on reserves, so it screens as a fintech but acts like a leveraged short-rates trade. 2x+ in his book.",
-    "first_mentioned_at": "2025-12-01",
-    "tweet_url": "https://x.com/aleabitoreddit/status/11",
-    "tweet_id": "11",
+    "first_mentioned_at": "2026-02-03",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2018724759262085467",
+    "tweet_id": "2018724759262085467",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2018724759262085467",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2018724759262085467",
+        "tweeted_at": "2026-02-03"
+      },
+      {
+        "tweet_id": "2019846302591512896",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2019846302591512896",
+        "tweeted_at": "2026-02-06"
+      },
+      {
+        "tweet_id": "2020258804953411966",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2020258804953411966",
+        "tweeted_at": "2026-02-07"
+      },
+      {
+        "tweet_id": "2026683292679024811",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026683292679024811",
+        "tweeted_at": "2026-02-25"
+      },
+      {
+        "tweet_id": "2027068051749998875",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027068051749998875",
+        "tweeted_at": "2026-02-26"
+      },
+      {
+        "tweet_id": "2028109409948508531",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028109409948508531",
+        "tweeted_at": "2026-03-01"
+      },
+      {
+        "tweet_id": "2028912096713511401",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2028912096713511401",
+        "tweeted_at": "2026-03-03"
+      },
+      {
+        "tweet_id": "2029675551980679177",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029675551980679177",
+        "tweeted_at": "2026-03-05"
+      },
+      {
+        "tweet_id": "2031079292474650686",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031079292474650686",
+        "tweeted_at": "2026-03-09"
+      },
+      {
+        "tweet_id": "2034166166676230238",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034166166676230238",
+        "tweeted_at": "2026-03-18"
+      },
+      {
+        "tweet_id": "2034559475533910175",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034559475533910175",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2035552610078572849",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2035552610078572849",
+        "tweeted_at": "2026-03-22"
+      },
+      {
+        "tweet_id": "2037463630455902465",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037463630455902465",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037735842316419375",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037735842316419375",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2040469708739375399",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040469708739375399",
+        "tweeted_at": "2026-04-04"
+      },
+      {
+        "tweet_id": "2041106775311884517",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041106775311884517",
+        "tweeted_at": "2026-04-06"
+      },
+      {
+        "tweet_id": "2042701873833218352",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042701873833218352",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2043499958134022631",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043499958134022631",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      }
+    ]
   },
   {
     "ticker": "RPI",
@@ -161,11 +3028,133 @@
     "conviction": "medium",
     "thesis_short": "UK-listed compute platform — industrial and education flywheel.",
     "thesis_long": "Single-board computer maker with embedded enterprise pull. Tagged +107% YTD; the institutional float story is still early.",
-    "first_mentioned_at": "2025-10-22",
-    "tweet_url": "https://x.com/aleabitoreddit/status/12",
-    "tweet_id": "12",
+    "first_mentioned_at": "2026-02-16",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2023415224372756782",
+    "tweet_id": "2023415224372756782",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2023415224372756782",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2023415224372756782",
+        "tweeted_at": "2026-02-16"
+      },
+      {
+        "tweet_id": "2023686478816309647",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2023686478816309647",
+        "tweeted_at": "2026-02-17"
+      },
+      {
+        "tweet_id": "2023733917866750273",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2023733917866750273",
+        "tweeted_at": "2026-02-17"
+      },
+      {
+        "tweet_id": "2023904689637699910",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2023904689637699910",
+        "tweeted_at": "2026-02-17"
+      },
+      {
+        "tweet_id": "2023921191652933900",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2023921191652933900",
+        "tweeted_at": "2026-02-18"
+      },
+      {
+        "tweet_id": "2024043155566522855",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2024043155566522855",
+        "tweeted_at": "2026-02-18"
+      },
+      {
+        "tweet_id": "2024108923658084577",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2024108923658084577",
+        "tweeted_at": "2026-02-18"
+      },
+      {
+        "tweet_id": "2024197302278377541",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2024197302278377541",
+        "tweeted_at": "2026-02-18"
+      },
+      {
+        "tweet_id": "2024408036203516182",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2024408036203516182",
+        "tweeted_at": "2026-02-19"
+      },
+      {
+        "tweet_id": "2025274299746251190",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2025274299746251190",
+        "tweeted_at": "2026-02-21"
+      },
+      {
+        "tweet_id": "2026191160411382010",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2026191160411382010",
+        "tweeted_at": "2026-02-24"
+      },
+      {
+        "tweet_id": "2033914965988684154",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033914965988684154",
+        "tweeted_at": "2026-03-17"
+      },
+      {
+        "tweet_id": "2034517997700915712",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2034517997700915712",
+        "tweeted_at": "2026-03-19"
+      },
+      {
+        "tweet_id": "2038913900582998087",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038913900582998087",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038919845623017874",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038919845623017874",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038965788724560093",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038965788724560093",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2038998103177728246",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038998103177728246",
+        "tweeted_at": "2026-03-31"
+      },
+      {
+        "tweet_id": "2044183312533770427",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044183312533770427",
+        "tweeted_at": "2026-04-14"
+      },
+      {
+        "tweet_id": "2044483730027503987",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044483730027503987",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044822095931306149",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044822095931306149",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2045160542256656611",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045160542256656611",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2046333897202692142",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046333897202692142",
+        "tweeted_at": "2026-04-20"
+      },
+      {
+        "tweet_id": "2046507698037170575",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046507698037170575",
+        "tweeted_at": "2026-04-21"
+      }
+    ]
   },
   {
     "ticker": "RDDT",
@@ -175,10 +3164,267 @@
     "conviction": "medium",
     "thesis_short": "Worst performer in book — engagement deceleration vs sky-high multiple.",
     "thesis_long": "Tagged as the worst performer in the tracker at -32% YTD. Concerns around DAU growth, ad load saturation, and the Google search-traffic dependency.",
-    "first_mentioned_at": "2026-01-15",
-    "tweet_url": "https://x.com/aleabitoreddit/status/13",
-    "tweet_id": "13",
+    "first_mentioned_at": "2026-02-05",
+    "tweet_url": "https://x.com/aleabitoreddit/status/2019248496797532285",
+    "tweet_id": "2019248496797532285",
     "exited_at": null,
-    "exit_price": null
+    "exit_price": null,
+    "tweet_events": [
+      {
+        "tweet_id": "2019248496797532285",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2019248496797532285",
+        "tweeted_at": "2026-02-05"
+      },
+      {
+        "tweet_id": "2019608424007524779",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2019608424007524779",
+        "tweeted_at": "2026-02-06"
+      },
+      {
+        "tweet_id": "2020702873458463137",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2020702873458463137",
+        "tweeted_at": "2026-02-09"
+      },
+      {
+        "tweet_id": "2021359576575246505",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2021359576575246505",
+        "tweeted_at": "2026-02-10"
+      },
+      {
+        "tweet_id": "2021615793159704628",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2021615793159704628",
+        "tweeted_at": "2026-02-11"
+      },
+      {
+        "tweet_id": "2022107598821187815",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2022107598821187815",
+        "tweeted_at": "2026-02-13"
+      },
+      {
+        "tweet_id": "2022475315872960567",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2022475315872960567",
+        "tweeted_at": "2026-02-14"
+      },
+      {
+        "tweet_id": "2025827917221994770",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2025827917221994770",
+        "tweeted_at": "2026-02-23"
+      },
+      {
+        "tweet_id": "2027393372953174177",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027393372953174177",
+        "tweeted_at": "2026-02-27"
+      },
+      {
+        "tweet_id": "2027801561846644848",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2027801561846644848",
+        "tweeted_at": "2026-02-28"
+      },
+      {
+        "tweet_id": "2029977266541953094",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2029977266541953094",
+        "tweeted_at": "2026-03-06"
+      },
+      {
+        "tweet_id": "2030836560464417170",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2030836560464417170",
+        "tweeted_at": "2026-03-09"
+      },
+      {
+        "tweet_id": "2031055797086728366",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031055797086728366",
+        "tweeted_at": "2026-03-09"
+      },
+      {
+        "tweet_id": "2031782754405544335",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2031782754405544335",
+        "tweeted_at": "2026-03-11"
+      },
+      {
+        "tweet_id": "2032194165690548623",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2032194165690548623",
+        "tweeted_at": "2026-03-12"
+      },
+      {
+        "tweet_id": "2033203768792371525",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2033203768792371525",
+        "tweeted_at": "2026-03-15"
+      },
+      {
+        "tweet_id": "2035714961650131378",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2035714961650131378",
+        "tweeted_at": "2026-03-22"
+      },
+      {
+        "tweet_id": "2036840136730935736",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2036840136730935736",
+        "tweeted_at": "2026-03-25"
+      },
+      {
+        "tweet_id": "2037061185263329434",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037061185263329434",
+        "tweeted_at": "2026-03-26"
+      },
+      {
+        "tweet_id": "2037320624746729756",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037320624746729756",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037483250419990759",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037483250419990759",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037493017209450673",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037493017209450673",
+        "tweeted_at": "2026-03-27"
+      },
+      {
+        "tweet_id": "2037735842316419375",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037735842316419375",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2037915721435587028",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2037915721435587028",
+        "tweeted_at": "2026-03-28"
+      },
+      {
+        "tweet_id": "2038163974437659019",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2038163974437659019",
+        "tweeted_at": "2026-03-29"
+      },
+      {
+        "tweet_id": "2039176628727939472",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2039176628727939472",
+        "tweeted_at": "2026-04-01"
+      },
+      {
+        "tweet_id": "2040269140855083041",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2040269140855083041",
+        "tweeted_at": "2026-04-04"
+      },
+      {
+        "tweet_id": "2041650903305089389",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041650903305089389",
+        "tweeted_at": "2026-04-07"
+      },
+      {
+        "tweet_id": "2041752476542759313",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2041752476542759313",
+        "tweeted_at": "2026-04-08"
+      },
+      {
+        "tweet_id": "2042187668931616964",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042187668931616964",
+        "tweeted_at": "2026-04-09"
+      },
+      {
+        "tweet_id": "2042400195607216431",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042400195607216431",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042469877492171129",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042469877492171129",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042507141618004372",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042507141618004372",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042687596166615445",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042687596166615445",
+        "tweeted_at": "2026-04-10"
+      },
+      {
+        "tweet_id": "2042819960301588910",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042819960301588910",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2042856101939712444",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042856101939712444",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2042988968149684305",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2042988968149684305",
+        "tweeted_at": "2026-04-11"
+      },
+      {
+        "tweet_id": "2043602257292534014",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043602257292534014",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043708829570072606",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043708829570072606",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043734433405243696",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043734433405243696",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2043762143502479483",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2043762143502479483",
+        "tweeted_at": "2026-04-13"
+      },
+      {
+        "tweet_id": "2044460526017941554",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044460526017941554",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044491122161160517",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044491122161160517",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044507444962070817",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044507444962070817",
+        "tweeted_at": "2026-04-15"
+      },
+      {
+        "tweet_id": "2044695311764099291",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044695311764099291",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044796702218215832",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044796702218215832",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044862572088922469",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044862572088922469",
+        "tweeted_at": "2026-04-16"
+      },
+      {
+        "tweet_id": "2044954792381030506",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2044954792381030506",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2045228954584481951",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2045228954584481951",
+        "tweeted_at": "2026-04-17"
+      },
+      {
+        "tweet_id": "2046003874553901188",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046003874553901188",
+        "tweeted_at": "2026-04-19"
+      },
+      {
+        "tweet_id": "2046296091461869737",
+        "tweet_url": "https://x.com/aleabitoreddit/status/2046296091461869737",
+        "tweeted_at": "2026-04-20"
+      }
+    ]
   }
 ]
