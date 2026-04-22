@@ -20,8 +20,9 @@ import { InsightsPanel } from "../components/InsightsPanel";
 
 export const dynamic = "force-static";
 
-export function generateStaticParams() {
-  return getPeople().map((p) => ({ person: p.slug }));
+export async function generateStaticParams() {
+  const people = await getPeople();
+  return people.map((p) => ({ person: p.slug }));
 }
 
 export default async function PersonDashboardPage({
@@ -30,15 +31,17 @@ export default async function PersonDashboardPage({
   params: Promise<{ person: string }>;
 }) {
   const { person: slug } = await params;
-  const person = getPersonBySlug(slug);
+  const person = await getPersonBySlug(slug);
   if (!person) notFound();
 
-  const picks = getEnrichedPicks(slug);
-  const themes = getThemes(slug);
-  const themeStats = getThemeStats(slug, picks);
+  const [picks, themes, meta, people] = await Promise.all([
+    getEnrichedPicks(slug),
+    getThemes(slug),
+    getSiteMeta(slug),
+    getPeople(),
+  ]);
+  const themeStats = getThemeStats(themes, picks);
   const headline = getHeadlineStats(picks);
-  const meta = getSiteMeta(slug);
-  const people = getPeople();
 
   return (
     <main className="bg-grid relative min-h-dvh">

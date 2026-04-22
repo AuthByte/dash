@@ -1,6 +1,8 @@
 # Serenity's Picks
 
-A self-hosted, version-controlled tracker for [@aleabitoreddit](https://x.com/aleabitoreddit)'s public stock picks. Dark terminal aesthetic, theme/stance/conviction taxonomy, on-demand price refresh, and an LLM-driven ingest pipeline so you don't have to copy-paste tweets.
+A self-hosted tracker for [@aleabitoreddit](https://x.com/aleabitoreddit)'s public stock picks. Dark terminal aesthetic, theme/stance/conviction taxonomy, on-demand price refresh, and an LLM-driven ingest pipeline so you don't have to copy-paste tweets.
+
+All state lives in **Supabase** (project: `dashboard`). The Next.js site reads picks/prices/themes/site-meta from Postgres on the server; there is no flat-file data directory. The Python scripts write back to the same tables.
 
 ```
        ┌─────────────┐    ┌────────────┐    ┌──────────────┐
@@ -10,10 +12,10 @@ tweets │ X GraphQL   │ -> │ OpenRouter │ -> │ digest JSON  │
                                                    │
               ┌────────────────────────────────────┘
               v
-       ┌─────────────┐    ┌──────────────┐    ┌───────────┐
-       │ Cursor edits│ -> │ data/picks   │ -> │ Next.js   │
-       │ picks.json  │    │ data/prices  │    │ static SSG│
-       └─────────────┘    └──────────────┘    └───────────┘
+       ┌────────────────┐    ┌──────────┐    ┌───────────┐
+       │ apply_digest.py│ -> │ Supabase │ -> │ Next.js   │
+       │ (picks/events) │    │ Postgres │    │ (SSR+ISR) │
+       └────────────────┘    └──────────┘    └───────────┘
 ```
 
 ---
@@ -33,14 +35,37 @@ pip install -r requirements.txt
 # 3. Configure secrets
 copy .env.example .env           # Windows
 # cp .env.example .env           # macOS/Linux
-# Edit .env: paste your OPENROUTER_API_KEY
+# Edit .env: paste your OPENROUTER_API_KEY and fill in the Supabase section.
 
 # 4. Run dev server
 npm run dev
 # -> http://localhost:3000
 ```
 
-The site renders fine immediately because [data/picks.json](data/picks.json) ships with seed data pulled from the screenshot. From here you have two operational loops to set up.
+The site renders immediately because Supabase ships with a seeded row set (see "Seeding Supabase" below). From here you have two operational loops to set up.
+
+### Supabase schema
+
+Six tables in `public`:
+
+- `people`        — profiles (`slug`, `name`, `handle`, `tagline`, `accent`, `active`, `sort_order`)
+- `themes`        — per-person taxonomy (`person_slug`, `slug`, `label`, `accent`, `sort_order`)
+- `site_meta`     — per-person thesis blob + follower count + YTD claim
+- `picks`         — one row per (`person_slug`, `ticker`) with thesis/stance/conviction + tweet provenance
+- `tweet_events`  — every tweet that mentioned a ticker (`person_slug`, `ticker`, `tweet_id`)
+- `prices`        — one row per (`person_slug`, `ticker`) with price/market_cap/history/metrics (refreshed by `npm run refresh`)
+
+Row-level security is on; public `select` is allowed, writes require the service-role key (or anon while policies are permissive for your dev project).
+
+### Seeding Supabase
+
+`scripts/build_seed.js` regenerates an idempotent SQL seed from any JSON fixtures you keep locally:
+
+```bash
+node scripts/build_seed.js > /tmp/seed.sql
+# then paste into the Supabase SQL editor, or psql $SUPABASE_DB_URL -f /tmp/seed.sql
+```
+
 
 ---
 
@@ -49,11 +74,12 @@ The site renders fine immediately because [data/picks.json](data/picks.json) shi
 You want this whenever you care about price/YTD/market-cap drift. It only needs to run as often as you care.
 
 ```bash
-npm run refresh                    # all tickers
-npm run refresh -- --ticker IQE.L  # one ticker
+npm run refresh                          # all active people, all tickers
+npm run refresh -- --person serenity     # one person only
+npm run refresh -- --ticker IQE.L        # one ticker across all people
 ```
 
-This calls Yahoo Finance via [`yahoo-finance2`](https://github.com/gadicc/node-yahoo-finance2), supports international tickers (`IQE.L`, `ALRIB.ST`, `SOI` on EuroNext, etc.), and writes [data/prices.json](data/prices.json). The drawer's mini chart populates automatically once history exists.
+This calls Yahoo Finance via [`yahoo-finance2`](https://github.com/gadicc/node-yahoo-finance2), supports international tickers (`IQE.L`, `ALRIB.ST`, `SOI` on EuroNext, etc.), and **upserts into `public.prices` in Supabase**. The drawer's mini chart populates automatically once history exists. Needs `NEXT_PUBLIC_SUPABASE_URL` + (`SUPABASE_SERVICE_ROLE_KEY` or `SUPABASE_ANON_KEY`) in `.env`.
 
 Failures are logged but never abort the batch. Delisted or invalid tickers print a warning and skip.
 
@@ -107,8 +133,8 @@ python scripts/run.py
 This:
 
 1. **Scrapes** `@aleabitoreddit` (configurable via `TWITTER_HANDLE` env) and writes raw tweets to `scrape-output/raw-YYYY-MM-DD.json`. Stores a cursor (`scrape-output/.cursor`) so subsequent runs only fetch new tweets.
-2. **Digests** those tweets via OpenRouter with a strict JSON-schema response and your existing `picks.json` as dedupe context. Output goes to `scrape-output/digest-YYYY-MM-DD.json`.
-3. **Prints** a clearly-fenced block at the end labeled `=== PASTE THIS TO CURSOR ===`. Copy that whole block into a fresh Cursor chat with this repo open, and the agent will diff it against [data/picks.json](data/picks.json) and apply changes.
+2. **Digests** those tweets via OpenRouter with a strict JSON-schema response, using the current `public.picks` rows from Supabase as dedupe context. Output goes to `scrape-output/digest-YYYY-MM-DD.json`.
+3. **Prints** a clearly-fenced block at the end labeled `=== PASTE THIS TO CURSOR ===`. Copy that whole block into a fresh Cursor chat with this repo open, and the agent will review and run `python scripts/apply_digest.py` to upsert into Supabase. You can also just run `python scripts/apply_digest.py --person serenity` directly once the digest file exists.
 
 Useful flags:
 
@@ -124,14 +150,17 @@ If no new tweets are found, the script exits cleanly with no LLM call.
 
 ## Editing picks by hand
 
-The whole data layer is just three JSON files in [`data/`](data/):
+Everything is in Supabase. Use the Supabase table editor for fast edits, or write a quick SQL statement in the SQL editor:
 
-- [`data/picks.json`](data/picks.json) — array of pick objects. Add, edit, or remove freely.
-- [`data/site_meta.json`](data/site_meta.json) — current thesis blockquote, follower count, last_updated.
-- [`data/themes.json`](data/themes.json) — taxonomy. Adding a new theme requires updating [`lib/schema.ts`](lib/schema.ts) `ThemeSlugSchema` enum.
-- [`data/prices.json`](data/prices.json) — generated by `npm run refresh`. Don't hand-edit; it'll get overwritten.
+```sql
+update public.picks
+   set thesis_short = 'Updated thesis',
+       stance       = 'long'
+ where person_slug = 'serenity'
+   and ticker      = 'AAOI';
+```
 
-Every file is validated at build time by [zod schemas](lib/schema.ts). A malformed edit breaks `next build` loudly with a clear error rather than silently corrupting the site.
+Adding a new theme slug still requires updating [`lib/schema.ts`](lib/schema.ts) `ThemeSlugSchema` enum (the zod parser validates every read) and then inserting a row into `public.themes`. Every Supabase row is validated at runtime by [zod schemas](lib/schema.ts); a malformed row blows up the page render loudly rather than corrupting the site silently.
 
 ---
 
@@ -141,9 +170,14 @@ Every file is validated at build time by [zod schemas](lib/schema.ts). A malform
 npm run build
 ```
 
-Standard static Next.js. Push to GitHub and import into Vercel (or anywhere). No env vars are required at build/runtime — `OPENROUTER_API_KEY` is only used by the local Python scripts.
+Standard Next.js. Push to GitHub and import into Vercel (or anywhere). At build/runtime you need:
 
-The site is fully prerendered (`force-static`), so deploys are instant and there's nothing to pay for at scale.
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+`OPENROUTER_API_KEY` + `SUPABASE_SERVICE_ROLE_KEY` are only used by the local scripts.
+
+The dashboard routes are `force-static` — Next.js renders them at build time against Supabase and revalidates on each deploy. If you want fresher data without redeploying, remove `export const dynamic = "force-static"` from the relevant page (or switch to `revalidate = 60`).
 
 ---
 
@@ -155,20 +189,23 @@ The site is fully prerendered (`force-static`), so deploys are instant and there
 │   ├── components/
 │   ├── globals.css         Tailwind v4 + design tokens
 │   ├── layout.tsx
-│   └── page.tsx            Single dashboard route
-├── data/                   Source-of-truth JSON
+│   ├── page.tsx            Profile picker
+│   └── [person]/           Per-profile dashboard
 ├── lib/
-│   ├── data.ts             Server-only loaders + derived stats
+│   ├── data.ts             Server-only Supabase loaders + derived stats
+│   ├── supabase.ts         Supabase client factory
 │   ├── format.ts           Number/currency/date formatters
-│   └── schema.ts           Zod schemas for every data file
+│   └── schema.ts           Zod schemas for the Supabase row shapes
 ├── scripts/
 │   ├── prompts/
 │   │   └── digest_system.md  System prompt for the LLM digest
 │   ├── common.py           Shared paths & env helpers
 │   ├── scrape.py           X GraphQL (cookie auth) -> raw-*.json
-│   ├── digest.py           OpenRouter LLM -> digest-*.json
+│   ├── digest.py           OpenRouter LLM -> digest-*.json (reads Supabase picks for dedupe)
+│   ├── apply_digest.py     Upserts digest-*.json into Supabase
+│   ├── build_seed.js       One-off: dump local JSON -> idempotent SQL seed
 │   ├── run.py              Orchestrator + Cursor handoff block
-│   └── refresh.ts          yahoo-finance2 -> data/prices.json
+│   └── refresh.ts          yahoo-finance2 -> public.prices in Supabase
 ├── requirements.txt
 ├── package.json
 └── README.md (you are here)
