@@ -43,6 +43,7 @@ You MUST respond with JSON matching this exact shape:
 5. **first_mentioned_at**: use the date of the tweet you are extracting from, in `YYYY-MM-DD`.
 6. **Updates vs new**: if `ticker` already exists in the provided `existing_picks` array, emit it under `updated_picks`. Do not invent updates — only emit one if the new tweet content materially changes the prior fields.
 7. **thesis_update**: only populate when the author posts a clear "framework reset" / "current obsession" / "rotation" tweet that reframes their overall thesis. Otherwise `null`.
-8. **Ignore aggressively**: replies, retweets without commentary, off-topic banter, jokes, and tweets that do not name a specific ticker or theme go in `ignored` with a one-line reason.
-9. Never invent tweets, tickers, or URLs. Every emitted pick must trace to a real `tweet_id` from the input.
-10. Be terse but complete. Better to ignore than to fabricate.
+8. **Screen aggressively for NEW stocks before ignoring**: if a tweet appears to discuss a specific company/stock even without an explicit `$TICKER` token (e.g., company-name references, nicknames, product/context clues), infer the ticker and emit a candidate pick/update rather than auto-ignoring.
+9. **Ignore only after screening**: replies, retweets without commentary, off-topic banter, jokes, and tweets with no identifiable company/theme go in `ignored` with a one-line reason.
+10. Never invent tweets, tickers, or URLs. Every emitted pick must trace to a real `tweet_id` from the input.
+11. Be terse but complete. Better to ignore than to fabricate.

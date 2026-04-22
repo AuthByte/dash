@@ -22,7 +22,7 @@ from common import (
 )
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-DEFAULT_MODEL = "anthropic/claude-3.5-sonnet"
+DEFAULT_MODEL = "anthropic/claude-sonnet-4.6"
 PROMPT_PATH = Path(__file__).parent / "prompts" / "digest_system.md"
 
 
@@ -104,22 +104,54 @@ def load_system_prompt(handle: str) -> str:
     return PROMPT_PATH.read_text().replace("{HANDLE}", handle)
 
 
-def existing_pick_summaries() -> list[dict[str, Any]]:
-    """Slim view of picks.json to stuff into the LLM context for dedupe."""
-    picks_path = DATA_DIR / "picks.json"
+def existing_pick_summaries(handle: str) -> list[dict[str, Any]]:
+    """Slim view of existing picks for strong dedupe/new-mention screening."""
+    people_path = DATA_DIR / "people.json"
+    if not people_path.exists():
+        return []
+    people = read_json(people_path)
+    if not isinstance(people, list):
+        return []
+
+    # Resolve person by handle first, fall back to slug/name contains match.
+    target_slug: str | None = None
+    handle_l = handle.lower().lstrip("@")
+    for person in people:
+        if not isinstance(person, dict):
+            continue
+        person_handle = str(person.get("handle", "")).lower().lstrip("@")
+        if person_handle == handle_l:
+            target_slug = str(person.get("slug", "")).strip() or None
+            break
+    if target_slug is None:
+        for person in people:
+            if not isinstance(person, dict):
+                continue
+            slug = str(person.get("slug", ""))
+            name = str(person.get("name", ""))
+            if handle_l in slug.lower() or handle_l in name.lower():
+                target_slug = slug.strip() or None
+                break
+    if target_slug is None:
+        return []
+
+    picks_path = DATA_DIR / "people" / target_slug / "picks.json"
     if not picks_path.exists():
         return []
     picks = read_json(picks_path)
+    if not isinstance(picks, list):
+        return []
     return [
         {
-            "ticker": p["ticker"],
-            "name": p["name"],
-            "theme": p["theme"],
-            "stance": p["stance"],
-            "conviction": p["conviction"],
-            "first_mentioned_at": p["first_mentioned_at"],
+            "ticker": p.get("ticker"),
+            "name": p.get("name"),
+            "theme": p.get("theme"),
+            "stance": p.get("stance"),
+            "conviction": p.get("conviction"),
+            "first_mentioned_at": p.get("first_mentioned_at"),
         }
         for p in picks
+        if isinstance(p, dict)
     ]
 
 
@@ -224,7 +256,7 @@ def main() -> int:
 
     user_payload = {
         "handle": handle,
-        "existing_picks": existing_pick_summaries(),
+        "existing_picks": existing_pick_summaries(handle),
         "tweets": tweets,
     }
 
