@@ -16,9 +16,15 @@ import {
   PeopleFileSchema,
   PicksFileSchema,
   PricesFileSchema,
+  SiteMetaSchema,
+  ThemesFileSchema,
   type FinancialMetrics,
   type PriceEntry,
+  type Pick,
+  type SiteMeta,
+  type Theme,
 } from "../lib/schema";
+import { getSupabaseAdminClient } from "./supabase_client";
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -519,14 +525,27 @@ async function refreshPerson(slug: string, tickerFilter?: string) {
   const dir = path.join(PEOPLE_DIR, slug);
   const picksPath = path.join(dir, "picks.json");
   const pricesPath = path.join(dir, "prices.json");
+  const themesPath = path.join(dir, "themes.json");
+  const siteMetaPath = path.join(dir, "site_meta.json");
 
   if (!fs.existsSync(picksPath)) {
     console.warn(`[refresh] ${slug}: no picks.json at ${picksPath}, skipping`);
     return { ok: 0, fail: 0, fmp: 0, mixed: 0, yfin: 0 };
   }
 
+  if (!fs.existsSync(themesPath) || !fs.existsSync(siteMetaPath)) {
+    console.warn(`[refresh] ${slug}: missing themes.json or site_meta.json, skipping`);
+    return { ok: 0, fail: 0, fmp: 0, mixed: 0, yfin: 0 };
+  }
+
   const picks = PicksFileSchema.parse(
     JSON.parse(fs.readFileSync(picksPath, "utf8")),
+  );
+  const themes = ThemesFileSchema.parse(
+    JSON.parse(fs.readFileSync(themesPath, "utf8")),
+  );
+  const siteMeta = SiteMetaSchema.parse(
+    JSON.parse(fs.readFileSync(siteMetaPath, "utf8")),
   );
   const tickers = Array.from(new Set(picks.map((p) => p.ticker))).sort();
   const targets = tickerFilter
@@ -598,10 +617,51 @@ async function refreshPerson(slug: string, tickerFilter?: string) {
 
   PricesFileSchema.parse(out);
   fs.writeFileSync(pricesPath, JSON.stringify(out, null, 2) + "\n");
+
+  await maybeSyncPersonDatasetToSupabase({
+    slug,
+    picks,
+    prices: out,
+    themes,
+    siteMeta,
+  });
+
   console.log(
     `[refresh] ${slug}: ok=${ok} fail=${fail} fmp=${fmp} fmp+yf=${mixed} yfinance=${yfin}  ->  ${path.relative(ROOT, pricesPath)}`,
   );
   return { ok, fail, fmp, mixed, yfin };
+}
+
+async function maybeSyncPersonDatasetToSupabase({
+  slug,
+  picks,
+  prices,
+  themes,
+  siteMeta,
+}: {
+  slug: string;
+  picks: Pick[];
+  prices: Record<string, PriceEntry>;
+  themes: Theme[];
+  siteMeta: SiteMeta;
+}) {
+  const client = getSupabaseAdminClient();
+  if (!client) return;
+  const payload = {
+    person_slug: slug,
+    picks,
+    prices,
+    themes,
+    site_meta: siteMeta,
+    updated_at: new Date().toISOString(),
+  };
+  const { error } = await client
+    .from("person_datasets")
+    .upsert(payload, { onConflict: "person_slug" });
+  if (error) {
+    // Keep local refresh resilient even if remote sync fails.
+    console.warn(`[refresh] ${slug}: supabase sync skipped: ${error.message}`);
+  }
 }
 
 async function main() {

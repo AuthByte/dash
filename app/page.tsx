@@ -1,10 +1,10 @@
 import { getPeople } from "@/lib/data";
 import { PersonPicker } from "./components/PersonPicker";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
-export default function HomePage() {
-  const people = getPeople();
+export default async function HomePage() {
+  const people = await getPeople();
 
   return (
     <main className="bg-grid relative min-h-dvh">

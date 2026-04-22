@@ -2,6 +2,12 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 import {
+  hasSupabaseConfig,
+  readSupabasePersonDataset,
+  readSupabasePeople,
+  type SupabasePersonDataset,
+} from "./supabase";
+import {
   PeopleFileSchema,
   PicksFileSchema,
   PricesFileSchema,
@@ -24,42 +30,71 @@ function readJson<T>(absPath: string): unknown {
   return JSON.parse(raw) as T;
 }
 
-export function getPeople(): Person[] {
-  return PeopleFileSchema.parse(
-    readJson(path.join(DATA_DIR, "people.json")),
-  ).filter((p) => p.active !== false);
+async function getSupabaseDataset(personSlug: string): Promise<SupabasePersonDataset | null> {
+  if (!hasSupabaseConfig()) return null;
+  try {
+    return await readSupabasePersonDataset(personSlug);
+  } catch {
+    return null;
+  }
 }
 
-export function getPersonBySlug(slug: string): Person | null {
-  return getPeople().find((p) => p.slug === slug) ?? null;
+export async function getPeople(): Promise<Person[]> {
+  if (hasSupabaseConfig()) {
+    try {
+      const supabasePeople = await readSupabasePeople();
+      return PeopleFileSchema.parse(supabasePeople).filter((p) => p.active !== false);
+    } catch {
+      // Fall back to file storage to keep the app serving.
+    }
+  }
+  return PeopleFileSchema.parse(readJson(path.join(DATA_DIR, "people.json"))).filter(
+    (p) => p.active !== false,
+  );
+}
+
+export async function getPersonBySlug(slug: string): Promise<Person | null> {
+  return (await getPeople()).find((p) => p.slug === slug) ?? null;
 }
 
 function personDir(slug: string): string {
   return path.join(PEOPLE_DIR, slug);
 }
 
-export function getPicks(personSlug: string): Pick[] {
-  return PicksFileSchema.parse(
-    readJson(path.join(personDir(personSlug), "picks.json")),
+export async function getPicks(personSlug: string): Promise<Pick[]> {
+  const dataset = await getSupabaseDataset(personSlug);
+  if (dataset?.picks) {
+    return PicksFileSchema.parse(dataset.picks);
+  }
+  return PicksFileSchema.parse(readJson(path.join(personDir(personSlug), "picks.json")));
+}
+
+export async function getPrices(personSlug: string): Promise<Record<string, PriceEntry>> {
+  const dataset = await getSupabaseDataset(personSlug);
+  if (dataset?.prices) {
+    return PricesFileSchema.parse(dataset.prices);
+  }
+  return PricesFileSchema.parse(readJson(path.join(personDir(personSlug), "prices.json")));
+}
+
+export async function getThemes(personSlug: string): Promise<Theme[]> {
+  const dataset = await getSupabaseDataset(personSlug);
+  if (dataset?.themes) {
+    return ThemesFileSchema.parse(dataset.themes).sort(
+      (a, b) => a.sort_order - b.sort_order,
+    );
+  }
+  return ThemesFileSchema.parse(readJson(path.join(personDir(personSlug), "themes.json"))).sort(
+    (a, b) => a.sort_order - b.sort_order,
   );
 }
 
-export function getPrices(personSlug: string): Record<string, PriceEntry> {
-  return PricesFileSchema.parse(
-    readJson(path.join(personDir(personSlug), "prices.json")),
-  );
-}
-
-export function getThemes(personSlug: string): Theme[] {
-  return ThemesFileSchema.parse(
-    readJson(path.join(personDir(personSlug), "themes.json")),
-  ).sort((a, b) => a.sort_order - b.sort_order);
-}
-
-export function getSiteMeta(personSlug: string): SiteMeta {
-  return SiteMetaSchema.parse(
-    readJson(path.join(personDir(personSlug), "site_meta.json")),
-  );
+export async function getSiteMeta(personSlug: string): Promise<SiteMeta> {
+  const dataset = await getSupabaseDataset(personSlug);
+  if (dataset?.site_meta) {
+    return SiteMetaSchema.parse(dataset.site_meta);
+  }
+  return SiteMetaSchema.parse(readJson(path.join(personDir(personSlug), "site_meta.json")));
 }
 
 export type EnrichedPick = Pick & {
@@ -99,12 +134,12 @@ export function getTweetMarkersForPick(pick: Pick): TweetMarker[] {
   ];
 }
 
-export function getEnrichedPicks(
+export async function getEnrichedPicks(
   personSlug: string,
   options?: { includeHistory?: boolean },
-): EnrichedPick[] {
-  const picks = getPicks(personSlug);
-  const prices = getPrices(personSlug);
+): Promise<EnrichedPick[]> {
+  const picks = await getPicks(personSlug);
+  const prices = await getPrices(personSlug);
   const includeHistory = options?.includeHistory ?? true;
   return picks.map((p) => {
     const px = prices[p.ticker];
@@ -121,14 +156,14 @@ export function getEnrichedPicks(
   });
 }
 
-export function getEnrichedPick(
+export async function getEnrichedPick(
   personSlug: string,
   ticker: string,
-): EnrichedPick | null {
-  const picks = getPicks(personSlug);
+): Promise<EnrichedPick | null> {
+  const picks = await getPicks(personSlug);
   const pick = picks.find((p) => p.ticker === ticker);
   if (!pick) return null;
-  const prices = getPrices(personSlug);
+  const prices = await getPrices(personSlug);
   const px = prices[ticker];
   return {
     ...pick,
@@ -142,17 +177,11 @@ export function getEnrichedPick(
   };
 }
 
-export type ThemeStats = {
-  theme: Theme;
-  count: number;
-  avg_ytd_pct: number;
-};
-
-export function getThemeStats(
+export async function getThemeStats(
   personSlug: string,
   picks: EnrichedPick[],
-): ThemeStats[] {
-  const themes = getThemes(personSlug);
+): Promise<ThemeStats[]> {
+  const themes = await getThemes(personSlug);
   return themes.map((theme) => {
     const inTheme = picks.filter(
       (p) => p.theme === theme.slug && p.stance !== "exited",
@@ -168,16 +197,6 @@ export function getThemeStats(
     };
   });
 }
-
-export type HeadlineStats = {
-  total: number;
-  long_count: number;
-  other_count: number;
-  avg_ytd_pct_longs: number;
-  best: { ticker: string; ytd_pct: number } | null;
-  worst: { ticker: string; ytd_pct: number } | null;
-  highest_conviction_count: number;
-};
 
 export function getHeadlineStats(picks: EnrichedPick[]): HeadlineStats {
   const longs = picks.filter((p) => p.stance === "long");
@@ -214,3 +233,20 @@ export function getThemeBySlug(
 ): Theme | undefined {
   return themes.find((t) => t.slug === slug);
 }
+
+export type ThemeStats = {
+  theme: Theme;
+  count: number;
+  avg_ytd_pct: number;
+};
+
+export type HeadlineStats = {
+  total: number;
+  long_count: number;
+  other_count: number;
+  avg_ytd_pct_longs: number;
+  best: { ticker: string; ytd_pct: number } | null;
+  worst: { ticker: string; ytd_pct: number } | null;
+  highest_conviction_count: number;
+};
+

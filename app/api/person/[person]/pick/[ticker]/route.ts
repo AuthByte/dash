@@ -8,12 +8,12 @@ export async function GET(
   ctx: { params: Promise<{ person: string; ticker: string }> },
 ) {
   const { person, ticker } = await ctx.params;
-  const profile = getPersonBySlug(person);
+  const profile = await getPersonBySlug(person);
   if (!profile) {
     return NextResponse.json({ error: "Person not found" }, { status: 404 });
   }
 
-  const pick = getEnrichedPick(person, decodeURIComponent(ticker));
+  const pick = await getEnrichedPick(person, decodeURIComponent(ticker));
   if (!pick) {
     return NextResponse.json({ error: "Pick not found" }, { status: 404 });
   }

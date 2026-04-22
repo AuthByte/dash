@@ -17,10 +17,10 @@ import { PicksSection } from "../components/PicksSection";
 import { Footer } from "../components/Footer";
 import { ProfileSwitcher } from "../components/ProfileSwitcher";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
-  return getPeople().map((p) => ({ person: p.slug }));
+  return getPeople().then((people) => people.map((p) => ({ person: p.slug })));
 }
 
 export default async function PersonDashboardPage({
@@ -29,15 +29,15 @@ export default async function PersonDashboardPage({
   params: Promise<{ person: string }>;
 }) {
   const { person: slug } = await params;
-  const person = getPersonBySlug(slug);
+  const person = await getPersonBySlug(slug);
   if (!person) notFound();
 
-  const picks = getEnrichedPicks(slug, { includeHistory: false });
-  const themes = getThemes(slug);
-  const themeStats = getThemeStats(slug, picks);
+  const picks = await getEnrichedPicks(slug, { includeHistory: false });
+  const themes = await getThemes(slug);
+  const themeStats = await getThemeStats(slug, picks);
   const headline = getHeadlineStats(picks);
-  const meta = getSiteMeta(slug);
-  const people = getPeople();
+  const meta = await getSiteMeta(slug);
+  const people = await getPeople();
 
   return (
     <main className="bg-grid relative min-h-dvh">
