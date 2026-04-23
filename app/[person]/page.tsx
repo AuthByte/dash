@@ -18,7 +18,7 @@ import { ProfileSwitcher } from "../components/ProfileSwitcher";
 import { HighlightsPanel } from "../components/HighlightsPanel";
 import { InsightsPanel } from "../components/InsightsPanel";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   const people = await getPeople();
@@ -35,7 +35,7 @@ export default async function PersonDashboardPage({
   if (!person) notFound();
 
   const [picks, themes, meta, people] = await Promise.all([
-    getEnrichedPicks(slug),
+    getEnrichedPicks(slug, { includeHistory: false }),
     getThemes(slug),
     getSiteMeta(slug),
     getPeople(),
@@ -67,7 +67,7 @@ export default async function PersonDashboardPage({
         </div>
         <div className="mt-10">
           <Suspense fallback={null}>
-            <PicksSection picks={picks} themes={themes} />
+            <PicksSection personSlug={slug} picks={picks} themes={themes} />
           </Suspense>
         </div>
         <Footer meta={meta} />

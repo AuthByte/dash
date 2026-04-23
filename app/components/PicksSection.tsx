@@ -7,6 +7,7 @@ import type { Stance, Theme } from "@/lib/schema";
 import { FilterBar } from "./FilterBar";
 import { PicksTable, type SortKey, type SortDir } from "./PicksTable";
 import { PickDrawer } from "./PickDrawer";
+import { TweetsByStockPanel } from "./TweetsByStockPanel";
 
 const STANCE_VALUES: (Stance | "all")[] = [
   "all",
@@ -19,9 +20,11 @@ const STANCE_VALUES: (Stance | "all")[] = [
 export function PicksSection({
   picks,
   themes,
+  personSlug,
 }: {
   picks: EnrichedPick[];
   themes: Theme[];
+  personSlug: string;
 }) {
   const params = useSearchParams();
   const themeFilter = params.get("theme") ?? "all";
@@ -95,9 +98,13 @@ export function PicksSection({
           onSelect={setActiveTicker}
         />
       </div>
+      <div className="mt-6">
+        <TweetsByStockPanel picks={sorted} />
+      </div>
       <PickDrawer
         pick={activePick}
         theme={activeTheme}
+        personSlug={personSlug}
         onClose={() => setActiveTicker(null)}
       />
     </section>

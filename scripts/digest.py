@@ -13,6 +13,7 @@ import httpx
 
 from apply_digest import SupabaseClient, get_supabase_client
 from common import (
+    DATA_DIR,
     OUTPUT_DIR,
     ensure_dirs,
     get_handle,
@@ -22,7 +23,7 @@ from common import (
 )
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-DEFAULT_MODEL = "anthropic/claude-3.5-sonnet"
+DEFAULT_MODEL = "anthropic/claude-sonnet-4.6"
 PROMPT_PATH = Path(__file__).parent / "prompts" / "digest_system.md"
 
 
@@ -104,30 +105,80 @@ def load_system_prompt(handle: str) -> str:
     return PROMPT_PATH.read_text().replace("{HANDLE}", handle)
 
 
-def existing_pick_summaries(person_slug: str = "serenity") -> list[dict[str, Any]]:
-    """Slim view of Supabase picks to stuff into the LLM context for dedupe."""
-    try:
-        client: SupabaseClient = get_supabase_client()
-    except RuntimeError as err:
-        print(f"[digest] warning: {err}; continuing with empty dedupe context.")
+def _resolve_person_slug(handle: str) -> str | None:
+    """Match people.json by handle, else slug/name substring (handle without @)."""
+    people_path = DATA_DIR / "people.json"
+    if not people_path.exists():
+        return None
+    people = read_json(people_path)
+    if not isinstance(people, list):
+        return None
+
+    handle_l = handle.lower().lstrip("@")
+    for person in people:
+        if not isinstance(person, dict):
+            continue
+        person_handle = str(person.get("handle", "")).lower().lstrip("@")
+        if person_handle == handle_l:
+            slug = str(person.get("slug", "")).strip()
+            return slug or None
+    for person in people:
+        if not isinstance(person, dict):
+            continue
+        slug = str(person.get("slug", ""))
+        name = str(person.get("name", ""))
+        if handle_l in slug.lower() or handle_l in name.lower():
+            return slug.strip() or None
+    return None
+
+
+def existing_pick_summaries(handle: str) -> list[dict[str, Any]]:
+    """Slim view of existing picks for LLM dedupe (Supabase when configured, else JSON)."""
+    person_slug = _resolve_person_slug(handle)
+    if person_slug:
+        try:
+            client: SupabaseClient = get_supabase_client()
+            rows = client.select(
+                "picks",
+                {
+                    "select": "ticker,name,theme,stance,conviction,first_mentioned_at",
+                    "person_slug": f"eq.{person_slug}",
+                },
+            )
+            return [
+                {
+                    "ticker": row["ticker"],
+                    "name": row.get("name", ""),
+                    "theme": row.get("theme", ""),
+                    "stance": row.get("stance", ""),
+                    "conviction": row.get("conviction", ""),
+                    "first_mentioned_at": row.get("first_mentioned_at"),
+                }
+                for row in rows
+            ]
+        except RuntimeError as err:
+            print(f"[digest] warning: {err}; falling back to local picks if present.")
+
+    if not person_slug:
         return []
-    rows = client.select(
-        "picks",
-        {
-            "select": "ticker,name,theme,stance,conviction,first_mentioned_at",
-            "person_slug": f"eq.{person_slug}",
-        },
-    )
+
+    picks_path = DATA_DIR / "people" / person_slug / "picks.json"
+    if not picks_path.exists():
+        return []
+    picks = read_json(picks_path)
+    if not isinstance(picks, list):
+        return []
     return [
         {
-            "ticker": row["ticker"],
-            "name": row.get("name", ""),
-            "theme": row.get("theme", ""),
-            "stance": row.get("stance", ""),
-            "conviction": row.get("conviction", ""),
-            "first_mentioned_at": row.get("first_mentioned_at"),
+            "ticker": p.get("ticker"),
+            "name": p.get("name"),
+            "theme": p.get("theme"),
+            "stance": p.get("stance"),
+            "conviction": p.get("conviction"),
+            "first_mentioned_at": p.get("first_mentioned_at"),
         }
-        for row in rows
+        for p in picks
+        if isinstance(p, dict)
     ]
 
 
@@ -232,7 +283,7 @@ def main() -> int:
 
     user_payload = {
         "handle": handle,
-        "existing_picks": existing_pick_summaries(),
+        "existing_picks": existing_pick_summaries(handle),
         "tweets": tweets,
     }
 

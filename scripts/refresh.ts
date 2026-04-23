@@ -1,31 +1,46 @@
 /**
- * Refresh price/marketcap/YTD/history + rich fundamentals for every ticker
- * in the Supabase `picks` table.
+ * Refresh price/marketcap/YTD/history + fundamentals for every ticker
+ * in data/people/<person>/picks.json.
  *
- *   npm run refresh                          # refresh all active people
- *   npm run refresh -- --person serenity     # only one person
- *   npm run refresh -- --ticker IQE.L        # only one ticker (across all people)
+ *   pnpm refresh                          # refresh all people in data/people.json
+ *   pnpm refresh -- --person serenity     # only one person
+ *   pnpm refresh -- --ticker IQE.L        # only one ticker (across all people)
+ *
+ * FMP is primary source; yfinance can enrich missing fields/history.
  */
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import yahooFinance from "yahoo-finance2";
+import fs from "node:fs";
+import path from "node:path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import {
-  FinancialMetricsSchema,
-  PriceEntrySchema,
+  PeopleFileSchema,
+  PicksFileSchema,
+  PricesFileSchema,
+  SiteMetaSchema,
+  ThemesFileSchema,
   type FinancialMetrics,
   type PriceEntry,
+  type Pick,
+  type SiteMeta,
+  type Theme,
 } from "../lib/schema";
+import {
+  getSupabaseAdminClient,
+  getSupabaseDataTableName,
+} from "./supabase_client";
 
-const yf = yahooFinance as unknown as {
-  suppressNotices?: (keys: string[]) => void;
-  setGlobalConfig?: (cfg: Record<string, unknown>) => void;
-};
-if (typeof yf.suppressNotices === "function") {
-  yf.suppressNotices(["yahooSurvey", "ripHistorical"]);
-} else if (typeof yf.setGlobalConfig === "function") {
-  yf.setGlobalConfig({ notifyRipHistorical: false });
-}
+const ROOT = path.resolve(__dirname, "..");
+const DATA_DIR = path.join(ROOT, "data");
+const PEOPLE_DIR = path.join(DATA_DIR, "people");
+const PEOPLE_FILE = path.join(DATA_DIR, "people.json");
 
-const RATE_LIMIT_MS = 250;
+const RATE_LIMIT_MS = 350;
+const FMP_BASE_URL = "https://financialmodelingprep.com/stable";
+const FMP_API_KEY = process.env.FMP_API_KEY?.trim() ?? "";
+const PYTHON_BIN = process.env.PYTHON_BIN?.trim() || "python3";
+const YFINANCE_ENABLED = process.env.YFINANCE_ENABLED !== "0";
+const execFileAsync = promisify(execFile);
+
 const DEFAULT_CURRENCY: Record<string, string> = {
   ".L": "GBp",
   ".ST": "SEK",
@@ -34,57 +49,73 @@ const DEFAULT_CURRENCY: Record<string, string> = {
   ".TO": "CAD",
 };
 
-function getEnv(key: string): string | undefined {
-  return process.env[key];
-}
+type FmpQuote = {
+  symbol?: unknown;
+  price?: unknown;
+  marketCap?: unknown;
+  currency?: unknown;
+  previousClose?: unknown;
+  open?: unknown;
+  dayHigh?: unknown;
+  dayLow?: unknown;
+  changePercentage?: unknown;
+  volume?: unknown;
+  averageVolume?: unknown;
+  yearHigh?: unknown;
+  yearLow?: unknown;
+  priceAvg50?: unknown;
+  priceAvg200?: unknown;
+  exchange?: unknown;
+};
 
-function getSupabase(): SupabaseClient {
-  const url = getEnv("SUPABASE_URL") ?? getEnv("NEXT_PUBLIC_SUPABASE_URL");
-  const key =
-    getEnv("SUPABASE_SERVICE_ROLE_KEY") ??
-    getEnv("SUPABASE_SERVICE_KEY") ??
-    getEnv("SUPABASE_ANON_KEY") ??
-    getEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY") ??
-    getEnv("SUPABASE_PUBLISHABLE_KEY");
-  if (!url) {
-    throw new Error(
-      "Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) env var. Put it in .env.",
-    );
-  }
-  if (!key) {
-    throw new Error(
-      "Missing SUPABASE_SERVICE_ROLE_KEY (preferred for writes) or SUPABASE_ANON_KEY env var. Put it in .env.",
-    );
-  }
-  return createClient(url, key, { auth: { persistSession: false } });
-}
+type FmpProfile = {
+  symbol?: unknown;
+  price?: unknown;
+  marketCap?: unknown;
+  currency?: unknown;
+  previousClose?: unknown;
+  open?: unknown;
+  dayHigh?: unknown;
+  dayLow?: unknown;
+  changePercentage?: unknown;
+  volume?: unknown;
+  averageVolume?: unknown;
+  yearHigh?: unknown;
+  yearLow?: unknown;
+  priceAvg50?: unknown;
+  priceAvg200?: unknown;
+  exchange?: unknown;
+  beta?: unknown;
+  lastDividend?: unknown;
+  sector?: unknown;
+  industry?: unknown;
+  exchangeFullName?: unknown;
+};
 
-function loadDotEnv() {
-  try {
-    // Best-effort: read .env and populate process.env without adding a dep.
-    // Only overrides values that are not already set.
-    const fs = require("node:fs");
-    const path = require("node:path");
-    const envPath = path.resolve(__dirname, "..", ".env");
-    if (!fs.existsSync(envPath)) return;
-    const raw = fs.readFileSync(envPath, "utf8") as string;
-    for (const line of raw.split(/\r?\n/)) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-      const idx = trimmed.indexOf("=");
-      if (idx === -1) continue;
-      const k = trimmed.slice(0, idx).trim();
-      let v = trimmed.slice(idx + 1).trim();
-      if (
-        (v.startsWith('"') && v.endsWith('"')) ||
-        (v.startsWith("'") && v.endsWith("'"))
-      ) {
-        v = v.slice(1, -1);
-      }
-      if (!(k in process.env)) process.env[k] = v;
-    }
-  } catch {
-    // ignore
+type FmpHistoryPoint = {
+  date?: unknown;
+  price?: unknown;
+};
+
+type RefreshSource = "fmp" | "fmp+yfinance" | "yfinance";
+
+type YfinancePayload = {
+  price: number | null;
+  market_cap: number | null;
+  currency: string | null;
+  history: { date: string; close: number }[];
+  metrics: Partial<FinancialMetrics>;
+};
+
+type RefreshResult = {
+  entry: PriceEntry;
+  source: RefreshSource;
+};
+
+class FmpUnsupportedSymbolError extends Error {
+  constructor(ticker: string, detail: string) {
+    super(`FMP unsupported symbol ${ticker}: ${detail}`);
+    this.name = "FmpUnsupportedSymbolError";
   }
 }
 
@@ -126,6 +157,10 @@ function parseArgs(argv: string[]): { ticker?: string; person?: string } {
 function num(v: unknown): number | null {
   if (v == null) return null;
   if (typeof v === "number" && Number.isFinite(v)) return v;
+  if (typeof v === "string") {
+    const parsed = Number(v);
+    if (Number.isFinite(parsed)) return parsed;
+  }
   if (typeof v === "object" && v !== null && "raw" in v) {
     const raw = (v as { raw: unknown }).raw;
     if (typeof raw === "number" && Number.isFinite(raw)) return raw;
@@ -133,10 +168,8 @@ function num(v: unknown): number | null {
   return null;
 }
 
-function pct(v: unknown): number | null {
-  const n = num(v);
-  if (n == null) return null;
-  return Number((n * 100).toFixed(2));
+function str(v: unknown): string | null {
+  return typeof v === "string" && v.trim().length > 0 ? v : null;
 }
 
 function dateOnly(v: unknown): string | null {
@@ -156,253 +189,428 @@ function dateOnly(v: unknown): string | null {
   return null;
 }
 
-async function fetchSummary(ticker: string): Promise<Record<string, unknown> | null> {
-  try {
-    return (await yahooFinance.quoteSummary(ticker, {
-      modules: [
-        "summaryDetail",
-        "defaultKeyStatistics",
-        "financialData",
-        "calendarEvents",
-        "summaryProfile",
-        "price",
-      ],
-    })) as Record<string, unknown>;
-  } catch (err) {
-    console.warn(`  ! quoteSummary failed for ${ticker}:`, (err as Error).message);
-    return null;
-  }
-}
-
-function buildMetrics(
-  quote: Record<string, unknown>,
-  summary: Record<string, unknown> | null,
-): FinancialMetrics {
-  const sd = (summary?.summaryDetail ?? {}) as Record<string, unknown>;
-  const dks = (summary?.defaultKeyStatistics ?? {}) as Record<string, unknown>;
-  const fd = (summary?.financialData ?? {}) as Record<string, unknown>;
-  const ce = (summary?.calendarEvents ?? {}) as Record<string, unknown>;
-  const sp = (summary?.summaryProfile ?? {}) as Record<string, unknown>;
-  const pr = (summary?.price ?? {}) as Record<string, unknown>;
-
-  const earnings = (ce?.earnings ?? {}) as Record<string, unknown>;
-  const earningsDates = Array.isArray(earnings.earningsDate)
-    ? (earnings.earningsDate as unknown[])
-    : [];
-  const nextEarnings =
-    earningsDates.length > 0 ? dateOnly(earningsDates[0]) : null;
-
-  return FinancialMetricsSchema.parse({
-    prev_close: num(quote.regularMarketPreviousClose) ?? num(sd.previousClose),
-    open: num(quote.regularMarketOpen) ?? num(sd.open),
-    day_high: num(quote.regularMarketDayHigh) ?? num(sd.dayHigh),
-    day_low: num(quote.regularMarketDayLow) ?? num(sd.dayLow),
-    day_change_pct: num(quote.regularMarketChangePercent),
-    volume: num(quote.regularMarketVolume) ?? num(sd.volume),
-    avg_volume:
-      num(quote.averageDailyVolume3Month) ??
-      num(sd.averageVolume) ??
-      num(sd.averageDailyVolume10Day),
-
-    fifty_two_week_high:
-      num(quote.fiftyTwoWeekHigh) ?? num(sd.fiftyTwoWeekHigh),
-    fifty_two_week_low:
-      num(quote.fiftyTwoWeekLow) ?? num(sd.fiftyTwoWeekLow),
-    fifty_two_week_change_pct:
-      num(quote.fiftyTwoWeekChangePercent) ?? pct(dks["52WeekChange"]),
-
-    fifty_day_avg: num(quote.fiftyDayAverage) ?? num(sd.fiftyDayAverage),
-    two_hundred_day_avg:
-      num(quote.twoHundredDayAverage) ?? num(sd.twoHundredDayAverage),
-
-    pe_trailing: num(quote.trailingPE) ?? num(sd.trailingPE),
-    pe_forward: num(quote.forwardPE) ?? num(sd.forwardPE) ?? num(dks.forwardPE),
-    peg_ratio: num(dks.pegRatio),
-    price_to_book: num(quote.priceToBook) ?? num(dks.priceToBook),
-    price_to_sales: num(sd.priceToSalesTrailing12Months),
-    ev_to_revenue: num(dks.enterpriseToRevenue),
-    ev_to_ebitda: num(dks.enterpriseToEbitda),
-    enterprise_value: num(dks.enterpriseValue),
-    eps_trailing:
-      num(quote.epsTrailingTwelveMonths) ?? num(dks.trailingEps),
-    eps_forward: num(quote.epsForward) ?? num(dks.forwardEps),
-    shares_outstanding:
-      num(quote.sharesOutstanding) ?? num(dks.sharesOutstanding),
-    float_shares: num(dks.floatShares),
-
-    total_revenue: num(fd.totalRevenue),
-    revenue_growth: pct(fd.revenueGrowth),
-    earnings_growth: pct(fd.earningsGrowth),
-    gross_margin: pct(fd.grossMargins),
-    operating_margin: pct(fd.operatingMargins),
-    profit_margin: pct(fd.profitMargins) ?? pct(dks.profitMargins),
-    ebitda_margin: pct(fd.ebitdaMargins),
-    return_on_equity: pct(fd.returnOnEquity),
-    return_on_assets: pct(fd.returnOnAssets),
-
-    total_cash: num(fd.totalCash),
-    total_debt: num(fd.totalDebt),
-    debt_to_equity: num(fd.debtToEquity),
-    current_ratio: num(fd.currentRatio),
-    quick_ratio: num(fd.quickRatio),
-    free_cashflow: num(fd.freeCashflow),
-    operating_cashflow: num(fd.operatingCashflow),
-
-    recommendation_key:
-      (typeof fd.recommendationKey === "string"
-        ? (fd.recommendationKey as string)
-        : null) ?? null,
-    recommendation_mean: num(fd.recommendationMean),
-    num_analysts: num(fd.numberOfAnalystOpinions),
-    target_mean_price: num(fd.targetMeanPrice),
-    target_high_price: num(fd.targetHighPrice),
-    target_low_price: num(fd.targetLowPrice),
-
-    beta: num(quote.beta) ?? num(sd.beta) ?? num(dks.beta),
-    short_pct_float: pct(dks.shortPercentOfFloat),
-    short_ratio: num(dks.shortRatio),
-    dividend_yield:
-      pct(sd.dividendYield) ??
-      (typeof quote.dividendYield === "number"
-        ? Number((quote.dividendYield as number).toFixed(2))
-        : null),
-    dividend_rate: num(sd.dividendRate) ?? num(quote.dividendRate),
-    payout_ratio: pct(sd.payoutRatio),
-    ex_dividend_date: dateOnly(sd.exDividendDate ?? quote.dividendDate),
-    next_earnings_date: nextEarnings,
-
-    sector: (typeof sp.sector === "string" ? (sp.sector as string) : null) ?? null,
-    industry:
-      (typeof sp.industry === "string" ? (sp.industry as string) : null) ?? null,
-    exchange:
-      (typeof pr.exchangeName === "string"
-        ? (pr.exchangeName as string)
-        : typeof quote.fullExchangeName === "string"
-          ? (quote.fullExchangeName as string)
-          : null) ?? null,
-  });
-}
-
-async function refreshOne(ticker: string): Promise<PriceEntry> {
-  const quote = (await yahooFinance.quote(ticker)) as Record<string, unknown>;
-  const currency =
-    (typeof quote.currency === "string" ? (quote.currency as string) : null) ??
-    inferCurrency(ticker);
-  const price = num(quote.regularMarketPrice);
-  const marketCap = num(quote.marketCap);
-
-  let ytdPct = 0;
-  let history: { date: string; close: number }[] = [];
-  const jan1Ms = jan1ISO().getTime();
-
-  try {
-    const chart = await yahooFinance.chart(ticker, {
-      period1: yearsAgoISO(5),
-      interval: "1d",
-    });
-    const quotes = chart.quotes ?? [];
-    history = quotes
-      .filter((q) => typeof q.close === "number" && q.date instanceof Date)
-      .map((q) => ({
-        date: (q.date as Date).toISOString().slice(0, 10),
-        close: q.close as number,
-      }));
-    if (history.length > 1 && price != null) {
-      const ytdStart =
-        history.find((point) => {
-          const ms = Date.parse(point.date);
-          return !Number.isNaN(ms) && ms >= jan1Ms;
-        }) ?? history[history.length - 1];
-      const start = ytdStart.close;
-      if (start && start > 0) {
-        ytdPct = ((price - start) / start) * 100;
-      }
-    }
-  } catch (err) {
-    console.warn(`  ! chart failed for ${ticker}:`, (err as Error).message);
-  }
-
-  const summary = await fetchSummary(ticker);
-  const metrics = buildMetrics(quote, summary);
-
-  return PriceEntrySchema.parse({
-    price,
-    market_cap: marketCap,
-    currency,
-    ytd_pct: Number(ytdPct.toFixed(2)),
-    history,
-    updated_at: new Date().toISOString().slice(0, 10),
-    metrics,
-  });
-}
-
 async function sleep(ms: number) {
   return new Promise((res) => setTimeout(res, ms));
 }
 
-async function refreshPerson(
-  client: SupabaseClient,
-  slug: string,
-  tickerFilter?: string,
-) {
-  const { data: picks, error } = await client
-    .from("picks")
-    .select("ticker")
-    .eq("person_slug", slug);
-  if (error) {
-    console.warn(`[refresh] ${slug}: failed to load picks: ${error.message}`);
-    return { ok: 0, fail: 0 };
+async function fetchJson<T>(url: string): Promise<T> {
+  const res = await fetch(url);
+  const text = await res.text();
+  if (!res.ok) {
+    const body = text.slice(0, 240);
+    if (res.status === 402) {
+      throw new FmpUnsupportedSymbolError("unknown", body);
+    }
+    throw new Error(`HTTP ${res.status}: ${body}`);
+  }
+  return JSON.parse(text) as T;
+}
+
+function withFmpKey(endpoint: string): string {
+  const joiner = endpoint.includes("?") ? "&" : "?";
+  return `${FMP_BASE_URL}${endpoint}${joiner}apikey=${encodeURIComponent(FMP_API_KEY)}`;
+}
+
+function calculateYtdPct(
+  price: number | null,
+  history: { date: string; close: number }[],
+): number {
+  if (price == null || history.length === 0) return 0;
+  const jan1Ms = jan1ISO().getTime();
+  const ytdStart =
+    history.find((point) => {
+      const ms = Date.parse(point.date);
+      return !Number.isNaN(ms) && ms >= jan1Ms;
+    }) ?? history[history.length - 1];
+  const start = ytdStart?.close;
+  if (!start || start <= 0) return 0;
+  return Number((((price - start) / start) * 100).toFixed(2));
+}
+
+function buildFmpMetrics(
+  quote: FmpQuote,
+  profile: FmpProfile | null,
+): FinancialMetrics {
+  return {
+    prev_close: num(quote.previousClose),
+    open: num(quote.open),
+    day_high: num(quote.dayHigh),
+    day_low: num(quote.dayLow),
+    day_change_pct: num(quote.changePercentage),
+    volume: num(quote.volume),
+    avg_volume: num(quote.averageVolume),
+    fifty_two_week_high: num(quote.yearHigh),
+    fifty_two_week_low: num(quote.yearLow),
+    fifty_day_avg: num(quote.priceAvg50),
+    two_hundred_day_avg: num(quote.priceAvg200),
+    beta: num(profile?.beta),
+    dividend_rate: num(profile?.lastDividend),
+    sector: str(profile?.sector),
+    industry: str(profile?.industry),
+    exchange: str(profile?.exchangeFullName) ?? str(quote.exchange),
+  };
+}
+
+function fillMissingMetrics(
+  base: FinancialMetrics | undefined,
+  fallback: Partial<FinancialMetrics>,
+): FinancialMetrics {
+  const merged: FinancialMetrics = { ...(base ?? {}) };
+  for (const [key, value] of Object.entries(fallback)) {
+    const current = (merged as Record<string, unknown>)[key];
+    if ((current == null || current === "") && value != null) {
+      (merged as Record<string, unknown>)[key] = value;
+    }
+  }
+  return merged;
+}
+
+function shouldUseYfinanceEnrichment(entry: PriceEntry): boolean {
+  const metricsCount = Object.keys(entry.metrics ?? {}).length;
+  return (
+    entry.history.length === 0 ||
+    entry.price == null ||
+    entry.market_cap == null ||
+    metricsCount < 10 ||
+    !entry.metrics?.sector ||
+    !entry.metrics?.industry
+  );
+}
+
+function normalizeYfinancePayload(payload: unknown): YfinancePayload {
+  if (!payload || typeof payload !== "object") {
+    throw new Error("Invalid yfinance payload: expected object.");
+  }
+  const obj = payload as Record<string, unknown>;
+  const rawHistory = Array.isArray(obj.history) ? obj.history : [];
+  const history = rawHistory
+    .map((row) => {
+      if (!row || typeof row !== "object") return null;
+      const item = row as Record<string, unknown>;
+      const day = dateOnly(item.date);
+      const close = num(item.close);
+      if (!day || close == null) return null;
+      return { date: day, close };
+    })
+    .filter(
+      (row): row is { date: string; close: number } =>
+        row != null && row.close != null,
+    )
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  const rawMetrics =
+    obj.metrics && typeof obj.metrics === "object"
+      ? (obj.metrics as Record<string, unknown>)
+      : {};
+  const metrics = Object.fromEntries(
+    Object.entries(rawMetrics).filter(([, value]) => value != null),
+  ) as Partial<FinancialMetrics>;
+
+  return {
+    price: num(obj.price),
+    market_cap: num(obj.market_cap),
+    currency: str(obj.currency),
+    history,
+    metrics,
+  };
+}
+
+async function fetchYfinance(ticker: string): Promise<YfinancePayload> {
+  const scriptPath = path.join(ROOT, "scripts", "yfinance_fetch.py");
+  try {
+    const { stdout, stderr } = await execFileAsync(
+      PYTHON_BIN,
+      [scriptPath, "--ticker", ticker, "--years", "5"],
+      {
+        cwd: ROOT,
+        maxBuffer: 5 * 1024 * 1024,
+      },
+    );
+    if (!stdout || stdout.trim().length === 0) {
+      throw new Error(stderr?.trim() || "yfinance returned empty output.");
+    }
+    return normalizeYfinancePayload(JSON.parse(stdout));
+  } catch (err) {
+    const msg =
+      err instanceof Error ? err.message : "Unknown yfinance execution error";
+    throw new Error(`yfinance fetch failed for ${ticker}: ${msg}`);
+  }
+}
+
+async function fetchFmpQuote(ticker: string): Promise<FmpQuote> {
+  const url = withFmpKey(`/quote?symbol=${encodeURIComponent(ticker)}`);
+  const rows = await fetchJson<FmpQuote[] | { "Error Message"?: string }>(url);
+  if (!Array.isArray(rows) || rows.length === 0) {
+    throw new Error(`No quote rows returned for ${ticker}`);
+  }
+  return rows[0];
+}
+
+async function fetchFmpProfile(ticker: string): Promise<FmpProfile | null> {
+  const url = withFmpKey(`/profile?symbol=${encodeURIComponent(ticker)}`);
+  try {
+    const rows = await fetchJson<FmpProfile[] | { "Error Message"?: string }>(url);
+    if (!Array.isArray(rows) || rows.length === 0) return null;
+    return rows[0];
+  } catch {
+    return null;
+  }
+}
+
+async function fetchFmpHistory(
+  ticker: string,
+): Promise<{ date: string; close: number }[]> {
+  const from = yearsAgoISO(5).toISOString().slice(0, 10);
+  const url = withFmpKey(
+    `/historical-price-eod/light?symbol=${encodeURIComponent(ticker)}&from=${from}`,
+  );
+  const rows = await fetchJson<FmpHistoryPoint[] | { "Error Message"?: string }>(url);
+  if (!Array.isArray(rows)) return [];
+  return rows
+    .map((point) => ({
+      date: dateOnly(point.date),
+      close: num(point.price),
+    }))
+    .filter(
+      (point): point is { date: string; close: number } =>
+        point.date != null && point.close != null,
+    )
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+async function refreshViaFmp(ticker: string): Promise<PriceEntry> {
+  if (!FMP_API_KEY) {
+    throw new Error("FMP_API_KEY is not set.");
   }
 
-  const tickers = Array.from(
-    new Set((picks ?? []).map((p: { ticker: string }) => p.ticker)),
-  ).sort();
+  const profile = await fetchFmpProfile(ticker);
+  let quote: FmpQuote | null = null;
+  try {
+    quote = await fetchFmpQuote(ticker);
+  } catch (err) {
+    if (!(err instanceof FmpUnsupportedSymbolError)) {
+      throw err;
+    }
+    if (profile == null) {
+      throw new FmpUnsupportedSymbolError(ticker, err.message);
+    }
+  }
+
+  let history: { date: string; close: number }[] = [];
+  try {
+    history = await fetchFmpHistory(ticker);
+  } catch (err) {
+    if (!(err instanceof FmpUnsupportedSymbolError)) {
+      throw err;
+    }
+  }
+
+  const quoteLike = (quote ?? profile) as FmpQuote | null;
+  if (quoteLike == null) {
+    throw new Error(`No quote/profile rows returned for ${ticker}`);
+  }
+
+  const price = num(quoteLike.price);
+  const currency = str(quoteLike.currency) ?? inferCurrency(ticker);
+  const ytdPct = calculateYtdPct(price, history);
+  const metrics = buildFmpMetrics(quoteLike, profile);
+
+  return {
+    price,
+    market_cap: num(quoteLike.marketCap),
+    currency,
+    ytd_pct: ytdPct,
+    history,
+    updated_at: new Date().toISOString().slice(0, 10),
+    metrics,
+  };
+}
+
+function buildEntryFromYfinance(
+  ticker: string,
+  yf: YfinancePayload,
+  prev?: PriceEntry,
+): PriceEntry {
+  const history =
+    yf.history.length > 0 ? yf.history : (prev?.history ?? []);
+  const price = yf.price ?? prev?.price ?? null;
+  return {
+    price,
+    market_cap: yf.market_cap ?? prev?.market_cap ?? null,
+    currency: yf.currency ?? prev?.currency ?? inferCurrency(ticker),
+    ytd_pct: calculateYtdPct(price, history),
+    history,
+    updated_at: new Date().toISOString().slice(0, 10),
+    metrics: fillMissingMetrics(prev?.metrics, yf.metrics),
+  };
+}
+
+function enrichFmpEntryWithYfinance(
+  ticker: string,
+  fmpEntry: PriceEntry,
+  yf: YfinancePayload,
+): RefreshResult {
+  let usedYf = false;
+  const entry: PriceEntry = {
+    ...fmpEntry,
+    metrics: { ...(fmpEntry.metrics ?? {}) },
+  };
+
+  if (entry.price == null && yf.price != null) {
+    entry.price = yf.price;
+    usedYf = true;
+  }
+  if (entry.market_cap == null && yf.market_cap != null) {
+    entry.market_cap = yf.market_cap;
+    usedYf = true;
+  }
+  if (entry.history.length === 0 && yf.history.length > 0) {
+    entry.history = yf.history;
+    usedYf = true;
+  }
+  if (
+    yf.currency &&
+    (entry.currency === inferCurrency(ticker) || !entry.currency)
+  ) {
+    entry.currency = yf.currency;
+    usedYf = true;
+  }
+  const beforeMetrics = Object.keys(entry.metrics ?? {}).length;
+  entry.metrics = fillMissingMetrics(entry.metrics, yf.metrics);
+  if (Object.keys(entry.metrics ?? {}).length > beforeMetrics) {
+    usedYf = true;
+  }
+  entry.ytd_pct = calculateYtdPct(entry.price, entry.history);
+
+  return { entry, source: usedYf ? "fmp+yfinance" : "fmp" };
+}
+
+async function refreshOne(ticker: string, prev?: PriceEntry): Promise<RefreshResult> {
+  let fmpEntry: PriceEntry | null = null;
+  let fmpErr: Error | null = null;
+  if (FMP_API_KEY) {
+    try {
+      fmpEntry = await refreshViaFmp(ticker);
+    } catch (err) {
+      fmpErr = err as Error;
+    }
+  } else {
+    fmpErr = new Error("FMP_API_KEY is not set.");
+  }
+
+  let yf: YfinancePayload | null = null;
+  if (
+    YFINANCE_ENABLED &&
+    (fmpEntry == null || shouldUseYfinanceEnrichment(fmpEntry))
+  ) {
+    try {
+      yf = await fetchYfinance(ticker);
+    } catch (err) {
+      if (fmpEntry == null) {
+        throw err;
+      }
+    }
+  }
+
+  if (fmpEntry && yf) {
+    return enrichFmpEntryWithYfinance(ticker, fmpEntry, yf);
+  }
+  if (fmpEntry) {
+    return { entry: fmpEntry, source: "fmp" };
+  }
+  if (yf) {
+    return { entry: buildEntryFromYfinance(ticker, yf, prev), source: "yfinance" };
+  }
+  throw fmpErr ?? new Error(`Failed to refresh ${ticker} from all providers.`);
+}
+
+async function refreshPerson(slug: string, tickerFilter?: string) {
+  const dir = path.join(PEOPLE_DIR, slug);
+  const picksPath = path.join(dir, "picks.json");
+  const pricesPath = path.join(dir, "prices.json");
+  const themesPath = path.join(dir, "themes.json");
+  const siteMetaPath = path.join(dir, "site_meta.json");
+
+  if (!fs.existsSync(picksPath)) {
+    console.warn(`[refresh] ${slug}: no picks.json at ${picksPath}, skipping`);
+    return { ok: 0, fail: 0, fmp: 0, mixed: 0, yfin: 0 };
+  }
+
+  if (!fs.existsSync(themesPath) || !fs.existsSync(siteMetaPath)) {
+    console.warn(`[refresh] ${slug}: missing themes.json or site_meta.json, skipping`);
+    return { ok: 0, fail: 0, fmp: 0, mixed: 0, yfin: 0 };
+  }
+
+  const picks = PicksFileSchema.parse(
+    JSON.parse(fs.readFileSync(picksPath, "utf8")),
+  );
+  const themes = ThemesFileSchema.parse(
+    JSON.parse(fs.readFileSync(themesPath, "utf8")),
+  );
+  const siteMeta = SiteMetaSchema.parse(
+    JSON.parse(fs.readFileSync(siteMetaPath, "utf8")),
+  );
+  const tickers = Array.from(new Set(picks.map((p) => p.ticker))).sort();
   const targets = tickerFilter
     ? tickers.filter((t) => t === tickerFilter)
     : tickers;
 
   if (targets.length === 0) {
     console.log(`[refresh] ${slug}: no tickers to process`);
-    return { ok: 0, fail: 0 };
+    return { ok: 0, fail: 0, fmp: 0, mixed: 0, yfin: 0 };
   }
 
+  let existing: Record<string, PriceEntry> = {};
+  if (fs.existsSync(pricesPath)) {
+    try {
+      existing = PricesFileSchema.parse(
+        JSON.parse(fs.readFileSync(pricesPath, "utf8")),
+      );
+    } catch {
+      console.warn(`[refresh] ${slug}: existing prices.json invalid, starting fresh`);
+    }
+  }
+
+  const out: Record<string, PriceEntry> = { ...existing };
   let ok = 0;
   let fail = 0;
+  let fmp = 0;
+  let mixed = 0;
+  let yfin = 0;
 
   console.log(`\n[refresh] ${slug}: ${targets.length} ticker(s)`);
   for (const ticker of targets) {
     process.stdout.write(`  - ${ticker.padEnd(12)} `);
     try {
-      const entry = await refreshOne(ticker);
-      const { error: upsertErr } = await client.from("prices").upsert(
-        {
-          person_slug: slug,
-          ticker,
-          price: entry.price,
-          market_cap: entry.market_cap,
-          currency: entry.currency,
-          ytd_pct: entry.ytd_pct,
-          history: entry.history,
-          metrics: entry.metrics ?? {},
-          updated_at: entry.updated_at,
-        },
-        { onConflict: "person_slug,ticker" },
-      );
-      if (upsertErr) {
-        fail++;
-        console.log(`FAILED (upsert): ${upsertErr.message}`);
-      } else {
-        ok++;
-        const ytd =
-          entry.ytd_pct >= 0 ? `+${entry.ytd_pct}%` : `${entry.ytd_pct}%`;
-        const day =
-          entry.metrics?.day_change_pct != null
-            ? ` day=${entry.metrics.day_change_pct >= 0 ? "+" : ""}${entry.metrics.day_change_pct.toFixed(2)}%`
-            : "";
-        console.log(
-          `${entry.price ?? "—"} ${entry.currency}  ytd=${ytd}${day}  hist=${entry.history.length}d`,
-        );
+      const prev = out[ticker];
+      const { entry, source } = await refreshOne(ticker, prev);
+
+      if (entry.history.length === 0 && prev?.history?.length) {
+        entry.history = prev.history;
       }
+      if (
+        entry.history.length === 0 &&
+        entry.ytd_pct === 0 &&
+        prev != null &&
+        prev.ytd_pct !== 0
+      ) {
+        entry.ytd_pct = prev.ytd_pct;
+      }
+
+      out[ticker] = entry;
+      ok++;
+      if (source === "fmp") fmp++;
+      if (source === "fmp+yfinance") mixed++;
+      if (source === "yfinance") yfin++;
+
+      const ytd = entry.ytd_pct >= 0 ? `+${entry.ytd_pct}%` : `${entry.ytd_pct}%`;
+      const day =
+        entry.metrics?.day_change_pct != null
+          ? ` day=${entry.metrics.day_change_pct >= 0 ? "+" : ""}${entry.metrics.day_change_pct.toFixed(2)}%`
+          : "";
+      console.log(
+        `${entry.price ?? "—"} ${entry.currency}  ytd=${ytd}${day}  hist=${entry.history.length}d [${source}]`,
+      );
     } catch (err) {
       fail++;
       console.log(`FAILED: ${(err as Error).message}`);
@@ -410,43 +618,90 @@ async function refreshPerson(
     await sleep(RATE_LIMIT_MS);
   }
 
-  console.log(`[refresh] ${slug}: ok=${ok} fail=${fail}`);
-  return { ok, fail };
+  PricesFileSchema.parse(out);
+  fs.writeFileSync(pricesPath, JSON.stringify(out, null, 2) + "\n");
+
+  await maybeSyncPersonDatasetToSupabase({
+    slug,
+    picks,
+    prices: out,
+    themes,
+    siteMeta,
+  });
+
+  console.log(
+    `[refresh] ${slug}: ok=${ok} fail=${fail} fmp=${fmp} fmp+yf=${mixed} yfinance=${yfin}  ->  ${path.relative(ROOT, pricesPath)}`,
+  );
+  return { ok, fail, fmp, mixed, yfin };
+}
+
+async function maybeSyncPersonDatasetToSupabase({
+  slug,
+  picks,
+  prices,
+  themes,
+  siteMeta,
+}: {
+  slug: string;
+  picks: Pick[];
+  prices: Record<string, PriceEntry>;
+  themes: Theme[];
+  siteMeta: SiteMeta;
+}) {
+  const client = getSupabaseAdminClient();
+  if (!client) return;
+  const payload = {
+    slug,
+    picks,
+    prices,
+    themes,
+    site_meta: siteMeta,
+    updated_at: new Date().toISOString(),
+  };
+  const table = getSupabaseDataTableName();
+  const { error } = await client
+    .from(table)
+    .upsert(payload, { onConflict: "slug" });
+  if (error) {
+    // Keep local refresh resilient even if remote sync fails.
+    console.warn(`[refresh] ${slug}: supabase sync skipped: ${error.message}`);
+  }
 }
 
 async function main() {
-  loadDotEnv();
   const args = parseArgs(process.argv.slice(2));
-  const client = getSupabase();
-
-  const { data: people, error } = await client
-    .from("people")
-    .select("slug")
-    .eq("active", true);
-  if (error) {
-    throw new Error(`[refresh] failed to list people: ${error.message}`);
-  }
-
-  const targetPeople = (people ?? [])
-    .map((p: { slug: string }) => p.slug)
-    .filter((s: string) => !args.person || s === args.person);
+  const people = PeopleFileSchema.parse(
+    JSON.parse(fs.readFileSync(PEOPLE_FILE, "utf8")),
+  ).filter((p) => p.active !== false);
+  const targetPeople = args.person
+    ? people.filter((p) => p.slug === args.person)
+    : people;
 
   if (targetPeople.length === 0) {
-    console.log(
-      `[refresh] no people to process (filter: ${args.person ?? "<all>"})`,
-    );
+    console.log(`[refresh] no people to process (filter: ${args.person ?? "<all>"})`);
     return;
   }
 
   let totalOk = 0;
   let totalFail = 0;
-  for (const slug of targetPeople) {
-    const { ok, fail } = await refreshPerson(client, slug, args.ticker);
+  let totalFmp = 0;
+  let totalMixed = 0;
+  let totalYf = 0;
+  for (const person of targetPeople) {
+    const { ok, fail, fmp, mixed, yfin } = await refreshPerson(
+      person.slug,
+      args.ticker,
+    );
     totalOk += ok;
     totalFail += fail;
+    totalFmp += fmp;
+    totalMixed += mixed;
+    totalYf += yfin;
   }
 
-  console.log(`\n[refresh] DONE ok=${totalOk} fail=${totalFail}`);
+  console.log(
+    `\n[refresh] DONE ok=${totalOk} fail=${totalFail} fmp=${totalFmp} fmp+yf=${totalMixed} yfinance=${totalYf}`,
+  );
 }
 
 main().catch((err) => {

@@ -1,7 +1,7 @@
 import { getPeople } from "@/lib/data";
 import { PersonPicker } from "./components/PersonPicker";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const people = await getPeople();

@@ -151,16 +151,34 @@ def parse_tweet_datetime(raw: str | None) -> dt.datetime | None:
         return None
 
 
+def _effective_since_dt(
+    days_back: int | None,
+    since_date: dt.date | None,
+) -> dt.datetime | None:
+    """Lower bound on tweet time (UTC): intersection of optional windows."""
+    cutoffs: list[dt.datetime] = []
+    if since_date is not None:
+        cutoffs.append(
+            dt.datetime.combine(since_date, dt.time.min, tzinfo=dt.timezone.utc),
+        )
+    if days_back is not None and days_back > 0:
+        cutoffs.append(
+            dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=days_back),
+        )
+    if not cutoffs:
+        return None
+    return max(cutoffs)
+
+
 async def fetch_user_tweets(
     client: httpx.AsyncClient,
     user_id: str,
     limit: int,
     days_back: int | None,
+    since_date: dt.date | None,
     max_pages: int,
 ) -> list[dict[str, Any]]:
-    since_dt: dt.datetime | None = None
-    if days_back is not None and days_back > 0:
-        since_dt = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=days_back)
+    since_dt = _effective_since_dt(days_back, since_date)
 
     tweets: list[dict[str, Any]] = []
     seen_ids: set[str] = set()
@@ -374,10 +392,12 @@ async def main_async(args: argparse.Namespace) -> int:
     cookies = require_cookies()
     handle = args.handle or get_handle()
     cursor = None if args.full else read_cursor()
+    since_date = dt.date.fromisoformat(args.since_date)
 
     print(
         f"[scrape] target=@{handle}  cursor={cursor or '(none)'}  "
-        f"limit={args.limit}  days_back={args.days_back if args.days_back else 'all'}  "
+        f"limit={args.limit}  since_date={since_date.isoformat()}  "
+        f"days_back={args.days_back if args.days_back else 'all'}  "
         f"max_pages={args.max_pages}"
     )
 
@@ -397,14 +417,15 @@ async def main_async(args: argparse.Namespace) -> int:
                 user_id,
                 args.limit,
                 args.days_back,
+                since_date,
                 args.max_pages,
             )
         except httpx.HTTPError as exc:
             print(f"ERROR: network failure fetching tweets: {exc}", file=sys.stderr)
             return 2
 
-    print(f"[scrape] fetched {len(tweets)} tweets")
-    new_tweets = filter_new(tweets, cursor)
+    print(f"[scrape] fetched {len(tweets)} tweets in window")
+    new_tweets = tweets if args.full else filter_new(tweets, cursor)
     print(f"[scrape] {len(new_tweets)} new tweets since cursor")
 
     today = dt.date.today().isoformat()
@@ -434,24 +455,29 @@ def main() -> int:
     )
     parser.add_argument("--handle", default=None, help="Override TWITTER_HANDLE env.")
     parser.add_argument(
-        "--limit", type=int, default=200, help="Max tweets to pull per run."
+        "--limit", type=int, default=5000, help="Max tweets to pull per run."
     )
     parser.add_argument(
         "--days-back",
         type=int,
         default=365,
-        help="Only keep tweets from the last N days. Use 0 for no cutoff.",
+        help="Only keep tweets from the last N days. Use 0 for no rolling cutoff.",
     )
     parser.add_argument(
         "--max-pages",
         type=int,
-        default=40,
+        default=80,
         help="Maximum timeline pages to request when paginating.",
     )
     parser.add_argument(
         "--full",
         action="store_true",
         help="Ignore stored cursor and pull the full window.",
+    )
+    parser.add_argument(
+        "--since-date",
+        default="2026-01-01",
+        help="Keep tweets on/after this date (YYYY-MM-DD), combined with --days-back.",
     )
     args = parser.parse_args()
     return asyncio.run(main_async(args))
