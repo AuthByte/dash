@@ -12,15 +12,17 @@ import {
 import { Hero } from "../components/Hero";
 import { ThesisBlock } from "../components/ThesisBlock";
 import { StatStrip } from "../components/StatStrip";
-import { ThemeGrid } from "../components/ThemeGrid";
 import { PicksSection } from "../components/PicksSection";
 import { Footer } from "../components/Footer";
 import { ProfileSwitcher } from "../components/ProfileSwitcher";
+import { HighlightsPanel } from "../components/HighlightsPanel";
+import { InsightsPanel } from "../components/InsightsPanel";
 
 export const dynamic = "force-dynamic";
 
-export function generateStaticParams() {
-  return getPeople().then((people) => people.map((p) => ({ person: p.slug })));
+export async function generateStaticParams() {
+  const people = await getPeople();
+  return people.map((p) => ({ person: p.slug }));
 }
 
 export default async function PersonDashboardPage({
@@ -32,12 +34,14 @@ export default async function PersonDashboardPage({
   const person = await getPersonBySlug(slug);
   if (!person) notFound();
 
-  const picks = await getEnrichedPicks(slug, { includeHistory: false });
-  const themes = await getThemes(slug);
-  const themeStats = await getThemeStats(slug, picks);
+  const [picks, themes, meta, people] = await Promise.all([
+    getEnrichedPicks(slug, { includeHistory: false }),
+    getThemes(slug),
+    getSiteMeta(slug),
+    getPeople(),
+  ]);
+  const themeStats = getThemeStats(themes, picks);
   const headline = getHeadlineStats(picks);
-  const meta = await getSiteMeta(slug);
-  const people = await getPeople();
 
   return (
     <main className="bg-grid relative min-h-dvh">
@@ -53,7 +57,13 @@ export default async function PersonDashboardPage({
           <StatStrip stats={headline} />
         </div>
         <div className="mt-8">
-          <ThemeGrid stats={themeStats} />
+          <HighlightsPanel
+            picks={picks}
+            themeMap={new Map(themes.map((theme) => [theme.slug, theme] as const))}
+          />
+        </div>
+        <div id="insights" className="mt-8">
+          <InsightsPanel themeStats={themeStats} picks={picks} />
         </div>
         <div className="mt-10">
           <Suspense fallback={null}>

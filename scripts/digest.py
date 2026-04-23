@@ -11,6 +11,7 @@ from typing import Any
 
 import httpx
 
+from apply_digest import SupabaseClient, get_supabase_client
 from common import (
     DATA_DIR,
     OUTPUT_DIR,
@@ -104,38 +105,64 @@ def load_system_prompt(handle: str) -> str:
     return PROMPT_PATH.read_text().replace("{HANDLE}", handle)
 
 
-def existing_pick_summaries(handle: str) -> list[dict[str, Any]]:
-    """Slim view of existing picks for strong dedupe/new-mention screening."""
+def _resolve_person_slug(handle: str) -> str | None:
+    """Match people.json by handle, else slug/name substring (handle without @)."""
     people_path = DATA_DIR / "people.json"
     if not people_path.exists():
-        return []
+        return None
     people = read_json(people_path)
     if not isinstance(people, list):
-        return []
+        return None
 
-    # Resolve person by handle first, fall back to slug/name contains match.
-    target_slug: str | None = None
     handle_l = handle.lower().lstrip("@")
     for person in people:
         if not isinstance(person, dict):
             continue
         person_handle = str(person.get("handle", "")).lower().lstrip("@")
         if person_handle == handle_l:
-            target_slug = str(person.get("slug", "")).strip() or None
-            break
-    if target_slug is None:
-        for person in people:
-            if not isinstance(person, dict):
-                continue
-            slug = str(person.get("slug", ""))
-            name = str(person.get("name", ""))
-            if handle_l in slug.lower() or handle_l in name.lower():
-                target_slug = slug.strip() or None
-                break
-    if target_slug is None:
+            slug = str(person.get("slug", "")).strip()
+            return slug or None
+    for person in people:
+        if not isinstance(person, dict):
+            continue
+        slug = str(person.get("slug", ""))
+        name = str(person.get("name", ""))
+        if handle_l in slug.lower() or handle_l in name.lower():
+            return slug.strip() or None
+    return None
+
+
+def existing_pick_summaries(handle: str) -> list[dict[str, Any]]:
+    """Slim view of existing picks for LLM dedupe (Supabase when configured, else JSON)."""
+    person_slug = _resolve_person_slug(handle)
+    if person_slug:
+        try:
+            client: SupabaseClient = get_supabase_client()
+            rows = client.select(
+                "picks",
+                {
+                    "select": "ticker,name,theme,stance,conviction,first_mentioned_at",
+                    "person_slug": f"eq.{person_slug}",
+                },
+            )
+            return [
+                {
+                    "ticker": row["ticker"],
+                    "name": row.get("name", ""),
+                    "theme": row.get("theme", ""),
+                    "stance": row.get("stance", ""),
+                    "conviction": row.get("conviction", ""),
+                    "first_mentioned_at": row.get("first_mentioned_at"),
+                }
+                for row in rows
+            ]
+        except RuntimeError as err:
+            print(f"[digest] warning: {err}; falling back to local picks if present.")
+
+    if not person_slug:
         return []
 
-    picks_path = DATA_DIR / "people" / target_slug / "picks.json"
+    picks_path = DATA_DIR / "people" / person_slug / "picks.json"
     if not picks_path.exists():
         return []
     picks = read_json(picks_path)

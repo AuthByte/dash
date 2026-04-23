@@ -46,6 +46,7 @@ export const PickSchema = z.object({
         tweet_id: z.string(),
         tweeted_at: z.string(),
         tweet_url: z.string().url().or(z.literal("")),
+        text: z.string().optional(),
       }),
     )
     .optional(),

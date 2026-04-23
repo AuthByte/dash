@@ -5,11 +5,13 @@ import {
   hasSupabaseConfig,
   readSupabasePersonDataset,
   readSupabasePeople,
+  supabase,
   type SupabasePersonDataset,
 } from "./supabase";
 import {
   PeopleFileSchema,
   PicksFileSchema,
+  PriceEntrySchema,
   PricesFileSchema,
   SiteMetaSchema,
   ThemesFileSchema,
@@ -30,7 +32,13 @@ function readJson<T>(absPath: string): unknown {
   return JSON.parse(raw) as T;
 }
 
-async function getSupabaseDataset(personSlug: string): Promise<SupabasePersonDataset | null> {
+function personDir(slug: string): string {
+  return path.join(PEOPLE_DIR, slug);
+}
+
+async function getSupabaseDataset(
+  personSlug: string,
+): Promise<SupabasePersonDataset | null> {
   if (!hasSupabaseConfig()) return null;
   try {
     return await readSupabasePersonDataset(personSlug);
@@ -39,62 +47,238 @@ async function getSupabaseDataset(personSlug: string): Promise<SupabasePersonDat
   }
 }
 
+type TweetEventRow = {
+  ticker: string;
+  tweet_id: string;
+  tweeted_at: string | null;
+  tweet_url: string;
+  text: string | null;
+};
+
+async function getPicksFromNormalizedTables(
+  personSlug: string,
+): Promise<Pick[] | null> {
+  if (!hasSupabaseConfig()) return null;
+  try {
+    const client = supabase();
+    const [{ data: picksRows, error: picksErr }, { data: eventsRows, error: eventsErr }] =
+      await Promise.all([
+        client
+          .from("picks")
+          .select(
+            "ticker,name,theme,stance,conviction,thesis_short,thesis_long,first_mentioned_at,tweet_url,tweet_id,exited_at,exit_price,sort_order",
+          )
+          .eq("person_slug", personSlug)
+          .order("sort_order", { ascending: true })
+          .order("ticker", { ascending: true }),
+        client
+          .from("tweet_events")
+          .select("ticker,tweet_id,tweeted_at,tweet_url,text")
+          .eq("person_slug", personSlug)
+          .order("tweeted_at", { ascending: true }),
+      ]);
+
+    if (picksErr || eventsErr) return null;
+
+    const eventsByTicker = new Map<string, TweetEventRow[]>();
+    for (const ev of (eventsRows ?? []) as TweetEventRow[]) {
+      const bucket = eventsByTicker.get(ev.ticker);
+      if (bucket) bucket.push(ev);
+      else eventsByTicker.set(ev.ticker, [ev]);
+    }
+
+    const enriched = (picksRows ?? []).map((p) => ({
+      ticker: p.ticker,
+      name: p.name ?? "",
+      theme: p.theme,
+      stance: p.stance,
+      conviction: p.conviction,
+      thesis_short: p.thesis_short ?? "",
+      thesis_long: p.thesis_long ?? "",
+      first_mentioned_at: p.first_mentioned_at,
+      tweet_url: p.tweet_url ?? "",
+      tweet_id: p.tweet_id ?? "",
+      exited_at: p.exited_at ?? null,
+      exit_price: p.exit_price ?? null,
+      tweet_events: (eventsByTicker.get(p.ticker) ?? []).map((ev) => ({
+        tweet_id: ev.tweet_id,
+        tweet_url: ev.tweet_url ?? "",
+        tweeted_at: ev.tweeted_at ?? "",
+        ...(ev.text ? { text: ev.text } : {}),
+      })),
+    }));
+
+    return PicksFileSchema.parse(enriched);
+  } catch {
+    return null;
+  }
+}
+
+async function getPricesFromNormalizedTables(
+  personSlug: string,
+): Promise<Record<string, PriceEntry> | null> {
+  if (!hasSupabaseConfig()) return null;
+  try {
+    const { data, error } = await supabase()
+      .from("prices")
+      .select("ticker,price,market_cap,currency,ytd_pct,history,metrics,updated_at")
+      .eq("person_slug", personSlug);
+    if (error) return null;
+
+    const out: Record<string, PriceEntry> = {};
+    for (const row of data ?? []) {
+      out[row.ticker] = PriceEntrySchema.parse({
+        price: row.price,
+        market_cap: row.market_cap,
+        currency: row.currency,
+        ytd_pct: Number(row.ytd_pct ?? 0),
+        history: row.history ?? [],
+        metrics: row.metrics ?? {},
+        updated_at:
+          typeof row.updated_at === "string"
+            ? row.updated_at
+            : new Date(row.updated_at).toISOString().slice(0, 10),
+      });
+    }
+    return out;
+  } catch {
+    return null;
+  }
+}
+
+async function getThemesFromNormalizedTables(
+  personSlug: string,
+): Promise<Theme[] | null> {
+  if (!hasSupabaseConfig()) return null;
+  try {
+    const { data, error } = await supabase()
+      .from("themes")
+      .select("slug,label,accent,sort_order")
+      .eq("person_slug", personSlug)
+      .order("sort_order", { ascending: true });
+    if (error) return null;
+    return ThemesFileSchema.parse(data ?? []);
+  } catch {
+    return null;
+  }
+}
+
+async function getSiteMetaFromNormalizedTables(
+  personSlug: string,
+): Promise<SiteMeta | null> {
+  if (!hasSupabaseConfig()) return null;
+  try {
+    const { data, error } = await supabase()
+      .from("site_meta")
+      .select("handle,follower_count,current_thesis_md,claimed_ytd_pct,last_updated")
+      .eq("person_slug", personSlug)
+      .maybeSingle();
+    if (error || !data) return null;
+    return SiteMetaSchema.parse({
+      handle: data.handle,
+      follower_count: data.follower_count,
+      current_thesis_md: data.current_thesis_md,
+      claimed_ytd_pct: Number(data.claimed_ytd_pct ?? 0),
+      last_updated:
+        typeof data.last_updated === "string"
+          ? data.last_updated
+          : new Date(data.last_updated).toISOString().slice(0, 10),
+    });
+  } catch {
+    return null;
+  }
+}
+
 export async function getPeople(): Promise<Person[]> {
   if (hasSupabaseConfig()) {
+    try {
+      const rows = await supabase()
+        .from("people")
+        .select("slug,name,handle,tagline,accent,active,sort_order")
+        .eq("active", true)
+        .order("sort_order", { ascending: true })
+        .order("slug", { ascending: true });
+      if (!rows.error && rows.data != null) {
+        return PeopleFileSchema.parse(rows.data).filter((p) => p.active !== false);
+      }
+    } catch {
+      // fall through
+    }
     try {
       const supabasePeople = await readSupabasePeople();
       return PeopleFileSchema.parse(supabasePeople).filter((p) => p.active !== false);
     } catch {
-      // Fall back to file storage to keep the app serving.
+      // fall through
     }
   }
-  return PeopleFileSchema.parse(readJson(path.join(DATA_DIR, "people.json"))).filter(
-    (p) => p.active !== false,
-  );
+
+  const peoplePath = path.join(DATA_DIR, "people.json");
+  if (fs.existsSync(peoplePath)) {
+    return PeopleFileSchema.parse(readJson(peoplePath)).filter(
+      (p) => p.active !== false,
+    );
+  }
+  return [];
 }
 
 export async function getPersonBySlug(slug: string): Promise<Person | null> {
   return (await getPeople()).find((p) => p.slug === slug) ?? null;
 }
 
-function personDir(slug: string): string {
-  return path.join(PEOPLE_DIR, slug);
-}
-
 export async function getPicks(personSlug: string): Promise<Pick[]> {
+  const normalized = await getPicksFromNormalizedTables(personSlug);
+  if (normalized) return normalized;
+
   const dataset = await getSupabaseDataset(personSlug);
   if (dataset?.picks) {
     return PicksFileSchema.parse(dataset.picks);
   }
-  return PicksFileSchema.parse(readJson(path.join(personDir(personSlug), "picks.json")));
+  return PicksFileSchema.parse(
+    readJson(path.join(personDir(personSlug), "picks.json")),
+  );
 }
 
-export async function getPrices(personSlug: string): Promise<Record<string, PriceEntry>> {
+export async function getPrices(
+  personSlug: string,
+): Promise<Record<string, PriceEntry>> {
+  const normalized = await getPricesFromNormalizedTables(personSlug);
+  if (normalized) return normalized;
+
   const dataset = await getSupabaseDataset(personSlug);
   if (dataset?.prices) {
     return PricesFileSchema.parse(dataset.prices);
   }
-  return PricesFileSchema.parse(readJson(path.join(personDir(personSlug), "prices.json")));
+  return PricesFileSchema.parse(
+    readJson(path.join(personDir(personSlug), "prices.json")),
+  );
 }
 
 export async function getThemes(personSlug: string): Promise<Theme[]> {
+  const normalized = await getThemesFromNormalizedTables(personSlug);
+  if (normalized) return normalized;
+
   const dataset = await getSupabaseDataset(personSlug);
   if (dataset?.themes) {
     return ThemesFileSchema.parse(dataset.themes).sort(
       (a, b) => a.sort_order - b.sort_order,
     );
   }
-  return ThemesFileSchema.parse(readJson(path.join(personDir(personSlug), "themes.json"))).sort(
-    (a, b) => a.sort_order - b.sort_order,
-  );
+  return ThemesFileSchema.parse(
+    readJson(path.join(personDir(personSlug), "themes.json")),
+  ).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getSiteMeta(personSlug: string): Promise<SiteMeta> {
+  const normalized = await getSiteMetaFromNormalizedTables(personSlug);
+  if (normalized) return normalized;
+
   const dataset = await getSupabaseDataset(personSlug);
   if (dataset?.site_meta) {
     return SiteMetaSchema.parse(dataset.site_meta);
   }
-  return SiteMetaSchema.parse(readJson(path.join(personDir(personSlug), "site_meta.json")));
+  return SiteMetaSchema.parse(
+    readJson(path.join(personDir(personSlug), "site_meta.json")),
+  );
 }
 
 export type EnrichedPick = Pick & {
@@ -177,11 +361,10 @@ export async function getEnrichedPick(
   };
 }
 
-export async function getThemeStats(
-  personSlug: string,
+export function getThemeStats(
+  themes: Theme[],
   picks: EnrichedPick[],
-): Promise<ThemeStats[]> {
-  const themes = await getThemes(personSlug);
+): ThemeStats[] {
   return themes.map((theme) => {
     const inTheme = picks.filter(
       (p) => p.theme === theme.slug && p.stance !== "exited",
@@ -249,4 +432,3 @@ export type HeadlineStats = {
   worst: { ticker: string; ytd_pct: number } | null;
   highest_conviction_count: number;
 };
-

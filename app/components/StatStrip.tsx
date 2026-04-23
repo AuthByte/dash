@@ -45,22 +45,22 @@ export function StatStrip({ stats }: { stats: HeadlineStats }) {
   ];
 
   return (
-    <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {items.map((item) => (
         <article
           key={item.label}
-          className="group relative overflow-hidden rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] p-4 transition hover:border-[var(--color-gold)]/40"
+          className="group relative overflow-hidden rounded-3xl border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] px-6 py-5 transition hover:border-[var(--color-gold)]/40"
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
             {item.label}
           </p>
           <p
-            className={`mt-3 font-mono text-2xl font-semibold ${toneClass(item.tone)}`}
+            className={`mt-2 font-sans text-5xl leading-none font-semibold ${toneClass(item.tone)}`}
           >
             {item.value}
           </p>
           {item.sub && (
-            <p className="mt-1 font-mono text-[11px] text-[var(--color-text-muted)]">
+            <p className="mt-2 text-sm text-[var(--color-text-dim)]">
               {item.sub}
             </p>
           )}
