@@ -11,8 +11,8 @@ from typing import Any
 
 import httpx
 
+from apply_digest import SupabaseClient, get_supabase_client
 from common import (
-    DATA_DIR,
     OUTPUT_DIR,
     ensure_dirs,
     get_handle,
@@ -104,22 +104,30 @@ def load_system_prompt(handle: str) -> str:
     return PROMPT_PATH.read_text().replace("{HANDLE}", handle)
 
 
-def existing_pick_summaries() -> list[dict[str, Any]]:
-    """Slim view of picks.json to stuff into the LLM context for dedupe."""
-    picks_path = DATA_DIR / "picks.json"
-    if not picks_path.exists():
+def existing_pick_summaries(person_slug: str = "serenity") -> list[dict[str, Any]]:
+    """Slim view of Supabase picks to stuff into the LLM context for dedupe."""
+    try:
+        client: SupabaseClient = get_supabase_client()
+    except RuntimeError as err:
+        print(f"[digest] warning: {err}; continuing with empty dedupe context.")
         return []
-    picks = read_json(picks_path)
+    rows = client.select(
+        "picks",
+        {
+            "select": "ticker,name,theme,stance,conviction,first_mentioned_at",
+            "person_slug": f"eq.{person_slug}",
+        },
+    )
     return [
         {
-            "ticker": p["ticker"],
-            "name": p["name"],
-            "theme": p["theme"],
-            "stance": p["stance"],
-            "conviction": p["conviction"],
-            "first_mentioned_at": p["first_mentioned_at"],
+            "ticker": row["ticker"],
+            "name": row.get("name", ""),
+            "theme": row.get("theme", ""),
+            "stance": row.get("stance", ""),
+            "conviction": row.get("conviction", ""),
+            "first_mentioned_at": row.get("first_mentioned_at"),
         }
-        for p in picks
+        for row in rows
     ]
 
 

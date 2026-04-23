@@ -1,14 +1,18 @@
-"""Apply latest digest output into data/people/<person>/ files."""
+"""Apply latest digest output into Supabase (picks, tweet_events, site_meta)."""
 from __future__ import annotations
 
 import argparse
 import datetime as dt
+import json
+import os
 import re
 import sys
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Any
 
-from common import OUTPUT_DIR, ROOT, read_json, write_json
+from common import OUTPUT_DIR, ROOT, load_env, read_json
 
 
 def latest_digest_path() -> Path | None:
@@ -48,7 +52,7 @@ def canonical_new_pick(raw: dict[str, Any]) -> dict[str, Any]:
         "conviction": str(raw.get("conviction", "")).strip(),
         "thesis_short": str(raw.get("thesis_short", "")).strip(),
         "thesis_long": str(raw.get("thesis_long", "")).strip(),
-        "first_mentioned_at": str(raw.get("first_mentioned_at", "")).strip(),
+        "first_mentioned_at": str(raw.get("first_mentioned_at", "")).strip() or None,
         "tweet_url": str(raw.get("tweet_url", "")).strip(),
         "tweet_id": str(raw.get("tweet_id", "")).strip(),
         "exited_at": None,
@@ -72,7 +76,6 @@ def ticker_variants_for_match(ticker: str) -> set[str]:
 
 
 def extract_tickers_from_text(text: str) -> set[str]:
-    # Capture cashtags with common exchange suffixes or separators.
     matches = re.findall(r"\$([A-Za-z][A-Za-z0-9.\-]{0,19})", text or "")
     return {normalize_ticker(m) for m in matches if m}
 
@@ -83,12 +86,10 @@ def parse_tweeted_at(value: str | None) -> dt.datetime | None:
     raw = value.strip()
     if not raw:
         return None
-    # Scrape format from X.
     try:
         return dt.datetime.strptime(raw, "%a %b %d %H:%M:%S %z %Y")
     except ValueError:
         pass
-    # ISO-like timestamps.
     try:
         if raw.endswith("Z"):
             raw = raw[:-1] + "+00:00"
@@ -122,6 +123,7 @@ def build_tweet_event_index(raw_tweets: list[dict[str, Any]]) -> dict[str, list[
             "tweet_id": tweet_id,
             "tweeted_at": tweeted_at,
             "tweet_url": tweet_url,
+            "text": text or None,
         }
         for ticker in extract_tickers_from_text(text):
             bucket = out.setdefault(ticker, [])
@@ -130,69 +132,99 @@ def build_tweet_event_index(raw_tweets: list[dict[str, Any]]) -> dict[str, list[
     return out
 
 
-def merge_tweet_events(existing_events: list[dict[str, Any]], new_events: list[dict[str, Any]]) -> list[dict[str, str]]:
-    merged: list[dict[str, str]] = []
+class SupabaseClient:
+    """Tiny REST wrapper so we don't add a Python dep just for writes."""
+
+    def __init__(self, url: str, key: str) -> None:
+        self.base = url.rstrip("/") + "/rest/v1"
+        self.key = key
+
+    def _headers(self, extra: dict[str, str] | None = None) -> dict[str, str]:
+        headers = {
+            "apikey": self.key,
+            "Authorization": f"Bearer {self.key}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        }
+        if extra:
+            headers.update(extra)
+        return headers
+
+    def _request(self, method: str, path: str, *, params: dict[str, str] | None = None, body: Any | None = None, extra_headers: dict[str, str] | None = None) -> Any:
+        from urllib.parse import urlencode
+        url = f"{self.base}{path}"
+        if params:
+            url = f"{url}?{urlencode(params)}"
+        data = None
+        if body is not None:
+            data = json.dumps(body).encode("utf-8")
+        req = urllib.request.Request(url, method=method, headers=self._headers(extra_headers), data=data)
+        try:
+            with urllib.request.urlopen(req) as resp:
+                raw = resp.read().decode("utf-8")
+                return json.loads(raw) if raw else None
+        except urllib.error.HTTPError as err:
+            body_text = err.read().decode("utf-8", errors="replace")
+            raise RuntimeError(
+                f"Supabase {method} {path} failed ({err.code}): {body_text}"
+            ) from err
+
+    def select(self, table: str, params: dict[str, str]) -> list[dict[str, Any]]:
+        return self._request("GET", f"/{table}", params=params) or []
+
+    def upsert(self, table: str, rows: list[dict[str, Any]], *, on_conflict: str) -> Any:
+        if not rows:
+            return []
+        return self._request(
+            "POST",
+            f"/{table}",
+            params={"on_conflict": on_conflict},
+            body=rows,
+            extra_headers={"Prefer": "resolution=merge-duplicates,return=minimal"},
+        )
+
+
+def get_supabase_client() -> SupabaseClient:
+    url = os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
+    key = (
+        os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+        or os.environ.get("SUPABASE_SERVICE_KEY")
+        or os.environ.get("SUPABASE_ANON_KEY")
+        or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY")
+        or os.environ.get("SUPABASE_PUBLISHABLE_KEY")
+    )
+    if not url:
+        raise RuntimeError("Missing SUPABASE_URL env var (put it in .env).")
+    if not key:
+        raise RuntimeError(
+            "Missing SUPABASE_SERVICE_ROLE_KEY or SUPABASE_ANON_KEY env var."
+        )
+    return SupabaseClient(url, key)
+
+
+def merge_events(
+    existing: list[dict[str, Any]], new_events: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
     seen: set[str] = set()
-    for event in existing_events + new_events:
-        tweet_id = str(event.get("tweet_id", "")).strip()
-        tweet_url = str(event.get("tweet_url", "")).strip()
-        tweeted_at = str(event.get("tweeted_at", "")).strip()
-        if not tweet_id or not tweet_url or tweet_id in seen:
+    merged: list[dict[str, Any]] = []
+    for ev in existing + new_events:
+        tweet_id = str(ev.get("tweet_id", "")).strip()
+        if not tweet_id or tweet_id in seen:
             continue
         seen.add(tweet_id)
-        merged.append(
-            {
-                "tweet_id": tweet_id,
-                "tweet_url": tweet_url,
-                "tweeted_at": tweeted_at,
-            }
-        )
+        merged.append(ev)
     merged.sort(
-        key=lambda event: (
-            parse_tweeted_at(event.get("tweeted_at")) or dt.datetime.max.replace(tzinfo=dt.timezone.utc),
-            event.get("tweet_id", ""),
+        key=lambda ev: (
+            parse_tweeted_at(ev.get("tweeted_at")) or dt.datetime.max.replace(tzinfo=dt.timezone.utc),
+            ev.get("tweet_id", ""),
         )
     )
     return merged
 
 
-def should_replace(existing: dict[str, Any], candidate: dict[str, Any]) -> bool:
-    existing_date = parse_iso_date(existing.get("first_mentioned_at"))
-    candidate_date = parse_iso_date(candidate.get("first_mentioned_at"))
-    if existing_date is None and candidate_date is None:
-        return False
-    if existing_date is None:
-        return True
-    if candidate_date is None:
-        return False
-    return candidate_date >= existing_date
-
-
-def apply_event_fields(pick: dict[str, Any], events: list[dict[str, str]]) -> dict[str, Any]:
-    if not events:
-        return pick
-    out = dict(pick)
-    out["tweet_events"] = events
-    out["tweet_url"] = events[0]["tweet_url"]
-    out["tweet_id"] = events[0]["tweet_id"]
-    first_mentioned = to_event_date(events[0].get("tweeted_at"))
-    if first_mentioned:
-        out["first_mentioned_at"] = first_mentioned
-    return out
-
-
 def apply_digest_for_person(person_slug: str, digest_path: Path) -> int:
-    person_dir = ROOT / "data" / "people" / person_slug
-    picks_path = person_dir / "picks.json"
-    site_meta_path = person_dir / "site_meta.json"
-    if not picks_path.exists():
-        print(f"ERROR: picks file not found: {picks_path}", file=sys.stderr)
-        return 2
-    if not site_meta_path.exists():
-        print(f"ERROR: site meta file not found: {site_meta_path}", file=sys.stderr)
-        return 2
+    client = get_supabase_client()
 
-    picks = read_json(picks_path)
     digest = read_json(digest_path)
     source_file = str(digest.get("source_file", "")).strip()
     raw_path: Path | None = None
@@ -206,17 +238,28 @@ def apply_digest_for_person(person_slug: str, digest_path: Path) -> int:
             raw_path = latest_raw[-1]
     raw_tweets = read_json(raw_path).get("tweets", []) if raw_path and raw_path.exists() else []
     tweet_index = build_tweet_event_index(raw_tweets)
+
     digest_new = [canonical_new_pick(p) for p in digest.get("new_picks", [])]
     digest_updated = [canonical_new_pick(p) for p in digest.get("updated_picks", [])]
     incoming = digest_new + digest_updated
-    if not incoming and not digest.get("thesis_update"):
+    thesis_update = digest.get("thesis_update")
+    if not incoming and not thesis_update:
         print("[apply-digest] no incoming picks or thesis update.")
         return 0
 
-    index_by_ticker: dict[str, int] = {}
-    for idx, pick in enumerate(picks):
-        index_by_ticker[normalize_ticker(str(pick.get("ticker", "")))] = idx
+    existing_picks_rows = client.select(
+        "picks",
+        {
+            "select": "ticker,first_mentioned_at,sort_order",
+            "person_slug": f"eq.{person_slug}",
+        },
+    )
+    existing_by_ticker = {row["ticker"]: row for row in existing_picks_rows}
+    max_sort = max(
+        (row.get("sort_order") or 0 for row in existing_picks_rows), default=-1
+    )
 
+    pick_upserts: list[dict[str, Any]] = []
     added = 0
     updated = 0
     skipped = 0
@@ -225,65 +268,160 @@ def apply_digest_for_person(person_slug: str, digest_path: Path) -> int:
         if not ticker:
             skipped += 1
             continue
-        existing_idx = index_by_ticker.get(ticker)
-        if existing_idx is None:
-            variants = ticker_variants_for_match(ticker)
-            matched_events: list[dict[str, str]] = []
-            for variant in variants:
-                matched_events.extend(tweet_index.get(variant, []))
-            matched_events = merge_tweet_events([], matched_events)
-            candidate = apply_event_fields(candidate, matched_events)
-            picks.append(candidate)
-            index_by_ticker[ticker] = len(picks) - 1
+        existing = existing_by_ticker.get(ticker)
+        if existing is None:
+            max_sort += 1
+            pick_upserts.append(
+                {
+                    "person_slug": person_slug,
+                    "ticker": ticker,
+                    "name": candidate["name"],
+                    "theme": candidate["theme"],
+                    "stance": candidate["stance"],
+                    "conviction": candidate["conviction"],
+                    "thesis_short": candidate["thesis_short"],
+                    "thesis_long": candidate["thesis_long"],
+                    "first_mentioned_at": candidate["first_mentioned_at"],
+                    "tweet_url": candidate["tweet_url"],
+                    "tweet_id": candidate["tweet_id"],
+                    "exited_at": None,
+                    "exit_price": None,
+                    "sort_order": max_sort,
+                }
+            )
             added += 1
             continue
-        existing = picks[existing_idx]
-        variants = ticker_variants_for_match(ticker)
-        matched_events = []
-        for variant in variants:
-            matched_events.extend(tweet_index.get(variant, []))
-        merged_events = merge_tweet_events(existing.get("tweet_events", []), matched_events)
-        if should_replace(existing, candidate):
-            candidate_with_events = apply_event_fields(candidate, merged_events)
-            picks[existing_idx] = {**existing, **candidate_with_events}
+        # Only replace older first_mentioned_at with newer candidate date.
+        existing_date = parse_iso_date(existing.get("first_mentioned_at"))
+        candidate_date = parse_iso_date(candidate.get("first_mentioned_at"))
+        should_replace = (
+            existing_date is None
+            or (candidate_date is not None and candidate_date >= existing_date)
+        )
+        if should_replace:
+            pick_upserts.append(
+                {
+                    "person_slug": person_slug,
+                    "ticker": ticker,
+                    "name": candidate["name"],
+                    "theme": candidate["theme"],
+                    "stance": candidate["stance"],
+                    "conviction": candidate["conviction"],
+                    "thesis_short": candidate["thesis_short"],
+                    "thesis_long": candidate["thesis_long"],
+                    "first_mentioned_at": candidate["first_mentioned_at"]
+                    or existing.get("first_mentioned_at"),
+                    "tweet_url": candidate["tweet_url"],
+                    "tweet_id": candidate["tweet_id"],
+                    "sort_order": existing.get("sort_order") or 0,
+                }
+            )
             updated += 1
         else:
-            picks[existing_idx] = apply_event_fields(existing, merged_events)
             skipped += 1
 
-    # Enrich all existing picks with all matched tweet events from this scrape.
-    for idx, pick in enumerate(picks):
-        variants = ticker_variants_for_match(str(pick.get("ticker", "")))
-        matched_events: list[dict[str, Any]] = []
+    if pick_upserts:
+        client.upsert("picks", pick_upserts, on_conflict="person_slug,ticker")
+
+    # Enrich tweet_events for every pick (existing + new) with matches from this scrape.
+    all_ticker_rows = client.select(
+        "picks",
+        {
+            "select": "ticker",
+            "person_slug": f"eq.{person_slug}",
+        },
+    )
+    all_tickers = [row["ticker"] for row in all_ticker_rows]
+
+    event_rows: list[dict[str, Any]] = []
+    for ticker in all_tickers:
+        variants = ticker_variants_for_match(ticker)
+        matched: list[dict[str, Any]] = []
         for variant in variants:
-            matched_events.extend(tweet_index.get(variant, []))
-        merged_events = merge_tweet_events(pick.get("tweet_events", []), matched_events)
-        picks[idx] = apply_event_fields(pick, merged_events)
+            matched.extend(tweet_index.get(variant, []))
+        if not matched:
+            continue
+        # existing events for this (person, ticker)
+        existing_events = client.select(
+            "tweet_events",
+            {
+                "select": "tweet_id,tweeted_at,tweet_url,text",
+                "person_slug": f"eq.{person_slug}",
+                "ticker": f"eq.{ticker}",
+            },
+        )
+        merged = merge_events(existing_events, matched)
+        # Only upsert NEW events (existing already present).
+        existing_ids = {ev["tweet_id"] for ev in existing_events}
+        for ev in merged:
+            if ev["tweet_id"] in existing_ids:
+                continue
+            event_rows.append(
+                {
+                    "person_slug": person_slug,
+                    "ticker": ticker,
+                    "tweet_id": ev["tweet_id"],
+                    "tweeted_at": ev.get("tweeted_at") or None,
+                    "tweet_url": ev.get("tweet_url") or "",
+                    "text": ev.get("text"),
+                }
+            )
 
-    site_meta = read_json(site_meta_path)
-    thesis_update = digest.get("thesis_update")
+    if event_rows:
+        client.upsert(
+            "tweet_events", event_rows, on_conflict="person_slug,ticker,tweet_id"
+        )
+
     if isinstance(thesis_update, str) and thesis_update.strip():
-        site_meta["current_thesis_md"] = thesis_update.strip()
-        site_meta["last_updated"] = dt.date.today().isoformat()
-
-    write_json(picks_path, picks)
-    write_json(site_meta_path, site_meta)
+        client.upsert(
+            "site_meta",
+            [
+                {
+                    "person_slug": person_slug,
+                    # keep existing handle/follower_count via postgrest merge-duplicates; only overwrite thesis+last_updated
+                    "current_thesis_md": thesis_update.strip(),
+                    "last_updated": dt.date.today().isoformat(),
+                    # Required NOT NULLs. Read existing first so we don't clobber.
+                    **_existing_site_meta_fields(client, person_slug),
+                }
+            ],
+            on_conflict="person_slug",
+        )
 
     print(
         f"[apply-digest] person={person_slug} added={added} updated={updated} "
-        f"skipped={skipped} picks={len(picks)}"
+        f"skipped={skipped} picks={len(all_tickers)} new_events={len(event_rows)}"
     )
     if isinstance(thesis_update, str) and thesis_update.strip():
         print("[apply-digest] site_meta thesis updated.")
     return 0
 
 
+def _existing_site_meta_fields(client: SupabaseClient, person_slug: str) -> dict[str, Any]:
+    rows = client.select(
+        "site_meta",
+        {
+            "select": "handle,follower_count,claimed_ytd_pct",
+            "person_slug": f"eq.{person_slug}",
+        },
+    )
+    if not rows:
+        return {"handle": "", "follower_count": 0, "claimed_ytd_pct": 0}
+    row = rows[0]
+    return {
+        "handle": row.get("handle", ""),
+        "follower_count": row.get("follower_count", 0),
+        "claimed_ytd_pct": row.get("claimed_ytd_pct", 0),
+    }
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Apply digest json into person data files.")
+    load_env()
+    parser = argparse.ArgumentParser(description="Apply digest json into Supabase.")
     parser.add_argument(
         "--person",
         default="serenity",
-        help="Person slug under data/people/<slug>/.",
+        help="Person slug in public.people (e.g. serenity).",
     )
     parser.add_argument(
         "--digest",
