@@ -8,9 +8,12 @@
     "start": "next start",
     "lint": "next lint",
     "refresh": "tsx scripts/refresh.ts",
-    "scrape": "python scripts/run.py"
+    "scrape": "python scripts/run.py",
+    "supabase-sync": "python scripts/supabase_sync.py"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.104.1",
+    "dotenv": "^17.4.2",
     "next": "^15.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

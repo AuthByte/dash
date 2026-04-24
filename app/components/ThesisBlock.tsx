@@ -13,14 +13,14 @@ function renderSimpleMarkdown(md: string): string {
 export function ThesisBlock({ meta }: { meta: SiteMeta }) {
   const html = `<p>${renderSimpleMarkdown(meta.current_thesis_md)}</p>`;
   return (
-    <section className="overflow-hidden rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg-elev)]">
-      <div className="border-b border-[var(--color-border)] px-5 py-2">
-        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-gold-dim)]">
-          / Current Thesis — His Own Words
+    <section className="liquid-panel overflow-hidden rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elev)]/95">
+      <div className="border-b border-[var(--color-border)] px-5 py-3 sm:px-6">
+        <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold-dim)]">
+          Current thesis
         </p>
       </div>
       <div
-        className="prose-invert px-5 py-4 text-sm leading-relaxed text-[var(--color-text-dim)] sm:text-base"
+        className="prose-invert px-5 py-5 text-sm leading-relaxed text-[var(--color-text-dim)] sm:px-6 sm:py-6 sm:text-base"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </section>

@@ -17,10 +17,11 @@ def ensure_dirs() -> None:
 
 
 def load_env() -> None:
-    """Load .env if python-dotenv is available; silent no-op otherwise."""
+    """Load .env.local then .env if python-dotenv is available; silent no-op otherwise."""
     try:
         from dotenv import load_dotenv  # type: ignore
 
+        load_dotenv(ROOT / ".env.local")
         load_dotenv(ROOT / ".env")
     except ImportError:
         pass

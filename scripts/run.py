@@ -3,11 +3,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 
+from apply_digest import apply_digest_for_person
 from common import OUTPUT_DIR, load_env, read_json
+from supabase_sync import is_supabase_configured, push_person_to_supabase
 
 SCRIPTS_DIR = Path(__file__).parent
 
@@ -75,6 +78,16 @@ def main() -> int:
     parser.add_argument("--skip-scrape", action="store_true", help="Reuse latest raw-*.json")
     parser.add_argument("--full", action="store_true", help="Forward --full to scrape")
     parser.add_argument("--model", default=None, help="Forward --model to digest")
+    parser.add_argument(
+        "--skip-apply",
+        action="store_true",
+        help="Do not merge digest into data/people or push to Supabase (handoff only).",
+    )
+    parser.add_argument(
+        "--person",
+        default=None,
+        help="Person slug under data/people/<slug>/ (default: SCRAPE_PERSON_SLUG or serenity).",
+    )
     args = parser.parse_args()
 
     load_env()
@@ -106,6 +119,17 @@ def main() -> int:
 
     result = read_json(digest_path)
     print_summary(result)
+
+    if not args.skip_apply:
+        person_slug = (args.person or os.environ.get("SCRAPE_PERSON_SLUG") or "serenity").strip()
+        apply_rc = apply_digest_for_person(person_slug, digest_path)
+        if apply_rc != 0:
+            return apply_rc
+        if is_supabase_configured():
+            sync_rc = push_person_to_supabase(person_slug)
+            if sync_rc != 0:
+                return sync_rc
+
     print_cursor_block(digest_path, result)
     return 0
 

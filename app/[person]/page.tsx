@@ -15,14 +15,9 @@ import { StatStrip } from "../components/StatStrip";
 import { PicksSection } from "../components/PicksSection";
 import { Footer } from "../components/Footer";
 import { ProfileSwitcher } from "../components/ProfileSwitcher";
-import { HighlightsPanel } from "../components/HighlightsPanel";
 import { InsightsPanel } from "../components/InsightsPanel";
 
-export const dynamic = "force-static";
-
-export function generateStaticParams() {
-  return getPeople().map((p) => ({ person: p.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function PersonDashboardPage({
   params,
@@ -30,44 +25,66 @@ export default async function PersonDashboardPage({
   params: Promise<{ person: string }>;
 }) {
   const { person: slug } = await params;
-  const person = getPersonBySlug(slug);
+  const person = await getPersonBySlug(slug);
   if (!person) notFound();
 
-  const picks = getEnrichedPicks(slug);
-  const themes = getThemes(slug);
-  const themeStats = getThemeStats(slug, picks);
+  const picks = await getEnrichedPicks(slug);
+  const themes = await getThemes(slug);
+  const themeStats = getThemeStats(themes, picks);
   const headline = getHeadlineStats(picks);
-  const meta = getSiteMeta(slug);
-  const people = getPeople();
+  const meta = await getSiteMeta(slug);
+  const people = await getPeople();
+
+  const todayRibbon = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date());
 
   return (
-    <main className="bg-grid relative min-h-dvh">
-      <div className="mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6 lg:px-10">
-        <ProfileSwitcher current={person} people={people} />
-        <div className="mt-6">
-          <Hero meta={meta} person={person} />
+    <main className="relative flex min-h-[100dvh] w-full max-w-[100vw] flex-col overflow-x-hidden">
+      <div className="noise-overlay" aria-hidden="true" />
+      <div className="bg-grid relative z-[1] flex min-h-[100dvh] w-full flex-1 flex-col">
+        <div className="flex w-full flex-1 flex-col px-3 pb-12 pt-6 sm:px-4 lg:px-6 lg:pb-16 lg:pt-8">
+          <div className="animate-fade-up w-full shrink-0">
+            <ProfileSwitcher
+              current={person}
+              people={people}
+              todayRibbon={todayRibbon}
+            />
+          </div>
+
+          <div className="mt-6 flex w-full min-h-0 flex-1 flex-col gap-8 lg:mt-8 lg:gap-10">
+            <div className="w-full shrink-0 space-y-8 lg:space-y-10">
+              <div className="animate-fade-up w-full [animation-delay:60ms]">
+                <Hero meta={meta} person={person} />
+              </div>
+              <div className="animate-fade-up w-full [animation-delay:100ms]">
+                <ThesisBlock meta={meta} />
+              </div>
+              <div className="animate-fade-up w-full [animation-delay:130ms]">
+                <StatStrip stats={headline} />
+              </div>
+              <div
+                id="insights"
+                className="animate-fade-up w-full max-w-none [animation-delay:160ms]"
+              >
+                <InsightsPanel themeStats={themeStats} picks={picks} />
+              </div>
+            </div>
+
+            <div className="flex min-h-0 w-full flex-1 flex-col [animation-delay:190ms]">
+              <Suspense fallback={null}>
+                <PicksSection picks={picks} themes={themes} />
+              </Suspense>
+            </div>
+
+            <div className="animate-fade-up mt-8 w-full shrink-0 [animation-delay:210ms]">
+              <Footer meta={meta} />
+            </div>
+          </div>
         </div>
-        <div className="mt-10">
-          <ThesisBlock meta={meta} />
-        </div>
-        <div className="mt-10">
-          <StatStrip stats={headline} />
-        </div>
-        <div className="mt-8">
-          <HighlightsPanel
-            picks={picks}
-            themeMap={new Map(themes.map((theme) => [theme.slug, theme] as const))}
-          />
-        </div>
-        <div id="insights" className="mt-8">
-          <InsightsPanel themeStats={themeStats} picks={picks} />
-        </div>
-        <div className="mt-10">
-          <Suspense fallback={null}>
-            <PicksSection picks={picks} themes={themes} />
-          </Suspense>
-        </div>
-        <Footer meta={meta} />
       </div>
     </main>
   );

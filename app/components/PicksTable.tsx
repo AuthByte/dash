@@ -63,8 +63,8 @@ export function PicksTable({
   onSelect: (ticker: string) => void;
 }) {
   return (
-    <div className="overflow-hidden rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg-card)]">
-      <div className="scroll-thin hidden overflow-x-auto md:block">
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg-card)]">
+      <div className="scroll-thin hidden min-h-0 flex-1 overflow-x-auto overflow-y-auto md:block">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg-elev)]">
@@ -129,7 +129,7 @@ export function PicksTable({
         </table>
       </div>
       {/* Mobile cards */}
-      <div className="divide-y divide-[var(--color-border)] md:hidden">
+      <div className="scroll-thin flex min-h-0 flex-1 flex-col divide-y divide-[var(--color-border)] overflow-y-auto md:hidden">
         {picks.length === 0 ? (
           <div className="px-3 py-12 text-center font-mono text-xs text-[var(--color-text-muted)]">
             No picks match the current filters.

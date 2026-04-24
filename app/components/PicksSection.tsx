@@ -75,8 +75,11 @@ export function PicksSection({
   const activeTheme = activePick ? themeMap.get(activePick.theme) ?? null : null;
 
   return (
-    <section id="picks" className="scroll-mt-6">
-      <div className="mb-4 flex items-center justify-between">
+    <section
+      id="picks"
+      className="scroll-mt-4 flex min-h-[min(75dvh,calc(100dvh-13rem))] flex-1 flex-col"
+    >
+      <div className="mb-3 flex shrink-0 flex-wrap items-center justify-between gap-2">
         <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-text-muted)]">
           / All Picks
         </p>
@@ -84,8 +87,10 @@ export function PicksSection({
           {sorted.length} / {picks.length} shown
         </p>
       </div>
-      <FilterBar themes={themes} />
-      <div className="mt-4">
+      <div className="shrink-0">
+        <FilterBar themes={themes} />
+      </div>
+      <div className="mt-3 flex min-h-0 flex-1 flex-col">
         <PicksTable
           picks={sorted}
           themeMap={themeMap}

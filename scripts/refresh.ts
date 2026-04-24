@@ -9,6 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import yahooFinance from "yahoo-finance2";
+import { getSupabaseServiceClient } from "./supabase_client";
 import {
   PeopleFileSchema,
   PicksFileSchema,
@@ -363,6 +364,38 @@ async function refreshPerson(slug: string, tickerFilter?: string) {
   console.log(
     `[refresh] ${slug}: ok=${ok} fail=${fail}  ->  ${path.relative(ROOT, pricesPath)}`,
   );
+
+  const supabase = getSupabaseServiceClient();
+  if (supabase) {
+    const rows = targets.map((ticker) => {
+      const entry = out[ticker];
+      return {
+        person_slug: slug,
+        ticker,
+        price: entry.price,
+        market_cap: entry.market_cap,
+        currency: entry.currency,
+        ytd_pct: entry.ytd_pct,
+        history: entry.history,
+        metrics: entry.metrics ?? {},
+        updated_at: entry.updated_at,
+      };
+    });
+    const { error } = await supabase.from("prices").upsert(rows, {
+      onConflict: "person_slug,ticker",
+    });
+    if (error) {
+      console.warn(
+        `[refresh] ${slug}: Supabase prices upsert skipped:`,
+        error.message,
+      );
+    } else {
+      console.log(
+        `[refresh] ${slug}: synced ${rows.length} row(s) to Supabase (prices)`,
+      );
+    }
+  }
+
   return { ok, fail };
 }
 

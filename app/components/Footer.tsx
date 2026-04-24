@@ -3,27 +3,27 @@ import type { SiteMeta } from "@/lib/schema";
 
 export function Footer({ meta }: { meta: SiteMeta }) {
   return (
-    <footer className="mt-16 rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] px-5 py-4">
-      <div className="flex flex-col items-start justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)] sm:flex-row sm:items-center">
+    <footer className="liquid-panel rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-bg-card)]/90 px-5 py-5 sm:px-6">
+      <div className="flex flex-col gap-4 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-text-muted)] sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-6">
         <p>
-          Last updated:{" "}
+          Last ingest{" "}
           <span className="text-[var(--color-text-dim)]">
             {formatDate(meta.last_updated)}
           </span>
         </p>
         <p>
-          Built for{" "}
           <a
             href={`https://x.com/${meta.handle}`}
             target="_blank"
             rel="noreferrer"
-            className="text-[var(--color-text-dim)] hover:text-[var(--color-gold)]"
+            className="text-[var(--color-text-dim)] transition duration-200 ease-out hover:text-[var(--color-gold)] active:translate-y-px"
           >
             @{meta.handle}
-          </a>{" "}
-          watchers
+          </a>
         </p>
-        <p className="text-[var(--color-text-muted)]">Not investment advice.</p>
+        <p className="text-[var(--color-text-muted)] sm:text-right">
+          Not investment advice.
+        </p>
       </div>
     </footer>
   );

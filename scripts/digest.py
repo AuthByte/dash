@@ -106,7 +106,8 @@ def load_system_prompt(handle: str) -> str:
 
 def existing_pick_summaries() -> list[dict[str, Any]]:
     """Slim view of picks.json to stuff into the LLM context for dedupe."""
-    picks_path = DATA_DIR / "picks.json"
+    slug = os.environ.get("SCRAPE_PERSON_SLUG", "serenity").strip() or "serenity"
+    picks_path = DATA_DIR / "people" / slug / "picks.json"
     if not picks_path.exists():
         return []
     picks = read_json(picks_path)

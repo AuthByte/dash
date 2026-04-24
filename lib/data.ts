@@ -15,6 +15,15 @@ import {
   type Theme,
   type ThemeSlug,
 } from "./schema";
+import {
+  isSupabaseDataSource,
+  supabaseFetchPeople,
+  supabaseFetchPersonBySlug,
+  supabaseFetchPicks,
+  supabaseFetchPrices,
+  supabaseFetchSiteMeta,
+  supabaseFetchThemes,
+} from "./supabase";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const PEOPLE_DIR = path.join(DATA_DIR, "people");
@@ -24,39 +33,67 @@ function readJson<T>(absPath: string): unknown {
   return JSON.parse(raw) as T;
 }
 
-export function getPeople(): Person[] {
+async function trySupabase<T>(loader: () => Promise<T | null>): Promise<T | null> {
+  if (!isSupabaseDataSource()) return null;
+  try {
+    return await loader();
+  } catch (err) {
+    console.error("[data] Supabase read failed, falling back to files:", err);
+    return null;
+  }
+}
+
+function getPeopleFromFiles(): Person[] {
   return PeopleFileSchema.parse(
     readJson(path.join(DATA_DIR, "people.json")),
   ).filter((p) => p.active !== false);
 }
 
-export function getPersonBySlug(slug: string): Person | null {
-  return getPeople().find((p) => p.slug === slug) ?? null;
+export async function getPeople(): Promise<Person[]> {
+  const fromDb = await trySupabase(() => supabaseFetchPeople());
+  if (fromDb && fromDb.length > 0) return fromDb;
+  return getPeopleFromFiles();
+}
+
+export async function getPersonBySlug(slug: string): Promise<Person | null> {
+  const fromDb = await trySupabase(() => supabaseFetchPersonBySlug(slug));
+  if (fromDb) return fromDb;
+  return getPeopleFromFiles().find((p) => p.slug === slug) ?? null;
 }
 
 function personDir(slug: string): string {
   return path.join(PEOPLE_DIR, slug);
 }
 
-export function getPicks(personSlug: string): Pick[] {
+export async function getPicks(personSlug: string): Promise<Pick[]> {
+  const fromDb = await trySupabase(() => supabaseFetchPicks(personSlug));
+  if (fromDb != null) return fromDb;
   return PicksFileSchema.parse(
     readJson(path.join(personDir(personSlug), "picks.json")),
   );
 }
 
-export function getPrices(personSlug: string): Record<string, PriceEntry> {
+export async function getPrices(
+  personSlug: string,
+): Promise<Record<string, PriceEntry>> {
+  const fromDb = await trySupabase(() => supabaseFetchPrices(personSlug));
+  if (fromDb != null) return fromDb;
   return PricesFileSchema.parse(
     readJson(path.join(personDir(personSlug), "prices.json")),
   );
 }
 
-export function getThemes(personSlug: string): Theme[] {
+export async function getThemes(personSlug: string): Promise<Theme[]> {
+  const fromDb = await trySupabase(() => supabaseFetchThemes(personSlug));
+  if (fromDb != null) return fromDb;
   return ThemesFileSchema.parse(
     readJson(path.join(personDir(personSlug), "themes.json")),
   ).sort((a, b) => a.sort_order - b.sort_order);
 }
 
-export function getSiteMeta(personSlug: string): SiteMeta {
+export async function getSiteMeta(personSlug: string): Promise<SiteMeta> {
+  const fromDb = await trySupabase(() => supabaseFetchSiteMeta(personSlug));
+  if (fromDb) return fromDb;
   return SiteMetaSchema.parse(
     readJson(path.join(personDir(personSlug), "site_meta.json")),
   );
@@ -72,9 +109,13 @@ export type EnrichedPick = Pick & {
   updated_at: string | null;
 };
 
-export function getEnrichedPicks(personSlug: string): EnrichedPick[] {
-  const picks = getPicks(personSlug);
-  const prices = getPrices(personSlug);
+export async function getEnrichedPicks(
+  personSlug: string,
+): Promise<EnrichedPick[]> {
+  const [picks, prices] = await Promise.all([
+    getPicks(personSlug),
+    getPrices(personSlug),
+  ]);
   return picks.map((p) => {
     const px = prices[p.ticker];
     return {
@@ -97,10 +138,9 @@ export type ThemeStats = {
 };
 
 export function getThemeStats(
-  personSlug: string,
+  themes: Theme[],
   picks: EnrichedPick[],
 ): ThemeStats[] {
-  const themes = getThemes(personSlug);
   return themes.map((theme) => {
     const inTheme = picks.filter(
       (p) => p.theme === theme.slug && p.stance !== "exited",

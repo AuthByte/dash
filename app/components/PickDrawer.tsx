@@ -15,10 +15,19 @@ import {
   recommendationLabel,
   recommendationTone,
 } from "@/lib/format";
+import { toTradingViewSymbol } from "@/lib/tradingviewSymbol";
 
 const Sparkline = dynamic(() => import("./Sparkline").then((m) => m.Sparkline), {
   ssr: false,
 });
+
+const TradingViewSymbolOverview = dynamic(
+  () =>
+    import("./TradingViewSymbolOverview").then(
+      (m) => m.TradingViewSymbolOverview,
+    ),
+  { ssr: false, loading: () => <TvWidgetSkeleton /> },
+);
 
 export function PickDrawer({
   pick,
@@ -35,10 +44,19 @@ export function PickDrawer({
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    const { style } = document.body;
+    const prevOverflow = style.overflow;
+    const prevPaddingRight = style.paddingRight;
+    style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      style.paddingRight = `${scrollbarWidth}px`;
+    }
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      style.overflow = prevOverflow;
+      style.paddingRight = prevPaddingRight;
     };
   }, [pick, onClose]);
 
@@ -68,10 +86,11 @@ export function PickDrawer({
         ? "text-[var(--color-down)]"
         : "text-[var(--color-text-dim)]";
   const tweetMarkers = buildTweetMarkers(pick);
+  const tradingViewSymbol = toTradingViewSymbol(pick.ticker, m.exchange ?? null);
 
   return (
     <div
-      className="fixed inset-0 z-50 flex justify-end"
+      className="fixed inset-0 z-50 flex justify-end overscroll-none"
       role="dialog"
       aria-modal="true"
     >
@@ -79,7 +98,7 @@ export function PickDrawer({
         type="button"
         onClick={onClose}
         aria-label="Close"
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm overscroll-none"
       />
       <aside
         className="relative ml-auto flex h-full w-full max-w-2xl flex-col overflow-y-auto border-l border-[var(--color-border-strong)] bg-[var(--color-bg-elev)] shadow-2xl"
@@ -147,6 +166,30 @@ export function PickDrawer({
             value={formatLargeNumber(pick.market_cap, { currency: "USD" })}
           />
         </div>
+
+        <Section title="Live Chart">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+            {tradingViewSymbol}{" "}
+            <span className="text-[var(--color-text-muted)]">·</span>{" "}
+            <a
+              href={`https://www.tradingview.com/chart/?symbol=${encodeURIComponent(tradingViewSymbol)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-[var(--color-gold-dim)] underline decoration-[var(--color-border-strong)] underline-offset-2 transition hover:text-[var(--color-gold)]"
+            >
+              Open in TradingView ↗
+            </a>
+          </p>
+          <div className="mt-3 overflow-hidden rounded-sm border border-[var(--color-border)] bg-[#131110] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+            <div className="h-[min(280px,42dvh)] w-full min-h-[220px]">
+              <TradingViewSymbolOverview
+                key={tradingViewSymbol}
+                symbol={tradingViewSymbol}
+                className="h-full w-full"
+              />
+            </div>
+          </div>
+        </Section>
 
         {/* Price history chart */}
         <Section title="Price History">
@@ -618,6 +661,19 @@ function EmptyHint({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-full items-center justify-center rounded-sm border border-dashed border-[var(--color-border-strong)] px-3 text-center font-mono text-[11px] text-[var(--color-text-muted)]">
       {children}
+    </div>
+  );
+}
+
+function TvWidgetSkeleton() {
+  return (
+    <div className="flex h-full min-h-[220px] w-full flex-col justify-end gap-2 p-4">
+      <div className="h-px w-full bg-[var(--color-border)]" />
+      <div className="h-24 w-full animate-pulse rounded-sm bg-[var(--color-bg-soft)]" />
+      <div className="flex gap-2">
+        <div className="h-2 w-16 animate-pulse rounded-sm bg-[var(--color-border-strong)]" />
+        <div className="h-2 w-12 animate-pulse rounded-sm bg-[var(--color-border)]" />
+      </div>
     </div>
   );
 }
