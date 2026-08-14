@@ -23,11 +23,6 @@ import { InsightsPanel } from "../components/InsightsPanel";
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  const people = await getPeople();
-  return people.map((p) => ({ person: p.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -35,7 +30,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { person: slug } = await params;
   const person = await getPersonBySlug(slug);
-  if (!person) return { title: "Desk not found" };
+  if (!person) notFound();
   const origin = getSiteUrl();
   return {
     title: `${person.name} — Picks Tracker`,
