@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import type { EnrichedPick } from "@/lib/data";
 import type { Theme } from "@/lib/schema";
@@ -15,10 +15,15 @@ import {
   recommendationLabel,
   recommendationTone,
 } from "@/lib/format";
+import { CHART_RANGES, sliceHistory, type ChartRange } from "@/lib/history";
+import { toTradingViewSymbol } from "@/lib/tradingviewSymbol";
+import { TradingViewSymbolOverview } from "./TradingViewSymbolOverview";
 
 const Sparkline = dynamic(() => import("./Sparkline").then((m) => m.Sparkline), {
   ssr: false,
 });
+
+const historyCache = new Map<string, EnrichedPick>();
 
 type TweetMarker = {
   tweet_id: string;
@@ -39,6 +44,7 @@ export function PickDrawer({
 }) {
   const [resolvedPick, setResolvedPick] = useState<EnrichedPick | null>(null);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  const [chartRange, setChartRange] = useState<ChartRange>("1Y");
 
   useEffect(() => {
     if (!pick) return;
@@ -62,6 +68,13 @@ export function PickDrawer({
     }
 
     setResolvedPick(pick);
+    const cacheKey = `${personSlug}:${pick.ticker}`;
+    const cached = historyCache.get(cacheKey);
+    if (cached) {
+      setResolvedPick(cached);
+      setIsLoadingHistory(false);
+      return;
+    }
     setIsLoadingHistory(true);
 
     void fetch(
@@ -74,6 +87,7 @@ export function PickDrawer({
       })
       .then((fullPick) => {
         if (cancelled || !fullPick) return;
+        historyCache.set(cacheKey, fullPick);
         setResolvedPick(fullPick);
       })
       .catch(() => {})
@@ -86,17 +100,24 @@ export function PickDrawer({
     };
   }, [pick, personSlug]);
 
-  if (!pick) return null;
   const activePick = resolvedPick ?? pick;
+  const rangedHistory = useMemo(
+    () => sliceHistory(activePick?.history ?? [], chartRange),
+    [activePick?.history, chartRange],
+  );
+
+  if (!pick || !activePick) return null;
 
   const tweetMarkers: TweetMarker[] =
     activePick.tweet_events && activePick.tweet_events.length > 0
-      ? activePick.tweet_events.map((event) => ({
-          tweet_id: event.tweet_id,
-          tweet_url: event.tweet_url,
-          tweeted_at: event.tweeted_at,
-        }))
-      : activePick.first_mentioned_at
+      ? activePick.tweet_events
+          .filter((event) => event.tweet_url)
+          .map((event) => ({
+            tweet_id: event.tweet_id,
+            tweet_url: event.tweet_url,
+            tweeted_at: event.tweeted_at,
+          }))
+      : activePick.first_mentioned_at && activePick.tweet_url
         ? [
             {
               tweet_id: activePick.tweet_id,
@@ -105,6 +126,11 @@ export function PickDrawer({
             },
           ]
         : [];
+
+  const tvSymbol = toTradingViewSymbol(
+    activePick.ticker,
+    activePick.metrics?.exchange,
+  );
 
   const m = activePick.metrics ?? {};
   const ytdTone =
@@ -211,10 +237,26 @@ export function PickDrawer({
 
         {/* Price history chart */}
         <Section title="Price History">
+          <div className="mt-1 flex flex-wrap gap-1">
+            {CHART_RANGES.map((range) => (
+              <button
+                key={range}
+                type="button"
+                onClick={() => setChartRange(range)}
+                className={`rounded-sm border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${
+                  chartRange === range
+                    ? "border-[var(--color-gold)] text-[var(--color-gold)]"
+                    : "border-[var(--color-border-strong)] text-[var(--color-text-muted)] hover:text-white"
+                }`}
+              >
+                {range}
+              </button>
+            ))}
+          </div>
           <div className="mt-3 h-40">
-            {activePick.history.length > 1 ? (
+            {rangedHistory.length > 1 ? (
               <Sparkline
-                data={activePick.history}
+                data={rangedHistory}
                 positive={activePick.ytd_pct >= 0}
                 tweetMarkers={tweetMarkers}
               />
@@ -258,6 +300,9 @@ export function PickDrawer({
               Updated {activePick.updated_at}
             </p>
           )}
+          <div className="mt-4 overflow-hidden rounded-md border border-[var(--color-border)]">
+            <TradingViewSymbolOverview symbol={tvSymbol} className="h-[220px]" />
+          </div>
         </Section>
 
         {/* Today's session */}
@@ -562,7 +607,8 @@ export function PickDrawer({
                 No tweet references available for this stock.
               </p>
             ) : (
-              tweetMarkers.map((tweet) => (
+              tweetMarkers.map((tweet) =>
+                tweet.tweet_url ? (
                 <a
                   key={`${tweet.tweet_id}-${tweet.tweeted_at}`}
                   href={tweet.tweet_url}
@@ -577,7 +623,8 @@ export function PickDrawer({
                     Open Tweet ↗
                   </span>
                 </a>
-              ))
+                ) : null,
+              )
             )}
           </div>
         </div>

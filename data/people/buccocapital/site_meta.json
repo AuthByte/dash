@@ -1,7 +1,7 @@
 {
   "handle": "buccocapital",
   "follower_count": 0,
-  "current_thesis_md": "Watchlist for @buccocapital is being seeded. Run `python scripts/run.py --person buccocapital --handle buccocapital --full` with a free OpenRouter model to ingest tweets.",
+  "current_thesis_md": "",
   "claimed_ytd_pct": 0,
   "last_updated": "2026-08-14"
 }

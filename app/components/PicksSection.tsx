@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { EnrichedPick } from "@/lib/data";
 import type { Stance, Theme } from "@/lib/schema";
 import { FilterBar } from "./FilterBar";
@@ -27,15 +27,17 @@ export function PicksSection({
   personSlug: string;
 }) {
   const params = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
   const themeFilter = params.get("theme") ?? "all";
   const stanceFilter = (params.get("stance") ?? "all") as
     | Stance
     | "all";
+  const query = params.get("q") ?? "";
 
   const [sortKey, setSortKey] = useState<SortKey>("first_mentioned_at");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [activeTicker, setActiveTicker] = useState<string | null>(null);
-  const [query, setQuery] = useState("");
 
   const themeMap = useMemo(
     () => new Map(themes.map((t) => [t.slug, t] as const)),
@@ -102,7 +104,14 @@ export function PicksSection({
           id="pick-search"
           type="search"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            const next = new URLSearchParams(params.toString());
+            const value = e.target.value;
+            if (value) next.set("q", value);
+            else next.delete("q");
+            const qs = next.toString();
+            router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+          }}
           placeholder="Filter by ticker, name, or thesis…"
           className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] px-3 py-2 font-mono text-sm text-white outline-none ring-[var(--color-gold)] placeholder:text-[var(--color-text-muted)] focus:ring-1"
         />

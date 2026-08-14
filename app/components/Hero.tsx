@@ -1,7 +1,9 @@
-import { formatFollowers } from "@/lib/format";
+import { formatFollowers, formatPct } from "@/lib/format";
 import type { Person, SiteMeta } from "@/lib/schema";
 
 export function Hero({ meta, person }: { meta: SiteMeta; person: Person }) {
+  const showFollowers = meta.follower_count > 0;
+  const showClaimedYtd = meta.claimed_ytd_pct !== 0;
   return (
     <header className="liquid-panel grid gap-8 overflow-hidden rounded-[1.75rem] bg-[var(--color-bg-card)]/90 px-6 py-8 sm:px-8 sm:py-9 lg:grid-cols-[1fr_auto] lg:items-end">
       <div className="min-w-0">
@@ -27,9 +29,20 @@ export function Hero({ meta, person }: { meta: SiteMeta; person: Person }) {
           <XIcon className="h-3.5 w-3.5 shrink-0" />
           <span className="font-mono">@{meta.handle}</span>
         </a>
-        <span className="inline-flex items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elev)] px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-muted)]">
-          {formatFollowers(meta.follower_count)} followers
-        </span>
+        {showFollowers && (
+          <span className="inline-flex items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elev)] px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-muted)]">
+            {formatFollowers(meta.follower_count)} followers
+          </span>
+        )}
+        {showClaimedYtd && (
+          <span
+            className="inline-flex items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elev)] px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-gold)]"
+            title="Self-reported figure from the desk, not a verified return"
+          >
+            Claimed YTD {formatPct(meta.claimed_ytd_pct, { sign: true })}
+            <span className="ml-2 text-[var(--color-text-muted)]">self-reported</span>
+          </span>
+        )}
       </div>
     </header>
   );

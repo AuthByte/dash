@@ -6,11 +6,11 @@ import {
   readSupabasePersonDataset,
   readSupabasePeople,
   supabase,
+  SUPABASE_PEOPLE_TABLE,
   type SupabasePersonDataset,
 } from "./supabase";
 import {
   PeopleFileSchema,
-  PicksFileSchema,
   PriceEntrySchema,
   PricesFileSchema,
   SiteMetaSchema,
@@ -23,6 +23,10 @@ import {
   type Theme,
   type ThemeSlug,
 } from "./schema";
+import { parsePickRows } from "./pickParse";
+import { capHistory } from "./history";
+
+export { getHeadlineStats, type HeadlineStats } from "./stats";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const PEOPLE_DIR = path.join(DATA_DIR, "people");
@@ -37,7 +41,7 @@ function personDir(slug: string): string {
   return path.join(PEOPLE_DIR, slug);
 }
 
-const SUPABASE_TIMEOUT_MS = 4_000;
+const SUPABASE_TIMEOUT_MS = 8_000;
 
 async function withTimeout<T>(promise: PromiseLike<T>, ms = SUPABASE_TIMEOUT_MS): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -137,7 +141,7 @@ async function getPicksFromNormalizedTables(
       })),
     }));
 
-    return PicksFileSchema.parse(enriched);
+    return parsePickRows(enriched);
   } catch {
     return null;
   }
@@ -158,18 +162,22 @@ async function getPricesFromNormalizedTables(
 
     const out: Record<string, PriceEntry> = {};
     for (const row of data ?? []) {
-      out[row.ticker] = PriceEntrySchema.parse({
+      const parsed = PriceEntrySchema.safeParse({
         price: row.price,
         market_cap: row.market_cap,
-        currency: row.currency,
+        currency: row.currency ?? "USD",
         ytd_pct: Number(row.ytd_pct ?? 0),
-        history: row.history ?? [],
+        history: Array.isArray(row.history) ? row.history : [],
         metrics: row.metrics ?? {},
         updated_at:
           typeof row.updated_at === "string"
             ? row.updated_at
-            : new Date(row.updated_at).toISOString().slice(0, 10),
+            : row.updated_at
+              ? new Date(row.updated_at).toISOString().slice(0, 10)
+              : new Date().toISOString().slice(0, 10),
       });
+      if (!parsed.success || typeof row.ticker !== "string") continue;
+      out[row.ticker] = parsed.data;
     }
     return out;
   } catch {
@@ -229,7 +237,7 @@ export async function getPeople(): Promise<Person[]> {
     try {
       const rows = await withTimeout(
         supabase()
-          .from("people")
+          .from(SUPABASE_PEOPLE_TABLE)
           .select("slug,name,handle,tagline,accent,active,sort_order")
           .eq("active", true)
           .order("sort_order", { ascending: true })
@@ -264,14 +272,14 @@ export async function getPersonBySlug(slug: string): Promise<Person | null> {
 
 export async function getPicks(personSlug: string): Promise<Pick[]> {
   const normalized = await getPicksFromNormalizedTables(personSlug);
-  if (normalized && normalized.length > 0) return normalized;
+  if (normalized) return normalized;
 
   const dataset = await getSupabaseDataset(personSlug);
   if (dataset?.picks) {
-    return PicksFileSchema.parse(dataset.picks);
+    return parsePickRows(dataset.picks);
   }
   const local = readJsonFile(path.join(personDir(personSlug), "picks.json"));
-  if (local) return PicksFileSchema.parse(local);
+  if (local) return parsePickRows(local);
   return [];
 }
 
@@ -279,7 +287,7 @@ export async function getPrices(
   personSlug: string,
 ): Promise<Record<string, PriceEntry>> {
   const normalized = await getPricesFromNormalizedTables(personSlug);
-  if (normalized && Object.keys(normalized).length > 0) return normalized;
+  if (normalized) return normalized;
 
   const dataset = await getSupabaseDataset(personSlug);
   if (dataset?.prices) {
@@ -374,7 +382,7 @@ export async function getEnrichedPicks(
       market_cap: px?.market_cap ?? null,
       currency: px?.currency ?? "USD",
       ytd_pct: px?.ytd_pct ?? 0,
-      history: includeHistory ? (px?.history ?? []) : [],
+      history: includeHistory ? capHistory(px?.history ?? []) : [],
       metrics: px?.metrics ?? {},
       updated_at: px?.updated_at ?? null,
     };
@@ -396,7 +404,7 @@ export async function getEnrichedPick(
     market_cap: px?.market_cap ?? null,
     currency: px?.currency ?? "USD",
     ytd_pct: px?.ytd_pct ?? 0,
-    history: px?.history ?? [],
+    history: capHistory(px?.history ?? []),
     metrics: px?.metrics ?? {},
     updated_at: px?.updated_at ?? null,
   };
@@ -422,34 +430,6 @@ export function getThemeStats(
   });
 }
 
-export function getHeadlineStats(picks: EnrichedPick[]): HeadlineStats {
-  const longs = picks.filter((p) => p.stance === "long");
-  const others = picks.filter((p) => p.stance !== "long");
-  const avg =
-    longs.length === 0
-      ? 0
-      : longs.reduce((s, p) => s + p.ytd_pct, 0) / longs.length;
-  const sorted = [...picks].sort((a, b) => b.ytd_pct - a.ytd_pct);
-  const best = sorted[0]
-    ? { ticker: sorted[0].ticker, ytd_pct: sorted[0].ytd_pct }
-    : null;
-  const worst = sorted[sorted.length - 1]
-    ? {
-        ticker: sorted[sorted.length - 1].ticker,
-        ytd_pct: sorted[sorted.length - 1].ytd_pct,
-      }
-    : null;
-  return {
-    total: picks.length,
-    long_count: longs.length,
-    other_count: others.length,
-    avg_ytd_pct_longs: avg,
-    best,
-    worst,
-    highest_conviction_count: picks.filter((p) => p.conviction === "high")
-      .length,
-  };
-}
 
 export function getThemeBySlug(
   themes: Theme[],
@@ -464,12 +444,3 @@ export type ThemeStats = {
   avg_ytd_pct: number;
 };
 
-export type HeadlineStats = {
-  total: number;
-  long_count: number;
-  other_count: number;
-  avg_ytd_pct_longs: number;
-  best: { ticker: string; ytd_pct: number } | null;
-  worst: { ticker: string; ytd_pct: number } | null;
-  highest_conviction_count: number;
-};

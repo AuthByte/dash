@@ -1,7 +1,7 @@
 {
   "handle": "cmsinvests",
   "follower_count": 0,
-  "current_thesis_md": "Watchlist for @cmsinvests is being seeded. Run `python scripts/run.py --person cmsinvests --handle cmsinvests --full` with a free OpenRouter model to ingest tweets.",
+  "current_thesis_md": "",
   "claimed_ytd_pct": 0,
   "last_updated": "2026-08-14"
 }

@@ -214,8 +214,9 @@ function PickRow({
         {formatDate(pick.first_mentioned_at)}
       </td>
       <td className="px-3 py-2.5 text-center" onClick={(e) => e.stopPropagation()}>
+        {pick.tweet_url ? (
         <a
-          href={pick.tweet_url || "#"}
+          href={pick.tweet_url}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-1 rounded-sm border border-[var(--color-border-strong)] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--color-text-dim)] transition hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
@@ -223,6 +224,11 @@ function PickRow({
           <span aria-hidden>X</span>
           <span>Tweet</span>
         </a>
+        ) : (
+          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+            —
+          </span>
+        )}
       </td>
     </tr>
   );

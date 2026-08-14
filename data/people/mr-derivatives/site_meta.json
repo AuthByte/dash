@@ -1,7 +1,7 @@
 {
   "handle": "mr_derivatives",
   "follower_count": 0,
-  "current_thesis_md": "Watchlist for @mr_derivatives is being seeded. Run `python scripts/run.py --person mr-derivatives --handle mr_derivatives --full` with a free OpenRouter model to ingest tweets.",
+  "current_thesis_md": "",
   "claimed_ytd_pct": 0,
   "last_updated": "2026-08-14"
 }

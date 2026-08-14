@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import {
   getEnrichedPicks,
   getHeadlineStats,
@@ -9,6 +10,7 @@ import {
   getThemeStats,
   getThemes,
 } from "@/lib/data";
+import { DISCLAIMER, getSiteUrl } from "@/lib/site";
 import { Hero } from "../components/Hero";
 import { ThesisBlock } from "../components/ThesisBlock";
 import { StatStrip } from "../components/StatStrip";
@@ -19,6 +21,7 @@ import { HighlightsPanel } from "../components/HighlightsPanel";
 import { InsightsPanel } from "../components/InsightsPanel";
 
 export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const people = await getPeople();
@@ -29,13 +32,21 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ person: string }>;
-}) {
+}): Promise<Metadata> {
   const { person: slug } = await params;
   const person = await getPersonBySlug(slug);
   if (!person) return { title: "Desk not found" };
+  const origin = getSiteUrl();
   return {
     title: `${person.name} — Picks Tracker`,
-    description: person.tagline,
+    description: `${person.tagline}. ${DISCLAIMER}`,
+    alternates: { canonical: `${origin}/${person.slug}` },
+    openGraph: {
+      title: `${person.name} — Picks Tracker`,
+      description: `${person.tagline}. ${DISCLAIMER}`,
+      url: `${origin}/${person.slug}`,
+      type: "website",
+    },
   };
 }
 

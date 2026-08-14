@@ -1,7 +1,14 @@
 import { getPeople } from "@/lib/data";
+import { DISCLAIMER, getSiteUrl } from "@/lib/site";
 import { PersonPicker } from "./components/PersonPicker";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  alternates: { canonical: getSiteUrl() },
+  description: `Live trackers for stock picks across multiple analysts and traders. ${DISCLAIMER}`,
+};
 
 export default async function HomePage() {
   const people = await getPeople();

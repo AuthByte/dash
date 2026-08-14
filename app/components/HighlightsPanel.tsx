@@ -16,7 +16,18 @@ export function HighlightsPanel({
     .sort((a, b) => b.ytd_pct - a.ytd_pct)
     .slice(0, 2);
 
-  if (featured.length === 0) return null;
+  if (featured.length === 0) {
+    return (
+      <section className="rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-[var(--color-bg-card)]/60 px-5 py-8">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold-dim)]">
+          Highlights
+        </p>
+        <p className="mt-3 text-sm text-[var(--color-text-dim)]">
+          No live names on this desk yet. Ingest tweets to populate the board.
+        </p>
+      </section>
+    );
+  }
 
   return (
     <section className="grid gap-4 lg:grid-cols-2">

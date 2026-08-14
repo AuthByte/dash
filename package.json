@@ -2,6 +2,9 @@
   "name": "serenity-picks",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +14,8 @@
     "scrape": "python scripts/run.py",
     "bootstrap-people": "python scripts/bootstrap_people.py",
     "ingest": "python scripts/ingest_people.py",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test lib/*.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.0",
@@ -23,6 +27,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.9.0",
     "@types/react": "^19.0.0",

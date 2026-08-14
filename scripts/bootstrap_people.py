@@ -182,7 +182,8 @@ PEOPLE: list[dict[str, Any]] = [
 
 def write_local_fixtures() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    write_json(DATA_DIR / "people.json", PEOPLE)
+    catalog = [{**person, "sort_order": i} for i, person in enumerate(PEOPLE)]
+    write_json(DATA_DIR / "people.json", catalog)
     today = dt.date.today().isoformat()
     for i, person in enumerate(PEOPLE):
         slug = person["slug"]
@@ -204,12 +205,7 @@ def write_local_fixtures() -> None:
                 {
                     "handle": person["handle"],
                     "follower_count": 0,
-                    "current_thesis_md": (
-                        f"Watchlist for @{person['handle']} is being seeded. "
-                        "Run `python scripts/run.py --person "
-                        f"{slug} --handle {person['handle']} --full` "
-                        "with a free OpenRouter model to ingest tweets."
-                    ),
+                    "current_thesis_md": "",
                     "claimed_ytd_pct": 0,
                     "last_updated": today,
                 },

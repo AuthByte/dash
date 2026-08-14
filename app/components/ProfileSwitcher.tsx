@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Person } from "@/lib/schema";
 
 const STORAGE_KEY = "dash:last_person";
@@ -17,6 +17,21 @@ export function ProfileSwitcher({
   todayRibbon: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return people;
+    return people.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.handle.toLowerCase().includes(q) ||
+        p.slug.toLowerCase().includes(q),
+    );
+  }, [people, query]);
 
   useEffect(() => {
     try {
@@ -25,6 +40,53 @@ export function ProfileSwitcher({
       // ignore storage errors (private mode, etc.)
     }
   }, [current.slug]);
+
+  useEffect(() => {
+    if (!open) return;
+    setQuery("");
+    setActiveIndex(
+      Math.max(
+        0,
+        people.findIndex((p) => p.slug === current.slug),
+      ),
+    );
+    const id = window.setTimeout(() => searchRef.current?.focus(), 0);
+    return () => window.clearTimeout(id);
+  }, [open, people, current.slug]);
+
+  useEffect(() => {
+    setActiveIndex((idx) =>
+      filtered.length === 0 ? 0 : Math.min(idx, filtered.length - 1),
+    );
+  }, [filtered.length]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpen(false);
+        buttonRef.current?.focus();
+        return;
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((i) => (filtered.length ? (i + 1) % filtered.length : 0));
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((i) =>
+          filtered.length ? (i - 1 + filtered.length) % filtered.length : 0,
+        );
+      }
+      if (e.key === "Enter" && filtered[activeIndex]) {
+        e.preventDefault();
+        window.location.href = `/${filtered[activeIndex].slug}`;
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, filtered, activeIndex]);
 
   return (
     <div className="liquid-panel rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-bg-panel)]/95 px-4 py-3 sm:px-5">
@@ -47,11 +109,13 @@ export function ProfileSwitcher({
           </p>
           <div className="relative">
             <button
+              ref={buttonRef}
               type="button"
               onClick={() => setOpen((v) => !v)}
               className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] text-sm font-medium text-[var(--color-text-dim)] transition duration-200 ease-out hover:text-white active:translate-y-px"
               aria-haspopup="menu"
               aria-expanded={open}
+              aria-controls="profile-menu"
               aria-label="Switch profile"
             >
               {current.name.slice(0, 1)}
@@ -65,47 +129,73 @@ export function ProfileSwitcher({
                   aria-hidden="true"
                 />
                 <div
+                  id="profile-menu"
                   role="menu"
-                  className="absolute right-0 z-20 mt-2 w-64 overflow-hidden rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-panel)] shadow-[0_24px_48px_-20px_rgba(0,0,0,0.85)] liquid-panel"
+                  aria-label="Profiles"
+                  className="absolute right-0 z-20 mt-2 w-72 overflow-hidden rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-panel)] shadow-[0_24px_48px_-20px_rgba(0,0,0,0.85)] liquid-panel"
                 >
                   <div className="border-b border-[var(--color-border)] px-3 py-2">
                     <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-text-muted)]">
                       Profiles
                     </p>
+                    <label className="sr-only" htmlFor="profile-search">
+                      Search desks
+                    </label>
+                    <input
+                      id="profile-search"
+                      ref={searchRef}
+                      type="search"
+                      value={query}
+                      onChange={(e) => {
+                        setQuery(e.target.value);
+                        setActiveIndex(0);
+                      }}
+                      placeholder={`Search ${people.length} desks…`}
+                      className="mt-2 w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] px-2 py-1.5 font-mono text-xs text-white outline-none ring-[var(--color-gold)] placeholder:text-[var(--color-text-muted)] focus:ring-1"
+                    />
                   </div>
                   <ul className="max-h-72 overflow-y-auto scroll-thin">
-                    {people.map((p) => {
-                      const isActive = p.slug === current.slug;
-                      return (
-                        <li key={p.slug}>
-                          <Link
-                            href={`/${p.slug}`}
-                            onClick={() => setOpen(false)}
-                            className={`flex items-center gap-3 px-3 py-2.5 text-sm transition duration-200 ease-out hover:bg-[var(--color-bg-card)] active:translate-y-px ${
-                              isActive ? "bg-[var(--color-bg-card)]" : ""
-                            }`}
-                          >
-                            <span
-                              className="inline-block h-2 w-2 flex-none rounded-full"
-                              style={{ backgroundColor: p.accent }}
-                            />
-                            <span className="flex-1">
-                              <span className="block text-[var(--color-text)]">
-                                {p.name}
+                    {filtered.length === 0 ? (
+                      <li className="px-3 py-4 font-mono text-[11px] text-[var(--color-text-muted)]">
+                        No desks match
+                      </li>
+                    ) : (
+                      filtered.map((p, i) => {
+                        const isActive = p.slug === current.slug;
+                        const isFocused = i === activeIndex;
+                        return (
+                          <li key={p.slug}>
+                            <Link
+                              role="menuitem"
+                              href={`/${p.slug}`}
+                              onClick={() => setOpen(false)}
+                              onMouseEnter={() => setActiveIndex(i)}
+                              className={`flex items-center gap-3 px-3 py-2.5 text-sm transition duration-200 ease-out hover:bg-[var(--color-bg-card)] active:translate-y-px ${
+                                isActive || isFocused ? "bg-[var(--color-bg-card)]" : ""
+                              }`}
+                            >
+                              <span
+                                className="inline-block h-2 w-2 flex-none rounded-full"
+                                style={{ backgroundColor: p.accent }}
+                              />
+                              <span className="flex-1">
+                                <span className="block text-[var(--color-text)]">
+                                  {p.name}
+                                </span>
+                                <span className="block font-mono text-[10px] text-[var(--color-text-muted)]">
+                                  @{p.handle}
+                                </span>
                               </span>
-                              <span className="block font-mono text-[10px] text-[var(--color-text-muted)]">
-                                @{p.handle}
-                              </span>
-                            </span>
-                            {isActive && (
-                              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-gold)]">
-                                active
-                              </span>
-                            )}
-                          </Link>
-                        </li>
-                      );
-                    })}
+                              {isActive && (
+                                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-gold)]">
+                                  active
+                                </span>
+                              )}
+                            </Link>
+                          </li>
+                        );
+                      })
+                    )}
                   </ul>
                   <div className="border-t border-[var(--color-border)] px-3 py-2">
                     <Link

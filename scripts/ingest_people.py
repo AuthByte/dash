@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from common import DATA_DIR, load_env
+from common import DATA_DIR, OUTPUT_DIR, load_env, write_json
 
 SCRIPTS_DIR = Path(__file__).parent
 DEFAULT_MODEL = "openai/gpt-oss-20b:free"
@@ -42,6 +42,7 @@ def main() -> int:
         return 2
 
     failures = 0
+    summary: list[dict] = []
     for person in people:
         slug = person["slug"]
         handle = person["handle"]
@@ -65,10 +66,27 @@ def main() -> int:
             cmd.append("--full")
         print(f"\n######## ingest {slug} @{handle} ########")
         rc = subprocess.run(cmd, cwd=SCRIPTS_DIR.parent).returncode
+        summary.append(
+            {
+                "slug": slug,
+                "handle": handle,
+                "ok": rc == 0,
+                "exit_code": rc,
+            }
+        )
         if rc != 0:
             print(f"[ingest] {slug} failed with exit {rc}", file=sys.stderr)
             failures += 1
     print(f"\n[ingest] done people={len(people)} failures={failures}")
+    report = {
+        "people": len(people),
+        "failures": failures,
+        "ok": failures == 0,
+        "results": summary,
+    }
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    write_json(OUTPUT_DIR / "ingest-summary.json", report)
+    print(json.dumps(report, indent=2))
     return 1 if failures else 0
 
 

@@ -42,4 +42,3 @@ scrape-output/
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts

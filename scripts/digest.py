@@ -211,6 +211,51 @@ def extract_json_object(content: str) -> dict[str, Any]:
     return parsed
 
 
+REQUIRED_DIGEST_KEYS = ("new_picks", "updated_picks", "thesis_update", "ignored")
+
+
+def _coerce_pick_list(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        return []
+    out: list[dict[str, Any]] = []
+    required = (
+        "ticker",
+        "name",
+        "theme",
+        "stance",
+        "conviction",
+        "thesis_short",
+        "thesis_long",
+        "first_mentioned_at",
+        "tweet_url",
+        "tweet_id",
+    )
+    for item in value:
+        if not isinstance(item, dict):
+            continue
+        if not isinstance(item.get("ticker"), str) or not str(item["ticker"]).strip():
+            continue
+        if not all(key in item for key in required):
+            continue
+        out.append(item)
+    return out
+
+
+def validate_digest_result(payload: dict[str, Any]) -> dict[str, Any]:
+    missing = [key for key in REQUIRED_DIGEST_KEYS if key not in payload]
+    if missing:
+        raise RuntimeError(f"digest JSON missing keys: {', '.join(missing)}")
+    payload["new_picks"] = _coerce_pick_list(payload.get("new_picks"))
+    payload["updated_picks"] = _coerce_pick_list(payload.get("updated_picks"))
+    if payload.get("thesis_update") is not None and not isinstance(
+        payload.get("thesis_update"), str
+    ):
+        payload["thesis_update"] = None
+    if not isinstance(payload.get("ignored"), list):
+        payload["ignored"] = []
+    return payload
+
+
 def call_openrouter(
     api_key: str,
     model: str,
@@ -276,7 +321,7 @@ def call_openrouter(
                         for part in content
                         if isinstance(part, dict)
                     )
-                return extract_json_object(str(content))
+                return validate_digest_result(extract_json_object(str(content)))
             except (KeyError, IndexError, json.JSONDecodeError, RuntimeError) as exc:
                 last_error = exc
                 continue

@@ -1,7 +1,8 @@
 import { formatPct } from "@/lib/format";
-import type { HeadlineStats } from "@/lib/data";
+import type { HeadlineStats } from "@/lib/stats";
 
 export function StatStrip({ stats }: { stats: HeadlineStats }) {
+  const empty = stats.total === 0;
   const items: {
     label: string;
     value: string;
@@ -12,15 +13,29 @@ export function StatStrip({ stats }: { stats: HeadlineStats }) {
     {
       label: "Total picks",
       value: `${stats.total}`,
-      sub: `${stats.long_count} long · ${stats.other_count} other`,
+      sub: empty
+        ? "Desk is empty until tweets are ingested"
+        : `${stats.long_count} long · ${stats.other_count} other`,
       tone: "neutral",
       span: "col-span-12 md:col-span-4",
     },
     {
       label: "Avg YTD (longs)",
-      value: formatPct(stats.avg_ytd_pct_longs, { sign: true }),
-      sub: "Equal-weighted sleeve",
-      tone: stats.avg_ytd_pct_longs >= 0 ? "up" : "down",
+      value:
+        stats.avg_ytd_pct_longs == null
+          ? "—"
+          : formatPct(stats.avg_ytd_pct_longs, { sign: true }),
+      sub: empty
+        ? "No sleeve yet"
+        : stats.avg_ytd_pct_longs == null
+          ? "No long names"
+          : "Equal-weighted sleeve",
+      tone:
+        stats.avg_ytd_pct_longs == null
+          ? "neutral"
+          : stats.avg_ytd_pct_longs >= 0
+            ? "up"
+            : "down",
       span: "col-span-12 md:col-span-8",
     },
     {
@@ -28,8 +43,8 @@ export function StatStrip({ stats }: { stats: HeadlineStats }) {
       value: stats.best?.ticker ?? "—",
       sub: stats.best
         ? formatPct(stats.best.ytd_pct, { sign: true }) + " YTD"
-        : "",
-      tone: "up",
+        : "Awaiting names",
+      tone: stats.best ? "up" : "neutral",
       span: "col-span-6 md:col-span-4",
     },
     {
@@ -37,8 +52,8 @@ export function StatStrip({ stats }: { stats: HeadlineStats }) {
       value: stats.worst?.ticker ?? "—",
       sub: stats.worst
         ? formatPct(stats.worst.ytd_pct, { sign: true }) + " YTD"
-        : "",
-      tone: "down",
+        : "Awaiting names",
+      tone: stats.worst ? "down" : "neutral",
       span: "col-span-6 md:col-span-4",
     },
     {

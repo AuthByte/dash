@@ -1,7 +1,7 @@
 {
   "handle": "labubu_trader",
   "follower_count": 0,
-  "current_thesis_md": "Watchlist for @labubu_trader is being seeded. Run `python scripts/run.py --person labubu-trader --handle labubu_trader --full` with a free OpenRouter model to ingest tweets.",
+  "current_thesis_md": "",
   "claimed_ytd_pct": 0,
   "last_updated": "2026-08-14"
 }

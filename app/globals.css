@@ -10,7 +10,7 @@
   --color-border-strong: #3a342e;
   --color-text: #f4f0ea;
   --color-text-dim: #b5aea4;
-  --color-text-muted: #847a70;
+  --color-text-muted: #9a9188;
   --color-gold: #c9a06c;
   --color-gold-dim: #9e7a48;
   --color-up: #6eb89a;
@@ -117,6 +117,14 @@ body {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
