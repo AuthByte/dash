@@ -14,6 +14,7 @@
     "scrape": "python scripts/run.py",
     "bootstrap-people": "python scripts/bootstrap_people.py",
     "ingest": "python scripts/ingest_people.py",
+    "avatars": "python scripts/fetch_avatars.py",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test lib/*.test.ts"
   },

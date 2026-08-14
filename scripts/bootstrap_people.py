@@ -182,7 +182,10 @@ PEOPLE: list[dict[str, Any]] = [
 
 def write_local_fixtures() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    catalog = [{**person, "sort_order": i} for i, person in enumerate(PEOPLE)]
+    catalog = [
+        {**person, "sort_order": i, "avatar_url": f"/avatars/{person['slug']}.jpg"}
+        for i, person in enumerate(PEOPLE)
+    ]
     write_json(DATA_DIR / "people.json", catalog)
     today = dt.date.today().isoformat()
     for i, person in enumerate(PEOPLE):

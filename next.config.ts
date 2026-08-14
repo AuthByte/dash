@@ -29,6 +29,12 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   outputFileTracingRoot: __dirname,
   poweredByHeader: false,
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "unavatar.io", pathname: "/x/**" },
+      { protocol: "https", hostname: "pbs.twimg.com", pathname: "/profile_images/**" },
+    ],
+  },
   async headers() {
     return [
       {

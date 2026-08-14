@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Person } from "@/lib/schema";
+import { DeskAvatar } from "./DeskAvatar";
 
 const STORAGE_KEY = "dash:last_person";
 
@@ -112,13 +113,16 @@ export function ProfileSwitcher({
               ref={buttonRef}
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] text-sm font-medium text-[var(--color-text-dim)] transition duration-200 ease-out hover:text-white active:translate-y-px"
+              className="flex items-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] py-1 pl-1 pr-3 text-sm font-medium text-[var(--color-text-dim)] transition duration-200 ease-out hover:text-white active:translate-y-px"
               aria-haspopup="menu"
               aria-expanded={open}
               aria-controls="profile-menu"
               aria-label="Switch profile"
             >
-              {current.name.slice(0, 1)}
+              <DeskAvatar person={current} size="sm" />
+              <span className="hidden max-w-[9rem] truncate font-mono text-[11px] uppercase tracking-[0.14em] sm:inline">
+                {current.name}
+              </span>
             </button>
 
             {open && (
@@ -174,10 +178,7 @@ export function ProfileSwitcher({
                                 isActive || isFocused ? "bg-[var(--color-bg-card)]" : ""
                               }`}
                             >
-                              <span
-                                className="inline-block h-2 w-2 flex-none rounded-full"
-                                style={{ backgroundColor: p.accent }}
-                              />
+                              <DeskAvatar person={p} size="sm" />
                               <span className="flex-1">
                                 <span className="block text-[var(--color-text)]">
                                   {p.name}

@@ -6,7 +6,8 @@
     "tagline": "Supply chain chokepoints • photonics/CPO • neocloud",
     "accent": "#f5a623",
     "active": true,
-    "sort_order": 0
+    "sort_order": 0,
+    "avatar_url": "/avatars/serenity.jpg"
   },
   {
     "slug": "firstadopter",
@@ -15,7 +16,8 @@
     "tagline": "Early public-market adoption • thematic inflections",
     "accent": "#7dd3fc",
     "active": true,
-    "sort_order": 1
+    "sort_order": 1,
+    "avatar_url": "/avatars/firstadopter.jpg"
   },
   {
     "slug": "stocksavvyshay",
@@ -24,7 +26,8 @@
     "tagline": "Catalyst hunting • retail-to-pro tape reading",
     "accent": "#f9a8d4",
     "active": true,
-    "sort_order": 2
+    "sort_order": 2,
+    "avatar_url": "/avatars/stocksavvyshay.jpg"
   },
   {
     "slug": "bourboncap",
@@ -33,7 +36,8 @@
     "tagline": "Concentrated quality • capital allocation",
     "accent": "#d4a574",
     "active": true,
-    "sort_order": 3
+    "sort_order": 3,
+    "avatar_url": "/avatars/bourboncap.jpg"
   },
   {
     "slug": "mr-derivatives",
@@ -42,7 +46,8 @@
     "tagline": "Options flow • vol surfaces • positioning",
     "accent": "#a78bfa",
     "active": true,
-    "sort_order": 4
+    "sort_order": 4,
+    "avatar_url": "/avatars/mr-derivatives.jpg"
   },
   {
     "slug": "micro2macr0",
@@ -51,7 +56,8 @@
     "tagline": "Bottom-up names with a top-down overlay",
     "accent": "#34d399",
     "active": true,
-    "sort_order": 5
+    "sort_order": 5,
+    "avatar_url": "/avatars/micro2macr0.jpg"
   },
   {
     "slug": "rjccapital",
@@ -60,7 +66,8 @@
     "tagline": "Public-market research • special situations",
     "accent": "#60a5fa",
     "active": true,
-    "sort_order": 6
+    "sort_order": 6,
+    "avatar_url": "/avatars/rjccapital.jpg"
   },
   {
     "slug": "ckcapitalxx",
@@ -69,7 +76,8 @@
     "tagline": "High-conviction public book",
     "accent": "#fbbf24",
     "active": true,
-    "sort_order": 7
+    "sort_order": 7,
+    "avatar_url": "/avatars/ckcapitalxx.jpg"
   },
   {
     "slug": "theprofinvestor",
@@ -78,7 +86,8 @@
     "tagline": "Process-driven long/short research",
     "accent": "#22d3ee",
     "active": true,
-    "sort_order": 8
+    "sort_order": 8,
+    "avatar_url": "/avatars/theprofinvestor.jpg"
   },
   {
     "slug": "sixsigmacapital",
@@ -87,7 +96,8 @@
     "tagline": "Statistical edge • process discipline",
     "accent": "#fb923c",
     "active": true,
-    "sort_order": 9
+    "sort_order": 9,
+    "avatar_url": "/avatars/sixsigmacapital.jpg"
   },
   {
     "slug": "buccocapital",
@@ -96,7 +106,8 @@
     "tagline": "Concentrated public equity",
     "accent": "#f87171",
     "active": true,
-    "sort_order": 10
+    "sort_order": 10,
+    "avatar_url": "/avatars/buccocapital.jpg"
   },
   {
     "slug": "thelonginvest",
@@ -105,7 +116,8 @@
     "tagline": "Long-duration compounding",
     "accent": "#94a3b8",
     "active": true,
-    "sort_order": 11
+    "sort_order": 11,
+    "avatar_url": "/avatars/thelonginvest.jpg"
   },
   {
     "slug": "labubu-trader",
@@ -114,7 +126,8 @@
     "tagline": "Tactical trading • momentum",
     "accent": "#facc15",
     "active": true,
-    "sort_order": 12
+    "sort_order": 12,
+    "avatar_url": "/avatars/labubu-trader.jpg"
   },
   {
     "slug": "cmsinvests",
@@ -123,7 +136,8 @@
     "tagline": "Fundamental public-market investing",
     "accent": "#c084fc",
     "active": true,
-    "sort_order": 13
+    "sort_order": 13,
+    "avatar_url": "/avatars/cmsinvests.jpg"
   },
   {
     "slug": "globalflows",
@@ -132,7 +146,8 @@
     "tagline": "Cross-asset flows • macro tape",
     "accent": "#38bdf8",
     "active": true,
-    "sort_order": 14
+    "sort_order": 14,
+    "avatar_url": "/avatars/globalflows.jpg"
   },
   {
     "slug": "jbulltard1",
@@ -141,7 +156,8 @@
     "tagline": "High-conviction directional calls",
     "accent": "#fb7185",
     "active": true,
-    "sort_order": 15
+    "sort_order": 15,
+    "avatar_url": "/avatars/jbulltard1.jpg"
   },
   {
     "slug": "zephyr-z9",
@@ -150,7 +166,8 @@
     "tagline": "Public-market research desk",
     "accent": "#67e8f9",
     "active": true,
-    "sort_order": 16
+    "sort_order": 16,
+    "avatar_url": "/avatars/zephyr-z9.jpg"
   },
   {
     "slug": "amitisinvesting",
@@ -159,7 +176,8 @@
     "tagline": "Fundamental investing commentary",
     "accent": "#86efac",
     "active": true,
-    "sort_order": 17
+    "sort_order": 17,
+    "avatar_url": "/avatars/amitisinvesting.jpg"
   },
   {
     "slug": "kawzinvests",
@@ -168,6 +186,7 @@
     "tagline": "Public-market idea flow",
     "accent": "#fda4af",
     "active": true,
-    "sort_order": 18
+    "sort_order": 18,
+    "avatar_url": "/avatars/kawzinvests.jpg"
   }
 ]

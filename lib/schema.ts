@@ -166,6 +166,7 @@ export const PersonSchema = z.object({
   accent: z.string(),
   active: z.boolean().default(true),
   sort_order: z.number().int().optional(),
+  avatar_url: z.string().optional(),
 });
 export type Person = z.infer<typeof PersonSchema>;
 

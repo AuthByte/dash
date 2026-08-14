@@ -1,5 +1,6 @@
 import { formatFollowers, formatPct } from "@/lib/format";
 import type { Person, SiteMeta } from "@/lib/schema";
+import { DeskAvatar } from "./DeskAvatar";
 
 export function Hero({ meta, person }: { meta: SiteMeta; person: Person }) {
   const showFollowers = meta.follower_count > 0;
@@ -7,9 +8,12 @@ export function Hero({ meta, person }: { meta: SiteMeta; person: Person }) {
   return (
     <header className="liquid-panel grid gap-8 overflow-hidden rounded-[1.75rem] bg-[var(--color-bg-card)]/90 px-6 py-8 sm:px-8 sm:py-9 lg:grid-cols-[1fr_auto] lg:items-end">
       <div className="min-w-0">
-        <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-[var(--color-text-muted)]">
-          Live board
-        </p>
+        <div className="flex items-center gap-4">
+          <DeskAvatar person={person} size="lg" />
+          <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-[var(--color-text-muted)]">
+            Live board
+          </p>
+        </div>
         <h1 className="mt-4 text-3xl font-semibold leading-[1.05] tracking-tighter text-white sm:text-4xl lg:text-5xl">
           {person.name}
           <span className="text-[var(--color-text-dim)]"> — </span>

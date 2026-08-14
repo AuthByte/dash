@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Person } from "@/lib/schema";
+import { DeskAvatar } from "./DeskAvatar";
 
 const STORAGE_KEY = "dash:last_person";
 
@@ -119,15 +120,7 @@ export function PersonPicker({ people }: { people: Person[] }) {
             aria-hidden="true"
           />
           <div className="flex items-start justify-between gap-4 pl-2">
-            <div
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl font-mono text-sm font-bold text-[#0a0a0a] shadow-inner"
-              style={{
-                backgroundColor: p.accent,
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.25)",
-              }}
-            >
-              {p.name.charAt(0)}
-            </div>
+            <DeskAvatar person={p} size="md" />
             <span className="font-mono text-[10px] uppercase tracking-[0.26em] text-[var(--color-text-muted)] transition group-hover:text-[var(--color-gold)]">
               Enter
             </span>
