@@ -21,7 +21,7 @@ import {
   type Time,
   type WhitespaceData,
 } from "lightweight-charts";
-import { snapToSession } from "@/lib/history";
+import { dateOnly, snapToSession } from "@/lib/history";
 import type { PriceHistoryPoint } from "@/lib/schema";
 
 export function Sparkline({
@@ -58,7 +58,7 @@ export function Sparkline({
       data
         .filter((point) => Number.isFinite(point.close))
         .map((point) => ({
-          time: point.date as Time,
+          time: (dateOnly(point.date) ?? point.date) as Time,
           value: point.close,
         })),
     [data],

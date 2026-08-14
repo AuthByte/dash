@@ -1,3 +1,12 @@
+/** Calendar day `YYYY-MM-DD` from ISO dates, timestamps, or date-only strings. */
+export function dateOnly(iso: string | null | undefined): string | null {
+  if (!iso) return null;
+  const trimmed = iso.trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return trimmed;
+  const day = trimmed.slice(0, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(day) ? day : null;
+}
+
 export type ChartRange = "1M" | "3M" | "YTD" | "1Y" | "ALL";
 
 export const CHART_RANGES: ChartRange[] = ["1M", "3M", "YTD", "1Y", "ALL"];
@@ -22,7 +31,10 @@ export function sliceHistory<T extends { date: string }>(
 ): T[] {
   const start = cutoffDate(range, now);
   if (!start) return history;
-  return history.filter((point) => point.date >= start);
+  return history.filter((point) => {
+    const day = dateOnly(point.date) ?? point.date;
+    return day >= start;
+  });
 }
 
 export function capHistory<T>(history: T[], maxPoints = 800): T[] {
@@ -36,8 +48,12 @@ export function snapToSession(
   sessions: Iterable<string>,
   lookbackDays = 5,
 ): string | null {
-  const available = sessions instanceof Set ? sessions : new Set(sessions);
-  const day = isoDay.slice(0, 10);
+  const available = new Set(
+    [...(sessions instanceof Set ? sessions : sessions)].map(
+      (session) => dateOnly(String(session)) ?? String(session),
+    ),
+  );
+  const day = dateOnly(isoDay) ?? isoDay.slice(0, 10);
   if (available.has(day)) return day;
   const d = new Date(`${day}T00:00:00Z`);
   if (Number.isNaN(d.getTime())) return null;

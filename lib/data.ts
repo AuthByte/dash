@@ -24,7 +24,7 @@ import {
   type ThemeSlug,
 } from "./schema";
 import { parsePickRows } from "./pickParse";
-import { capHistory } from "./history";
+import { capHistory, dateOnly } from "./history";
 
 export { getHeadlineStats, type HeadlineStats } from "./stats";
 
@@ -167,7 +167,19 @@ async function getPricesFromNormalizedTables(
         market_cap: row.market_cap,
         currency: row.currency ?? "USD",
         ytd_pct: Number(row.ytd_pct ?? 0),
-        history: Array.isArray(row.history) ? row.history : [],
+        history: Array.isArray(row.history)
+          ? row.history
+              .map((point: { date?: unknown; close?: unknown }) => {
+                const day = dateOnly(typeof point?.date === "string" ? point.date : "");
+                const close = Number(point?.close);
+                if (!day || !Number.isFinite(close)) return null;
+                return { date: day, close };
+              })
+              .filter(
+                (point: { date: string; close: number } | null): point is { date: string; close: number } =>
+                  point != null,
+              )
+          : [],
         metrics: row.metrics ?? {},
         updated_at:
           typeof row.updated_at === "string"

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
   capHistory,
+  dateOnly,
   isAllowedTicker,
   sliceHistory,
   snapToSession,
@@ -34,6 +35,12 @@ describe("snapToSession", () => {
     const sessions = new Set(["2026-08-13", "2026-08-14"]);
     assert.equal(snapToSession("2026-08-15", sessions), "2026-08-14");
     assert.equal(snapToSession("2026-08-14", sessions), "2026-08-14");
+  });
+
+  it("matches tweet days against timezone-stamped history dates", () => {
+    const sessions = new Set(["2026-03-30T00:00:00-04:00", "2026-03-31T00:00:00-04:00"]);
+    assert.equal(snapToSession("2026-03-30T02:19:36+00:00", sessions), "2026-03-30");
+    assert.equal(dateOnly("2026-03-30T00:00:00-05:00"), "2026-03-30");
   });
 });
 
