@@ -35,6 +35,7 @@ export function PicksSection({
   const [sortKey, setSortKey] = useState<SortKey>("first_mentioned_at");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [activeTicker, setActiveTicker] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
 
   const themeMap = useMemo(
     () => new Map(themes.map((t) => [t.slug, t] as const)),
@@ -42,6 +43,7 @@ export function PicksSection({
   );
 
   const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
     return picks.filter((p) => {
       if (themeFilter !== "all" && p.theme !== themeFilter) return false;
       if (
@@ -50,9 +52,13 @@ export function PicksSection({
         p.stance !== stanceFilter
       )
         return false;
+      if (q) {
+        const hay = `${p.ticker} ${p.name} ${p.thesis_short} ${p.theme}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
       return true;
     });
-  }, [picks, themeFilter, stanceFilter]);
+  }, [picks, themeFilter, stanceFilter, query]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
@@ -88,6 +94,19 @@ export function PicksSection({
         </p>
       </div>
       <FilterBar themes={themes} />
+      <div className="mt-3">
+        <label className="sr-only" htmlFor="pick-search">
+          Search tickers
+        </label>
+        <input
+          id="pick-search"
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Filter by ticker, name, or thesis…"
+          className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] px-3 py-2 font-mono text-sm text-white outline-none ring-[var(--color-gold)] placeholder:text-[var(--color-text-muted)] focus:ring-1"
+        />
+      </div>
       <div className="mt-4">
         <PicksTable
           picks={sorted}

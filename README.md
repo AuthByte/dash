@@ -1,8 +1,8 @@
 # Serenity's Picks
 
-A self-hosted tracker for [@aleabitoreddit](https://x.com/aleabitoreddit)'s public stock picks. Dark terminal aesthetic, theme/stance/conviction taxonomy, on-demand price refresh, and an LLM-driven ingest pipeline so you don't have to copy-paste tweets.
+A self-hosted multi-profile tracker for public stock picks (Serenity plus additional desks). Dark editorial aesthetic, theme/stance/conviction taxonomy, on-demand price refresh, and an LLM ingest pipeline.
 
-All state lives in **Supabase** (project: `dashboard`). The Next.js site reads picks/prices/themes/site-meta from Postgres on the server; there is no flat-file data directory. The Python scripts write back to the same tables.
+All operational state can live in **Supabase** (`dashboard`). The Next.js site prefers Postgres, then falls back to `data/people/<slug>/*.json` if Supabase is paused, slow, or empty. Python scripts write both local JSON and Supabase when configured.
 
 ```
        ┌─────────────┐    ┌────────────┐    ┌──────────────┐
@@ -117,31 +117,34 @@ Sign up at [openrouter.ai](https://openrouter.ai/), grab a key, paste it into `.
 
 ```
 OPENROUTER_API_KEY=sk-or-v1-...
-OPENROUTER_MODEL=anthropic/claude-3.5-sonnet
+OPENROUTER_MODEL=openai/gpt-oss-20b:free
 ```
 
-Default model is Claude 3.5 Sonnet (~$0.07/run for ~50 tweets). For cheaper test runs, swap to `openai/gpt-4o-mini` (~$0.005/run). Override per-run with `npm run scrape -- --model openai/gpt-4o-mini` (or call `python scripts/run.py --model ...`).
+Default digest model is a **free** OpenRouter endpoint (`openai/gpt-oss-20b:free`) with automatic fallbacks (`google/gemma-4-31b-it:free`, `openrouter/free`) when structured-output is unavailable. Paid models still work via `--model`.
 
 ### 2c. The actual command
 
 ```bash
-npm run scrape
-# or directly:
-python scripts/run.py
+# one desk
+python scripts/run.py --person firstadopter --handle firstadopter --full --model openai/gpt-oss-20b:free
+
+# every active desk in data/people.json
+python scripts/bootstrap_people.py --supabase
+python scripts/ingest_people.py --full --model openai/gpt-oss-20b:free
 ```
 
 This:
 
-1. **Scrapes** `@aleabitoreddit` (configurable via `TWITTER_HANDLE` env) and writes raw tweets to `scrape-output/raw-YYYY-MM-DD.json`. Stores a cursor (`scrape-output/.cursor`) so subsequent runs only fetch new tweets.
-2. **Digests** those tweets via OpenRouter with a strict JSON-schema response, using the current `public.picks` rows from Supabase as dedupe context. Output goes to `scrape-output/digest-YYYY-MM-DD.json`.
-3. **Prints** a clearly-fenced block at the end labeled `=== PASTE THIS TO CURSOR ===`. Copy that whole block into a fresh Cursor chat with this repo open, and the agent will review and run `python scripts/apply_digest.py` to upsert into Supabase. You can also just run `python scripts/apply_digest.py --person serenity` directly once the digest file exists.
+1. **Scrapes** the given handle (or `TWITTER_HANDLE`) into `scrape-output/<slug>/raw-YYYY-MM-DD.json` with a per-desk cursor.
+2. **Digests** tweets via OpenRouter (free model by default) with JSON-schema when supported, otherwise JSON-object / raw JSON extraction.
+3. **Applies** into local `data/people/<slug>/picks.json` and, when reachable, Supabase `picks` / `tweet_events` / `site_meta`.
 
 Useful flags:
 
 ```bash
-python scripts/run.py --skip-scrape           # reuse the latest raw-*.json (re-digest)
-python scripts/run.py --full                  # ignore cursor, pull a full window
-python scripts/run.py --model openai/gpt-4o-mini   # cheaper run
+python scripts/run.py --skip-scrape --person serenity
+python scripts/run.py --full --person bourboncap --handle bourboncap
+python scripts/ingest_people.py --only firstadopter,globalflows --skip-scrape
 ```
 
 If no new tweets are found, the script exits cleanly with no LLM call.
@@ -177,7 +180,7 @@ Standard Next.js. Push to GitHub and import into Vercel (or anywhere). At build/
 
 `OPENROUTER_API_KEY` + `SUPABASE_SERVICE_ROLE_KEY` are only used by the local scripts.
 
-The dashboard routes are `force-static` — Next.js renders them at build time against Supabase and revalidates on each deploy. If you want fresher data without redeploying, remove `export const dynamic = "force-static"` from the relevant page (or switch to `revalidate = 60`).
+The dashboard routes are `force-dynamic` so a paused or empty database can fall back to local JSON without a rebuild. Set `SITE_URL` for sitemap/robots.
 
 ---
 

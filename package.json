@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "refresh": "tsx scripts/refresh.ts",
-    "scrape": "python scripts/run.py"
+    "scrape": "python scripts/run.py",
+    "bootstrap-people": "python scripts/bootstrap_people.py",
+    "ingest": "python scripts/ingest_people.py",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.0",

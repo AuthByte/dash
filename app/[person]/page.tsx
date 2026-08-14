@@ -25,6 +25,20 @@ export async function generateStaticParams() {
   return people.map((p) => ({ person: p.slug }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ person: string }>;
+}) {
+  const { person: slug } = await params;
+  const person = await getPersonBySlug(slug);
+  if (!person) return { title: "Desk not found" };
+  return {
+    title: `${person.name} — Picks Tracker`,
+    description: person.tagline,
+  };
+}
+
 export default async function PersonDashboardPage({
   params,
 }: {
@@ -43,10 +57,18 @@ export default async function PersonDashboardPage({
   const themeStats = getThemeStats(themes, picks);
   const headline = getHeadlineStats(picks);
 
+  const todayRibbon = new Date().toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
     <main className="bg-grid relative min-h-dvh">
-      <div className="mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6 lg:px-10">
-        <ProfileSwitcher current={person} people={people} />
+      <div className="noise-overlay" aria-hidden="true" />
+      <div className="relative z-[1] mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6 lg:px-10">
+        <ProfileSwitcher current={person} people={people} todayRibbon={todayRibbon} />
         <div className="mt-6">
           <Hero meta={meta} person={person} />
         </div>

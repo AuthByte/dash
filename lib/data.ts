@@ -27,13 +27,40 @@ import {
 const DATA_DIR = path.join(process.cwd(), "data");
 const PEOPLE_DIR = path.join(DATA_DIR, "people");
 
-function readJson<T>(absPath: string): unknown {
+function readJsonFile(absPath: string): unknown | null {
+  if (!fs.existsSync(absPath)) return null;
   const raw = fs.readFileSync(absPath, "utf8");
-  return JSON.parse(raw) as T;
+  return JSON.parse(raw) as unknown;
 }
 
 function personDir(slug: string): string {
   return path.join(PEOPLE_DIR, slug);
+}
+
+const SUPABASE_TIMEOUT_MS = 4_000;
+
+async function withTimeout<T>(promise: PromiseLike<T>, ms = SUPABASE_TIMEOUT_MS): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      Promise.resolve(promise),
+      new Promise<T>((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`timeout after ${ms}ms`)), ms);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+function emptySiteMeta(handle = ""): SiteMeta {
+  return {
+    handle,
+    follower_count: 0,
+    current_thesis_md: "",
+    claimed_ytd_pct: 0,
+    last_updated: new Date().toISOString().slice(0, 10),
+  };
 }
 
 async function getSupabaseDataset(
@@ -41,7 +68,7 @@ async function getSupabaseDataset(
 ): Promise<SupabasePersonDataset | null> {
   if (!hasSupabaseConfig()) return null;
   try {
-    return await readSupabasePersonDataset(personSlug);
+    return await withTimeout(readSupabasePersonDataset(personSlug));
   } catch {
     return null;
   }
@@ -62,21 +89,23 @@ async function getPicksFromNormalizedTables(
   try {
     const client = supabase();
     const [{ data: picksRows, error: picksErr }, { data: eventsRows, error: eventsErr }] =
-      await Promise.all([
-        client
-          .from("picks")
-          .select(
-            "ticker,name,theme,stance,conviction,thesis_short,thesis_long,first_mentioned_at,tweet_url,tweet_id,exited_at,exit_price,sort_order",
-          )
-          .eq("person_slug", personSlug)
-          .order("sort_order", { ascending: true })
-          .order("ticker", { ascending: true }),
-        client
-          .from("tweet_events")
-          .select("ticker,tweet_id,tweeted_at,tweet_url,text")
-          .eq("person_slug", personSlug)
-          .order("tweeted_at", { ascending: true }),
-      ]);
+      await withTimeout(
+        Promise.all([
+          client
+            .from("picks")
+            .select(
+              "ticker,name,theme,stance,conviction,thesis_short,thesis_long,first_mentioned_at,tweet_url,tweet_id,exited_at,exit_price,sort_order",
+            )
+            .eq("person_slug", personSlug)
+            .order("sort_order", { ascending: true })
+            .order("ticker", { ascending: true }),
+          client
+            .from("tweet_events")
+            .select("ticker,tweet_id,tweeted_at,tweet_url,text")
+            .eq("person_slug", personSlug)
+            .order("tweeted_at", { ascending: true }),
+        ]),
+      );
 
     if (picksErr || eventsErr) return null;
 
@@ -119,10 +148,12 @@ async function getPricesFromNormalizedTables(
 ): Promise<Record<string, PriceEntry> | null> {
   if (!hasSupabaseConfig()) return null;
   try {
-    const { data, error } = await supabase()
-      .from("prices")
-      .select("ticker,price,market_cap,currency,ytd_pct,history,metrics,updated_at")
-      .eq("person_slug", personSlug);
+    const { data, error } = await withTimeout(
+      supabase()
+        .from("prices")
+        .select("ticker,price,market_cap,currency,ytd_pct,history,metrics,updated_at")
+        .eq("person_slug", personSlug),
+    );
     if (error) return null;
 
     const out: Record<string, PriceEntry> = {};
@@ -151,11 +182,13 @@ async function getThemesFromNormalizedTables(
 ): Promise<Theme[] | null> {
   if (!hasSupabaseConfig()) return null;
   try {
-    const { data, error } = await supabase()
-      .from("themes")
-      .select("slug,label,accent,sort_order")
-      .eq("person_slug", personSlug)
-      .order("sort_order", { ascending: true });
+    const { data, error } = await withTimeout(
+      supabase()
+        .from("themes")
+        .select("slug,label,accent,sort_order")
+        .eq("person_slug", personSlug)
+        .order("sort_order", { ascending: true }),
+    );
     if (error) return null;
     return ThemesFileSchema.parse(data ?? []);
   } catch {
@@ -168,11 +201,13 @@ async function getSiteMetaFromNormalizedTables(
 ): Promise<SiteMeta | null> {
   if (!hasSupabaseConfig()) return null;
   try {
-    const { data, error } = await supabase()
-      .from("site_meta")
-      .select("handle,follower_count,current_thesis_md,claimed_ytd_pct,last_updated")
-      .eq("person_slug", personSlug)
-      .maybeSingle();
+    const { data, error } = await withTimeout(
+      supabase()
+        .from("site_meta")
+        .select("handle,follower_count,current_thesis_md,claimed_ytd_pct,last_updated")
+        .eq("person_slug", personSlug)
+        .maybeSingle(),
+    );
     if (error || !data) return null;
     return SiteMetaSchema.parse({
       handle: data.handle,
@@ -192,31 +227,33 @@ async function getSiteMetaFromNormalizedTables(
 export async function getPeople(): Promise<Person[]> {
   if (hasSupabaseConfig()) {
     try {
-      const rows = await supabase()
-        .from("people")
-        .select("slug,name,handle,tagline,accent,active,sort_order")
-        .eq("active", true)
-        .order("sort_order", { ascending: true })
-        .order("slug", { ascending: true });
-      if (!rows.error && rows.data != null) {
+      const rows = await withTimeout(
+        supabase()
+          .from("people")
+          .select("slug,name,handle,tagline,accent,active,sort_order")
+          .eq("active", true)
+          .order("sort_order", { ascending: true })
+          .order("slug", { ascending: true }),
+      );
+      if (!rows.error && rows.data != null && rows.data.length > 0) {
         return PeopleFileSchema.parse(rows.data).filter((p) => p.active !== false);
       }
     } catch {
       // fall through
     }
     try {
-      const supabasePeople = await readSupabasePeople();
-      return PeopleFileSchema.parse(supabasePeople).filter((p) => p.active !== false);
+      const supabasePeople = await withTimeout(readSupabasePeople());
+      const parsed = PeopleFileSchema.parse(supabasePeople).filter((p) => p.active !== false);
+      if (parsed.length > 0) return parsed;
     } catch {
       // fall through
     }
   }
 
   const peoplePath = path.join(DATA_DIR, "people.json");
-  if (fs.existsSync(peoplePath)) {
-    return PeopleFileSchema.parse(readJson(peoplePath)).filter(
-      (p) => p.active !== false,
-    );
+  const local = readJsonFile(peoplePath);
+  if (local) {
+    return PeopleFileSchema.parse(local).filter((p) => p.active !== false);
   }
   return [];
 }
@@ -227,35 +264,35 @@ export async function getPersonBySlug(slug: string): Promise<Person | null> {
 
 export async function getPicks(personSlug: string): Promise<Pick[]> {
   const normalized = await getPicksFromNormalizedTables(personSlug);
-  if (normalized) return normalized;
+  if (normalized && normalized.length > 0) return normalized;
 
   const dataset = await getSupabaseDataset(personSlug);
   if (dataset?.picks) {
     return PicksFileSchema.parse(dataset.picks);
   }
-  return PicksFileSchema.parse(
-    readJson(path.join(personDir(personSlug), "picks.json")),
-  );
+  const local = readJsonFile(path.join(personDir(personSlug), "picks.json"));
+  if (local) return PicksFileSchema.parse(local);
+  return [];
 }
 
 export async function getPrices(
   personSlug: string,
 ): Promise<Record<string, PriceEntry>> {
   const normalized = await getPricesFromNormalizedTables(personSlug);
-  if (normalized) return normalized;
+  if (normalized && Object.keys(normalized).length > 0) return normalized;
 
   const dataset = await getSupabaseDataset(personSlug);
   if (dataset?.prices) {
     return PricesFileSchema.parse(dataset.prices);
   }
-  return PricesFileSchema.parse(
-    readJson(path.join(personDir(personSlug), "prices.json")),
-  );
+  const local = readJsonFile(path.join(personDir(personSlug), "prices.json"));
+  if (local) return PricesFileSchema.parse(local);
+  return {};
 }
 
 export async function getThemes(personSlug: string): Promise<Theme[]> {
   const normalized = await getThemesFromNormalizedTables(personSlug);
-  if (normalized) return normalized;
+  if (normalized && normalized.length > 0) return normalized;
 
   const dataset = await getSupabaseDataset(personSlug);
   if (dataset?.themes) {
@@ -263,9 +300,11 @@ export async function getThemes(personSlug: string): Promise<Theme[]> {
       (a, b) => a.sort_order - b.sort_order,
     );
   }
-  return ThemesFileSchema.parse(
-    readJson(path.join(personDir(personSlug), "themes.json")),
-  ).sort((a, b) => a.sort_order - b.sort_order);
+  const local = readJsonFile(path.join(personDir(personSlug), "themes.json"));
+  if (local) {
+    return ThemesFileSchema.parse(local).sort((a, b) => a.sort_order - b.sort_order);
+  }
+  return [];
 }
 
 export async function getSiteMeta(personSlug: string): Promise<SiteMeta> {
@@ -276,9 +315,11 @@ export async function getSiteMeta(personSlug: string): Promise<SiteMeta> {
   if (dataset?.site_meta) {
     return SiteMetaSchema.parse(dataset.site_meta);
   }
-  return SiteMetaSchema.parse(
-    readJson(path.join(personDir(personSlug), "site_meta.json")),
-  );
+  const local = readJsonFile(path.join(personDir(personSlug), "site_meta.json"));
+  if (local) return SiteMetaSchema.parse(local);
+  const people = await getPeople();
+  const handle = people.find((p) => p.slug === personSlug)?.handle ?? personSlug;
+  return emptySiteMeta(handle);
 }
 
 export type EnrichedPick = Pick & {

@@ -32,6 +32,7 @@ from common import (
     ensure_dirs,
     get_handle,
     load_env,
+    person_output_dir,
     read_cursor,
     write_cursor,
     write_json,
@@ -391,8 +392,10 @@ async def main_async(args: argparse.Namespace) -> int:
     ensure_dirs()
     cookies = require_cookies()
     handle = args.handle or get_handle()
-    cursor = None if args.full else read_cursor()
+    person_slug = (args.person or os.environ.get("SCRAPE_PERSON_SLUG") or "").strip() or None
+    cursor = None if args.full else read_cursor(person_slug)
     since_date = dt.date.fromisoformat(args.since_date)
+    out_dir = person_output_dir(person_slug)
 
     print(
         f"[scrape] target=@{handle}  cursor={cursor or '(none)'}  "
@@ -429,7 +432,7 @@ async def main_async(args: argparse.Namespace) -> int:
     print(f"[scrape] {len(new_tweets)} new tweets since cursor")
 
     today = dt.date.today().isoformat()
-    out_path: Path = OUTPUT_DIR / f"raw-{today}.json"
+    out_path: Path = out_dir / f"raw-{today}.json"
     write_json(
         out_path,
         {
@@ -443,7 +446,7 @@ async def main_async(args: argparse.Namespace) -> int:
 
     if new_tweets:
         max_id = max(t["id"] for t in new_tweets if t.get("id"))
-        write_cursor(max_id)
+        write_cursor(max_id, person_slug)
         print(f"[scrape] cursor advanced to {max_id}")
 
     return 0 if new_tweets else 1
@@ -454,6 +457,11 @@ def main() -> int:
         description="Scrape tweets via X GraphQL with cookie auth."
     )
     parser.add_argument("--handle", default=None, help="Override TWITTER_HANDLE env.")
+    parser.add_argument(
+        "--person",
+        default=None,
+        help="Person slug used for per-profile cursor/output dirs.",
+    )
     parser.add_argument(
         "--limit", type=int, default=5000, help="Max tweets to pull per run."
     )

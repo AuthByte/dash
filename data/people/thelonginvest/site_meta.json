@@ -1,0 +1,7 @@
+{
+  "handle": "thelonginvest",
+  "follower_count": 0,
+  "current_thesis_md": "Watchlist for @thelonginvest is being seeded. Run `python scripts/run.py --person thelonginvest --handle thelonginvest --full` with a free OpenRouter model to ingest tweets.",
+  "claimed_ytd_pct": 0,
+  "last_updated": "2026-08-14"
+}

@@ -12,7 +12,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-from common import OUTPUT_DIR, ROOT, load_env, read_json
+from common import DATA_DIR, OUTPUT_DIR, ROOT, load_env, person_output_dir, read_json, write_json
 
 
 def latest_digest_path() -> Path | None:
@@ -222,21 +222,85 @@ def merge_events(
     return merged
 
 
-def apply_digest_for_person(person_slug: str, digest_path: Path) -> int:
-    client = get_supabase_client()
+def apply_digest_local(person_slug: str, digest: dict[str, Any], raw_tweets: list[dict[str, Any]]) -> None:
+    """Always persist digest results to local JSON so the app can render offline."""
+    pdir = DATA_DIR / "people" / person_slug
+    pdir.mkdir(parents=True, exist_ok=True)
+    picks_path = pdir / "picks.json"
+    existing: list[dict[str, Any]] = []
+    if picks_path.exists():
+        loaded = read_json(picks_path)
+        if isinstance(loaded, list):
+            existing = [p for p in loaded if isinstance(p, dict)]
 
+    by_ticker = {str(p.get("ticker", "")).upper(): p for p in existing}
+    tweet_index = build_tweet_event_index(raw_tweets)
+    incoming = [canonical_new_pick(p) for p in digest.get("new_picks", [])] + [
+        canonical_new_pick(p) for p in digest.get("updated_picks", [])
+    ]
+    for candidate in incoming:
+        ticker = candidate["ticker"]
+        if not ticker:
+            continue
+        prev = by_ticker.get(ticker, {})
+        events = merge_events(prev.get("tweet_events") or [], tweet_index.get(ticker, []))
+        by_ticker[ticker] = {
+            **prev,
+            **candidate,
+            "tweet_events": events,
+            "exited_at": candidate.get("exited_at", prev.get("exited_at")),
+            "exit_price": candidate.get("exit_price", prev.get("exit_price")),
+        }
+
+    merged_picks = list(by_ticker.values())
+    write_json(picks_path, merged_picks)
+
+    thesis_update = digest.get("thesis_update")
+    meta_path = pdir / "site_meta.json"
+    meta: dict[str, Any] = {}
+    if meta_path.exists():
+        loaded_meta = read_json(meta_path)
+        if isinstance(loaded_meta, dict):
+            meta = loaded_meta
+    if isinstance(thesis_update, str) and thesis_update.strip():
+        meta["current_thesis_md"] = thesis_update.strip()
+        meta["last_updated"] = dt.date.today().isoformat()
+        write_json(meta_path, meta)
+    print(f"[apply-digest] local picks={len(merged_picks)} -> {picks_path}")
+
+
+def apply_digest_for_person(person_slug: str, digest_path: Path) -> int:
     digest = read_json(digest_path)
     source_file = str(digest.get("source_file", "")).strip()
     raw_path: Path | None = None
+    person_dir = person_output_dir(person_slug)
     if source_file:
-        candidate = OUTPUT_DIR / source_file.replace("digest-", "raw-")
-        if candidate.exists():
-            raw_path = candidate
+        for candidate in (
+            person_dir / source_file.replace("digest-", "raw-"),
+            OUTPUT_DIR / source_file.replace("digest-", "raw-"),
+        ):
+            if candidate.exists():
+                raw_path = candidate
+                break
     if raw_path is None:
-        latest_raw = sorted(OUTPUT_DIR.glob("raw-*.json"))
+        latest_raw = sorted(person_dir.glob("raw-*.json")) or sorted(OUTPUT_DIR.glob("raw-*.json"))
         if latest_raw:
             raw_path = latest_raw[-1]
     raw_tweets = read_json(raw_path).get("tweets", []) if raw_path and raw_path.exists() else []
+
+    apply_digest_local(person_slug, digest, raw_tweets)
+
+    try:
+        return _apply_digest_supabase(person_slug, digest, raw_tweets)
+    except Exception as err:
+        print(f"[apply-digest] supabase apply skipped: {err}")
+        return 0
+
+
+def _apply_digest_supabase(
+    person_slug: str, digest: dict[str, Any], raw_tweets: list[dict[str, Any]]
+) -> int:
+    client = get_supabase_client()
     tweet_index = build_tweet_event_index(raw_tweets)
 
     digest_new = [canonical_new_pick(p) for p in digest.get("new_picks", [])]

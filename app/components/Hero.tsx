@@ -3,29 +3,31 @@ import type { Person, SiteMeta } from "@/lib/schema";
 
 export function Hero({ meta, person }: { meta: SiteMeta; person: Person }) {
   return (
-    <header className="grid gap-6 rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] px-6 py-7 shadow-[0_20px_40px_-28px_rgba(0,0,0,0.8)] lg:grid-cols-[1fr_auto] lg:items-start">
-      <div>
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-muted)]">
-          This week
+    <header className="liquid-panel grid gap-8 overflow-hidden rounded-[1.75rem] bg-[var(--color-bg-card)]/90 px-6 py-8 sm:px-8 sm:py-9 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div className="min-w-0">
+        <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-[var(--color-text-muted)]">
+          Live board
         </p>
-        <h1 className="mt-3 font-serif text-4xl leading-[1.1] text-white sm:text-5xl">
-          {person.name}&apos;s picks, at a glance.
+        <h1 className="mt-4 text-3xl font-semibold leading-[1.05] tracking-tighter text-white sm:text-4xl lg:text-5xl">
+          {person.name}
+          <span className="text-[var(--color-text-dim)]"> — </span>
+          <span className="text-[var(--color-gold)]">tape at a glance.</span>
         </h1>
-        <p className="mt-4 max-w-2xl text-sm text-[var(--color-text-dim)] sm:text-base">
+        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[var(--color-text-dim)] sm:text-base">
           {person.tagline}
         </p>
       </div>
-      <div className="flex flex-wrap items-center justify-start gap-3 lg:justify-end">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:flex-col lg:items-stretch">
         <a
           href={`https://x.com/${meta.handle}`}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-elev)] px-4 py-2 text-xs text-[var(--color-text-dim)] transition hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
+          className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elev)] px-4 py-2.5 text-xs text-[var(--color-text-dim)] transition duration-200 ease-out hover:border-[var(--color-gold)]/50 hover:text-[var(--color-gold)] active:translate-y-px"
         >
-          <XIcon className="h-3 w-3" />
+          <XIcon className="h-3.5 w-3.5 shrink-0" />
           <span className="font-mono">@{meta.handle}</span>
         </a>
-        <span className="inline-flex items-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elev)] px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
+        <span className="inline-flex items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elev)] px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-muted)]">
           {formatFollowers(meta.follower_count)} followers
         </span>
       </div>

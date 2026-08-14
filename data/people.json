@@ -1,0 +1,154 @@
+[
+  {
+    "slug": "serenity",
+    "name": "Serenity",
+    "handle": "aleabitoreddit",
+    "tagline": "Supply chain chokepoints • photonics/CPO • neocloud",
+    "accent": "#f5a623",
+    "active": true
+  },
+  {
+    "slug": "firstadopter",
+    "name": "First Adopter",
+    "handle": "firstadopter",
+    "tagline": "Early public-market adoption • thematic inflections",
+    "accent": "#7dd3fc",
+    "active": true
+  },
+  {
+    "slug": "stocksavvyshay",
+    "name": "Stock Savvy Shay",
+    "handle": "stocksavvyshay",
+    "tagline": "Catalyst hunting • retail-to-pro tape reading",
+    "accent": "#f9a8d4",
+    "active": true
+  },
+  {
+    "slug": "bourboncap",
+    "name": "Bourbon Capital",
+    "handle": "bourboncap",
+    "tagline": "Concentrated quality • capital allocation",
+    "accent": "#d4a574",
+    "active": true
+  },
+  {
+    "slug": "mr-derivatives",
+    "name": "Mr Derivatives",
+    "handle": "mr_derivatives",
+    "tagline": "Options flow • vol surfaces • positioning",
+    "accent": "#a78bfa",
+    "active": true
+  },
+  {
+    "slug": "micro2macr0",
+    "name": "Micro2Macro",
+    "handle": "micro2macr0",
+    "tagline": "Bottom-up names with a top-down overlay",
+    "accent": "#34d399",
+    "active": true
+  },
+  {
+    "slug": "rjccapital",
+    "name": "RJC Capital",
+    "handle": "rjccapital",
+    "tagline": "Public-market research • special situations",
+    "accent": "#60a5fa",
+    "active": true
+  },
+  {
+    "slug": "ckcapitalxx",
+    "name": "CK Capital",
+    "handle": "ckcapitalxx",
+    "tagline": "High-conviction public book",
+    "accent": "#fbbf24",
+    "active": true
+  },
+  {
+    "slug": "theprofinvestor",
+    "name": "The Prof Investor",
+    "handle": "theprofinvestor",
+    "tagline": "Process-driven long/short research",
+    "accent": "#22d3ee",
+    "active": true
+  },
+  {
+    "slug": "sixsigmacapital",
+    "name": "Six Sigma Capital",
+    "handle": "sixsigmacapital",
+    "tagline": "Statistical edge • process discipline",
+    "accent": "#fb923c",
+    "active": true
+  },
+  {
+    "slug": "buccocapital",
+    "name": "Bucco Capital",
+    "handle": "buccocapital",
+    "tagline": "Concentrated public equity",
+    "accent": "#f87171",
+    "active": true
+  },
+  {
+    "slug": "thelonginvest",
+    "name": "The Long Invest",
+    "handle": "thelonginvest",
+    "tagline": "Long-duration compounding",
+    "accent": "#94a3b8",
+    "active": true
+  },
+  {
+    "slug": "labubu-trader",
+    "name": "Labubu Trader",
+    "handle": "labubu_trader",
+    "tagline": "Tactical trading • momentum",
+    "accent": "#facc15",
+    "active": true
+  },
+  {
+    "slug": "cmsinvests",
+    "name": "CMS Invests",
+    "handle": "cmsinvests",
+    "tagline": "Fundamental public-market investing",
+    "accent": "#c084fc",
+    "active": true
+  },
+  {
+    "slug": "globalflows",
+    "name": "Global Flows",
+    "handle": "globalflows",
+    "tagline": "Cross-asset flows • macro tape",
+    "accent": "#38bdf8",
+    "active": true
+  },
+  {
+    "slug": "jbulltard1",
+    "name": "J Bulltard",
+    "handle": "jbulltard1",
+    "tagline": "High-conviction directional calls",
+    "accent": "#fb7185",
+    "active": true
+  },
+  {
+    "slug": "zephyr-z9",
+    "name": "Zephyr Z9",
+    "handle": "zephyr_z9",
+    "tagline": "Public-market research desk",
+    "accent": "#67e8f9",
+    "active": true
+  },
+  {
+    "slug": "amitisinvesting",
+    "name": "Amitis Investing",
+    "handle": "amitisinvesting",
+    "tagline": "Fundamental investing commentary",
+    "accent": "#86efac",
+    "active": true
+  },
+  {
+    "slug": "kawzinvests",
+    "name": "Kawz Invests",
+    "handle": "KawzInvests",
+    "tagline": "Public-market idea flow",
+    "accent": "#fda4af",
+    "active": true
+  }
+]

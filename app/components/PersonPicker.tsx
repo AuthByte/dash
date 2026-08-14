@@ -7,20 +7,43 @@ import type { Person } from "@/lib/schema";
 
 const STORAGE_KEY = "dash:last_person";
 
+function PickerSkeleton() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2" aria-hidden="true">
+      {[0, 1].map((i) => (
+        <div
+          key={i}
+          className="liquid-panel h-52 rounded-2xl bg-[var(--color-bg-card)]/60 sm:h-56"
+          style={{ animationDelay: `${i * 80}ms` }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export function PersonPicker({ people }: { people: Person[] }) {
   const router = useRouter();
   const [showAll, setShowAll] = useState(false);
   const [autoRedirected, setAutoRedirected] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   useEffect(() => {
     try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get("pick") === "1") {
+        setShowAll(true);
+        return;
+      }
+      if (people.length > 1 && url.searchParams.get("resume") !== "1") {
+        return;
+      }
       const last = window.localStorage.getItem(STORAGE_KEY);
       if (last && people.some((p) => p.slug === last)) {
-        const url = new URL(window.location.href);
-        if (url.searchParams.get("pick") === "1") {
-          setShowAll(true);
-          return;
-        }
         setAutoRedirected(true);
         router.replace(`/${last}`);
       }
@@ -29,22 +52,58 @@ export function PersonPicker({ people }: { people: Person[] }) {
     }
   }, [people, router]);
 
+  if (!hydrated) {
+    return <PickerSkeleton />;
+  }
+
   if (autoRedirected) {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-text-muted)]">
-          Loading last profile…
+      <div className="flex min-h-[32dvh] flex-col items-start justify-center gap-4">
+        <div className="h-1 w-16 rounded-full bg-[var(--color-border-strong)]">
+          <div className="h-full w-1/2 animate-pulse rounded-full bg-[var(--color-gold)]/50" />
+        </div>
+        <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-text-muted)]">
+          Resuming last desk…
         </p>
       </div>
     );
   }
 
+  const filtered = people.filter((p) => {
+    const q = query.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      p.name.toLowerCase().includes(q) ||
+      p.handle.toLowerCase().includes(q) ||
+      p.slug.toLowerCase().includes(q) ||
+      p.tagline.toLowerCase().includes(q)
+    );
+  });
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {people.map((p) => (
+    <div className="space-y-4">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <label className="sr-only" htmlFor="desk-search">
+          Search desks
+        </label>
+        <input
+          id="desk-search"
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search desks, handles, themes…"
+          className="w-full rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] px-4 py-2.5 font-mono text-sm text-white outline-none ring-[var(--color-gold)] placeholder:text-[var(--color-text-muted)] focus:ring-1 sm:max-w-sm"
+        />
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+          {filtered.length} / {people.length} desks
+        </p>
+      </div>
+    <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:gap-5">
+      {filtered.map((p, i) => (
         <Link
           key={p.slug}
           href={`/${p.slug}`}
+          style={{ animationDelay: `${i * 75}ms` }}
           onClick={() => {
             try {
               window.localStorage.setItem(STORAGE_KEY, p.slug);
@@ -52,43 +111,55 @@ export function PersonPicker({ people }: { people: Person[] }) {
               // ignore
             }
           }}
-          className="group relative overflow-hidden rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg-elev)] p-6 transition hover:border-[var(--color-gold)]"
+          className="animate-fade-up group relative flex flex-col overflow-hidden rounded-2xl bg-[var(--color-bg-card)]/85 p-6 transition-[transform,box-shadow,border-color] duration-300 ease-out active:translate-y-px sm:p-7 lg:min-h-[220px] liquid-panel hover:border-[var(--color-gold)]/35"
         >
           <div
-            className="absolute inset-x-0 top-0 h-0.5 opacity-60 transition group-hover:opacity-100"
+            className="absolute left-0 top-0 h-full w-1 opacity-80 transition group-hover:opacity-100"
             style={{ backgroundColor: p.accent }}
+            aria-hidden="true"
           />
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between gap-4 pl-2">
             <div
-              className="flex h-12 w-12 items-center justify-center rounded-full font-mono text-lg font-bold text-black"
-              style={{ backgroundColor: p.accent }}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl font-mono text-sm font-bold text-[#0a0a0a] shadow-inner"
+              style={{
+                backgroundColor: p.accent,
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.25)",
+              }}
             >
               {p.name.charAt(0)}
             </div>
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-text-muted)] transition group-hover:text-[var(--color-gold)]">
-              Open →
+            <span className="font-mono text-[10px] uppercase tracking-[0.26em] text-[var(--color-text-muted)] transition group-hover:text-[var(--color-gold)]">
+              Enter
             </span>
           </div>
-          <div className="mt-5">
-            <h3 className="font-mono text-xl font-semibold text-white">
+          <div className="mt-6 flex flex-1 flex-col pl-2">
+            <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
               {p.name}
             </h3>
-            <p className="mt-1 font-mono text-xs text-[var(--color-text-dim)]">
+            <p className="mt-1 font-mono text-xs text-[var(--color-text-muted)]">
               @{p.handle}
             </p>
+            <p className="mt-4 flex-1 text-sm leading-relaxed text-[var(--color-text-dim)]">
+              {p.tagline}
+            </p>
           </div>
-          <p className="mt-4 text-sm leading-relaxed text-[var(--color-text-dim)]">
-            {p.tagline}
-          </p>
-        </Link>
-      ))}
-      {showAll && (
-        <div className="rounded-md border border-dashed border-[var(--color-border-strong)] bg-transparent p-6 text-center">
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--color-text-muted)]">
-            More profiles coming soon
+          </Link>
+        ))}
+      {filtered.length === 0 && (
+        <div className="sm:col-span-2 rounded-2xl border border-dashed border-[var(--color-border-strong)] px-6 py-10 text-center">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+            No desks match “{query}”
           </p>
         </div>
       )}
+      {showAll && (
+        <div className="flex min-h-[180px] items-center justify-center rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-transparent px-6 py-8 text-left sm:col-span-2">
+          <p className="max-w-sm font-mono text-[10px] uppercase leading-relaxed tracking-[0.24em] text-[var(--color-text-muted)]">
+            Additional profiles ship here when you wire them in Supabase.
+          </p>
+        </div>
+      )}
+    </div>
     </div>
   );
 }

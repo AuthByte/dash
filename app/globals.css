@@ -1,39 +1,62 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #121110;
-  --color-bg-elev: #181715;
-  --color-bg-card: #1d1b19;
-  --color-bg-soft: #22201d;
-  --color-bg-panel: #161412;
-  --color-border: #2a2723;
-  --color-border-strong: #36312c;
-  --color-text: #f2efe9;
-  --color-text-dim: #b8b1a8;
-  --color-text-muted: #8a8278;
-  --color-gold: #d4a574;
-  --color-gold-dim: #ab7f52;
-  --color-up: #7bc29d;
-  --color-down: #dd8b84;
+  --color-bg: #0f0e0d;
+  --color-bg-elev: #161412;
+  --color-bg-card: #1a1816;
+  --color-bg-soft: #201e1b;
+  --color-bg-panel: #131110;
+  --color-border: #2c2824;
+  --color-border-strong: #3a342e;
+  --color-text: #f4f0ea;
+  --color-text-dim: #b5aea4;
+  --color-text-muted: #847a70;
+  --color-gold: #c9a06c;
+  --color-gold-dim: #9e7a48;
+  --color-up: #6eb89a;
+  --color-down: #d88a82;
   --color-long: #34d399;
   --color-bearish: #f87171;
   --color-neutral: #94a3b8;
   --color-exited: #5a5a5a;
-  --color-conv-high: #f5a623;
-  --color-conv-medium: #60a5fa;
+  --color-conv-high: #e8a82e;
+  --color-conv-medium: #5b9fd4;
   --color-conv-low: #5a5a5a;
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
-    "URW Palladio L", serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-line {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
 }
 
 html,
 body {
   background:
-    radial-gradient(circle at 15% -10%, rgba(212, 165, 116, 0.08), transparent 35%),
-    radial-gradient(circle at 90% 0%, rgba(255, 255, 255, 0.04), transparent 30%),
+    radial-gradient(ellipse 120% 80% at 0% -20%, rgba(201, 160, 108, 0.09), transparent 45%),
+    radial-gradient(ellipse 90% 60% at 100% 0%, rgba(255, 255, 255, 0.035), transparent 42%),
     var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
@@ -44,7 +67,7 @@ body {
 
 ::selection {
   background: var(--color-gold);
-  color: #000;
+  color: #0a0a0a;
 }
 
 .font-mono {
@@ -52,16 +75,49 @@ body {
   font-feature-settings: "zero", "ss02";
 }
 
-.font-display {
-  font-family: var(--font-display);
+/* Film grain: fixed overlay, never on scroll containers */
+.noise-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
 }
 
-/* Subtle scanline / grid backdrop */
 .bg-grid {
+  position: relative;
+  z-index: 1;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.liquid-panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 48px -28px rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+}
+
+.animate-fade-up {
+  animation: fade-up 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-pulse-line {
+  animation: pulse-line 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-pulse-line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .divider-ascii {
@@ -73,7 +129,6 @@ body {
   color: var(--color-text-muted);
 }
 
-/* Custom scrollbar for table area */
 .scroll-thin::-webkit-scrollbar {
   height: 8px;
   width: 8px;
@@ -86,5 +141,5 @@ body {
   border-radius: 4px;
 }
 .scroll-thin::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
+  background: #454038;
 }
