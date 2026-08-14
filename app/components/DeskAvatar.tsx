@@ -21,7 +21,12 @@ export function DeskAvatar({
   className?: string;
 }) {
   const candidates = useMemo(
-    () => avatarCandidates(person),
+    () =>
+      avatarCandidates({
+        slug: person.slug,
+        handle: person.handle,
+        avatar_url: person.avatar_url,
+      }),
     [person.slug, person.handle, person.avatar_url],
   );
   const [index, setIndex] = useState(0);
