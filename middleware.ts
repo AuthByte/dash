@@ -12,6 +12,7 @@ const PASSTHROUGH = [
   /^\/$/,
   /^\/api\//,
   /^\/_next\//,
+  /^\/avatars\//,
   /^\/robots\.txt$/,
   /^\/sitemap\.xml$/,
   /^\/missing$/,

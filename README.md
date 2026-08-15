@@ -171,6 +171,8 @@ Standard Next.js. On Vercel set:
 
 Keep `SUPABASE_SERVICE_ROLE_KEY` and `OPENROUTER_API_KEY` on the machine that runs ingest/refresh, not in the browser bundle.
 
+Production deploy: GitHub Action **Deploy Vercel** (`workflow_dispatch`) uses secret `VERCEL_TOKEN`, or `npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"`.
+
 ---
 
 ## Not investment advice

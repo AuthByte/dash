@@ -177,6 +177,14 @@ PEOPLE: list[dict[str, Any]] = [
         "accent": "#fda4af",
         "active": True,
     },
+    {
+        "slug": "bubbleboi",
+        "name": "Bubble Boi",
+        "handle": "bubbleboi",
+        "tagline": "Semi/AI tape • Intel/foundry • risk-first",
+        "accent": "#e879f9",
+        "active": True,
+    },
 ]
 
 

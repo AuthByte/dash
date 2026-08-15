@@ -188,5 +188,15 @@
     "active": true,
     "sort_order": 18,
     "avatar_url": "/avatars/kawzinvests.jpg"
+  },
+  {
+    "slug": "bubbleboi",
+    "name": "Bubble Boi",
+    "handle": "bubbleboi",
+    "tagline": "Semi/AI tape • Intel/foundry • risk-first",
+    "accent": "#e879f9",
+    "active": true,
+    "sort_order": 19,
+    "avatar_url": "/avatars/bubbleboi.jpg"
   }
 ]
