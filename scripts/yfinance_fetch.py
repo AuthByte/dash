@@ -34,10 +34,11 @@ def to_int(value: Any) -> int | None:
 def to_iso_date(value: Any) -> str | None:
     if value is None:
         return None
-    if isinstance(value, date):
-        return value.isoformat()
+    # datetime is a date subclass; pandas.Timestamp.isoformat() includes time.
     if isinstance(value, datetime):
         return value.date().isoformat()
+    if isinstance(value, date):
+        return value.isoformat()
     if isinstance(value, (int, float)):
         try:
             return datetime.fromtimestamp(value, tz=timezone.utc).date().isoformat()

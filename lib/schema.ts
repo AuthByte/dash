@@ -1,16 +1,10 @@
 import { z } from "zod";
 
-export const ThemeSlugSchema = z.enum([
-  "photonics",
-  "neocloud",
-  "ai-semi",
-  "energy",
-  "natsec",
-  "fintech",
-  "consumer",
-  "crypto",
-  "macro",
-]);
+export const ThemeSlugSchema = z
+  .string()
+  .min(1)
+  .max(64)
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "theme slug must be kebab-case");
 export type ThemeSlug = z.infer<typeof ThemeSlugSchema>;
 
 export const StanceSchema = z.enum(["long", "neutral", "bearish", "exited"]);
@@ -38,14 +32,14 @@ export const PickSchema = z.object({
   thesis_short: z.string(),
   thesis_long: z.string(),
   first_mentioned_at: z.string(),
-  tweet_url: z.string().url().or(z.literal("")),
+  tweet_url: z.string(),
   tweet_id: z.string(),
   tweet_events: z
     .array(
       z.object({
         tweet_id: z.string(),
         tweeted_at: z.string(),
-        tweet_url: z.string().url().or(z.literal("")),
+        tweet_url: z.string(),
         text: z.string().optional(),
       }),
     )
@@ -171,6 +165,8 @@ export const PersonSchema = z.object({
   tagline: z.string(),
   accent: z.string(),
   active: z.boolean().default(true),
+  sort_order: z.number().int().optional(),
+  avatar_url: z.string().optional(),
 });
 export type Person = z.infer<typeof PersonSchema>;
 

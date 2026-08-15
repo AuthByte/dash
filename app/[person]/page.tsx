@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import {
   getEnrichedPicks,
   getHeadlineStats,
@@ -9,6 +10,7 @@ import {
   getThemeStats,
   getThemes,
 } from "@/lib/data";
+import { DISCLAIMER, getSiteUrl } from "@/lib/site";
 import { Hero } from "../components/Hero";
 import { ThesisBlock } from "../components/ThesisBlock";
 import { StatStrip } from "../components/StatStrip";
@@ -19,10 +21,28 @@ import { HighlightsPanel } from "../components/HighlightsPanel";
 import { InsightsPanel } from "../components/InsightsPanel";
 
 export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  const people = await getPeople();
-  return people.map((p) => ({ person: p.slug }));
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ person: string }>;
+}): Promise<Metadata> {
+  const { person: slug } = await params;
+  const person = await getPersonBySlug(slug);
+  if (!person) notFound();
+  const origin = getSiteUrl();
+  return {
+    title: `${person.name} — Picks Tracker`,
+    description: `${person.tagline}. ${DISCLAIMER}`,
+    alternates: { canonical: `${origin}/${person.slug}` },
+    openGraph: {
+      title: `${person.name} — Picks Tracker`,
+      description: `${person.tagline}. ${DISCLAIMER}`,
+      url: `${origin}/${person.slug}`,
+      type: "website",
+    },
+  };
 }
 
 export default async function PersonDashboardPage({
@@ -43,10 +63,18 @@ export default async function PersonDashboardPage({
   const themeStats = getThemeStats(themes, picks);
   const headline = getHeadlineStats(picks);
 
+  const todayRibbon = new Date().toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
     <main className="bg-grid relative min-h-dvh">
-      <div className="mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6 lg:px-10">
-        <ProfileSwitcher current={person} people={people} />
+      <div className="noise-overlay" aria-hidden="true" />
+      <div className="relative z-[1] mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6 lg:px-10">
+        <ProfileSwitcher current={person} people={people} todayRibbon={todayRibbon} />
         <div className="mt-6">
           <Hero meta={meta} person={person} />
         </div>

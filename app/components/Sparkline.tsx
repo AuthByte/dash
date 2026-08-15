@@ -19,9 +19,9 @@ import {
   type SeriesMarker,
   type SeriesOptionsCommon,
   type Time,
-  type TimeChartOptions,
   type WhitespaceData,
 } from "lightweight-charts";
+import { dateOnly, snapToSession } from "@/lib/history";
 import type { PriceHistoryPoint } from "@/lib/schema";
 
 export function Sparkline({
@@ -58,7 +58,7 @@ export function Sparkline({
       data
         .filter((point) => Number.isFinite(point.close))
         .map((point) => ({
-          time: point.date as Time,
+          time: (dateOnly(point.date) ?? point.date) as Time,
           value: point.close,
         })),
     [data],
@@ -67,12 +67,14 @@ export function Sparkline({
   const markers = useMemo(() => {
     if (chartData.length === 0) return [];
     const availableDays = new Set(chartData.map((point) => point.time as string));
+    const used = new Set<string>();
     return tweetMarkers
       .map((event) => {
-        const day = event.tweeted_at.slice(0, 10);
-        if (!availableDays.has(day)) return null;
+        const snapped = snapToSession(event.tweeted_at, availableDays);
+        if (!snapped || used.has(`${snapped}:${event.tweet_id}`)) return null;
+        used.add(`${snapped}:${event.tweet_id}`);
         return {
-          time: day as Time,
+          time: snapped as Time,
           position: "aboveBar" as const,
           color: "#f5a623",
           shape: "circle" as const,

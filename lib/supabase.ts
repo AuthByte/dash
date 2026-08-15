@@ -13,8 +13,8 @@ const SUPABASE_ANON_KEY =
   process.env.SUPABASE_PUBLISHABLE_KEY?.trim() ??
   "";
 
-const SUPABASE_PEOPLE_TABLE =
-  process.env.SUPABASE_PEOPLE_TABLE?.trim() || "tracker_people";
+export const SUPABASE_PEOPLE_TABLE =
+  process.env.SUPABASE_PEOPLE_TABLE?.trim() || "people";
 const SUPABASE_PROFILE_TABLE =
   process.env.SUPABASE_PROFILE_TABLE?.trim() || "person_datasets";
 

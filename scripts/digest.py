@@ -5,6 +5,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -18,12 +19,19 @@ from common import (
     ensure_dirs,
     get_handle,
     load_env,
+    person_output_dir,
     read_json,
     write_json,
 )
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-DEFAULT_MODEL = "anthropic/claude-sonnet-4.6"
+# Free OpenRouter model. Override with OPENROUTER_MODEL or --model.
+DEFAULT_MODEL = "openai/gpt-oss-20b:free"
+FREE_MODEL_FALLBACKS = [
+    "openai/gpt-oss-20b:free",
+    "google/gemma-4-31b-it:free",
+    "openrouter/free",
+]
 PROMPT_PATH = Path(__file__).parent / "prompts" / "digest_system.md"
 
 
@@ -119,8 +127,8 @@ def _resolve_person_slug(handle: str) -> str | None:
         if not isinstance(person, dict):
             continue
         person_handle = str(person.get("handle", "")).lower().lstrip("@")
-        if person_handle == handle_l:
-            slug = str(person.get("slug", "")).strip()
+        slug = str(person.get("slug", "")).strip()
+        if person_handle == handle_l or slug.lower() == handle_l:
             return slug or None
     for person in people:
         if not isinstance(person, dict):
@@ -182,6 +190,72 @@ def existing_pick_summaries(handle: str) -> list[dict[str, Any]]:
     ]
 
 
+def extract_json_object(content: str) -> dict[str, Any]:
+    text = content.strip()
+    if text.startswith("```"):
+        text = re.sub(r"^```(?:json)?", "", text, flags=re.IGNORECASE).strip()
+        text = re.sub(r"```$", "", text).strip()
+    try:
+        parsed = json.loads(text)
+        if isinstance(parsed, dict):
+            return parsed
+    except json.JSONDecodeError:
+        pass
+    start = text.find("{")
+    end = text.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        raise RuntimeError(f"model did not return JSON: {text[:400]}")
+    parsed = json.loads(text[start : end + 1])
+    if not isinstance(parsed, dict):
+        raise RuntimeError("model JSON was not an object")
+    return parsed
+
+
+REQUIRED_DIGEST_KEYS = ("new_picks", "updated_picks", "thesis_update", "ignored")
+
+
+def _coerce_pick_list(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        return []
+    out: list[dict[str, Any]] = []
+    required = (
+        "ticker",
+        "name",
+        "theme",
+        "stance",
+        "conviction",
+        "thesis_short",
+        "thesis_long",
+        "first_mentioned_at",
+        "tweet_url",
+        "tweet_id",
+    )
+    for item in value:
+        if not isinstance(item, dict):
+            continue
+        if not isinstance(item.get("ticker"), str) or not str(item["ticker"]).strip():
+            continue
+        if not all(key in item for key in required):
+            continue
+        out.append(item)
+    return out
+
+
+def validate_digest_result(payload: dict[str, Any]) -> dict[str, Any]:
+    missing = [key for key in REQUIRED_DIGEST_KEYS if key not in payload]
+    if missing:
+        raise RuntimeError(f"digest JSON missing keys: {', '.join(missing)}")
+    payload["new_picks"] = _coerce_pick_list(payload.get("new_picks"))
+    payload["updated_picks"] = _coerce_pick_list(payload.get("updated_picks"))
+    if payload.get("thesis_update") is not None and not isinstance(
+        payload.get("thesis_update"), str
+    ):
+        payload["thesis_update"] = None
+    if not isinstance(payload.get("ignored"), list):
+        payload["ignored"] = []
+    return payload
+
+
 def call_openrouter(
     api_key: str,
     model: str,
@@ -191,15 +265,16 @@ def call_openrouter(
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://github.com/serenity-picks",
-        "X-Title": "Serenity Picks Digest",
+        "HTTP-Referer": "https://github.com/AuthByte/dash",
+        "X-Title": "Picks Tracker Digest",
     }
-    body = {
+    messages = [
+        {"role": "system", "content": system},
+        {"role": "user", "content": json.dumps(user, ensure_ascii=False)},
+    ]
+    schema_body = {
         "model": model,
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": json.dumps(user, ensure_ascii=False)},
-        ],
+        "messages": messages,
         "response_format": {
             "type": "json_schema",
             "json_schema": {
@@ -210,27 +285,61 @@ def call_openrouter(
         },
         "temperature": 0.2,
     }
-    with httpx.Client(timeout=120.0) as client:
-        resp = client.post(OPENROUTER_URL, headers=headers, json=body)
-        resp.raise_for_status()
-        data = resp.json()
-    try:
-        content = data["choices"][0]["message"]["content"]
-    except (KeyError, IndexError) as exc:
-        raise RuntimeError(f"unexpected OpenRouter response: {data}") from exc
-    if isinstance(content, list):
-        # Some models return content blocks; concat the text parts.
-        content = "".join(
-            part.get("text", "") for part in content if isinstance(part, dict)
-        )
-    return json.loads(content)
+    json_object_body = {
+        "model": model,
+        "messages": messages,
+        "response_format": {"type": "json_object"},
+        "temperature": 0.2,
+    }
+    plain_body = {
+        "model": model,
+        "messages": messages
+        + [
+            {
+                "role": "user",
+                "content": "Respond with ONLY a JSON object. No markdown.",
+            }
+        ],
+        "temperature": 0.2,
+    }
+
+    last_error: Exception | None = None
+    with httpx.Client(timeout=180.0) as client:
+        for body in (schema_body, json_object_body, plain_body):
+            try:
+                resp = client.post(OPENROUTER_URL, headers=headers, json=body)
+                if resp.status_code >= 400:
+                    last_error = RuntimeError(
+                        f"OpenRouter HTTP {resp.status_code}: {resp.text[:500]}"
+                    )
+                    continue
+                data = resp.json()
+                content = data["choices"][0]["message"]["content"]
+                if isinstance(content, list):
+                    content = "".join(
+                        part.get("text", "")
+                        for part in content
+                        if isinstance(part, dict)
+                    )
+                return validate_digest_result(extract_json_object(str(content)))
+            except (KeyError, IndexError, json.JSONDecodeError, RuntimeError) as exc:
+                last_error = exc
+                continue
+    raise RuntimeError(f"digest failed for {model}: {last_error}")
 
 
-def find_latest_raw() -> Path | None:
-    if not OUTPUT_DIR.exists():
-        return None
-    candidates = sorted(OUTPUT_DIR.glob("raw-*.json"))
-    return candidates[-1] if candidates else None
+def find_latest_raw(person_slug: str | None = None) -> Path | None:
+    search_dirs = []
+    if person_slug:
+        search_dirs.append(person_output_dir(person_slug))
+    search_dirs.append(OUTPUT_DIR)
+    for directory in search_dirs:
+        if not directory.exists():
+            continue
+        candidates = sorted(directory.glob("raw-*.json"))
+        if candidates:
+            return candidates[-1]
+    return None
 
 
 def main() -> int:
@@ -242,6 +351,11 @@ def main() -> int:
         help="Path to raw-*.json (defaults to latest in scrape-output).",
     )
     parser.add_argument("--model", default=None, help="Override OPENROUTER_MODEL.")
+    parser.add_argument(
+        "--person",
+        default=None,
+        help="Person slug for per-profile output and local pick context.",
+    )
     parser.add_argument(
         "--max-tweets",
         type=int,
@@ -261,7 +375,8 @@ def main() -> int:
         )
         return 2
 
-    raw_path = args.input or find_latest_raw()
+    person_slug = (args.person or os.environ.get("SCRAPE_PERSON_SLUG") or "").strip() or None
+    raw_path = args.input or find_latest_raw(person_slug)
     if not raw_path or not raw_path.exists():
         print("ERROR: no raw scrape file found. Run scripts/scrape.py first.", file=sys.stderr)
         return 2
@@ -279,7 +394,11 @@ def main() -> int:
         tweets = tweets[-args.max_tweets :]
 
     handle = raw.get("handle") or get_handle()
-    model = args.model or os.environ.get("OPENROUTER_MODEL") or DEFAULT_MODEL
+    requested = args.model or os.environ.get("OPENROUTER_MODEL") or DEFAULT_MODEL
+    models = [requested]
+    for fallback in FREE_MODEL_FALLBACKS:
+        if fallback not in models:
+            models.append(fallback)
 
     user_payload = {
         "handle": handle,
@@ -287,11 +406,27 @@ def main() -> int:
         "tweets": tweets,
     }
 
-    print(f"[digest] model={model}  tweets={len(tweets)}  raw={raw_path.name}")
-    result = call_openrouter(api_key, model, load_system_prompt(handle), user_payload)
+    result: dict[str, Any] | None = None
+    last_err: Exception | None = None
+    used_model = requested
+    for model in models:
+        print(f"[digest] model={model}  tweets={len(tweets)}  raw={raw_path}")
+        try:
+            result = call_openrouter(api_key, model, load_system_prompt(handle), user_payload)
+            used_model = model
+            break
+        except Exception as err:
+            last_err = err
+            print(f"[digest] warning: {model} failed: {err}")
+    if result is None:
+        print(f"ERROR: all digest models failed. Last error: {last_err}", file=sys.stderr)
+        return 2
 
+    result["_model"] = used_model
+    result["source_file"] = raw_path.name.replace("raw-", "digest-")
     today = dt.date.today().isoformat()
-    out_path = OUTPUT_DIR / f"digest-{today}.json"
+    out_dir = person_output_dir(person_slug)
+    out_path = out_dir / f"digest-{today}.json"
     write_json(out_path, result)
 
     summary = (

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Outfit } from "next/font/google";
 import "./globals.css";
+import { DISCLAIMER, getSiteUrl } from "@/lib/site";
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-outfit",
   display: "swap",
 });
 
@@ -15,14 +16,12 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: "Picks Tracker — Multi-profile Dashboard",
-  description:
-    "Live trackers for stock picks across multiple analysts and traders.",
-  metadataBase: new URL("https://picks-tracker.local"),
+  description: `Live trackers for stock picks across multiple analysts and traders. ${DISCLAIMER}`,
   openGraph: {
     title: "Picks Tracker — Multi-profile Dashboard",
-    description:
-      "Live trackers for stock picks across multiple analysts and traders.",
+    description: `Live trackers for stock picks across multiple analysts and traders. ${DISCLAIMER}`,
     type: "website",
   },
 };
@@ -33,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
-      <body className="min-h-dvh bg-[var(--color-bg)] text-[var(--color-text)] antialiased">
+    <html lang="en" className={`${outfit.variable} ${jetbrains.variable}`}>
+      <body className="min-h-dvh bg-[var(--color-bg)] font-sans text-[var(--color-text)] antialiased">
         {children}
       </body>
     </html>

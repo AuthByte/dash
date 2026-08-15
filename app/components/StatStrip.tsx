@@ -1,66 +1,88 @@
 import { formatPct } from "@/lib/format";
-import type { HeadlineStats } from "@/lib/data";
+import type { HeadlineStats } from "@/lib/stats";
 
 export function StatStrip({ stats }: { stats: HeadlineStats }) {
+  const empty = stats.total === 0;
   const items: {
     label: string;
     value: string;
     sub?: string;
     tone?: "up" | "down" | "neutral" | "gold";
+    span: string;
   }[] = [
     {
-      label: "Total Picks",
+      label: "Total picks",
       value: `${stats.total}`,
-      sub: `${stats.long_count} long • ${stats.other_count} other`,
+      sub: empty
+        ? "Desk is empty until tweets are ingested"
+        : `${stats.long_count} long · ${stats.other_count} other`,
       tone: "neutral",
+      span: "col-span-12 md:col-span-4",
     },
     {
-      label: "Avg YTD (Longs)",
-      value: formatPct(stats.avg_ytd_pct_longs, { sign: true }),
-      sub: "Equal-weighted",
-      tone: stats.avg_ytd_pct_longs >= 0 ? "up" : "down",
+      label: "Avg YTD (longs)",
+      value:
+        stats.avg_ytd_pct_longs == null
+          ? "—"
+          : formatPct(stats.avg_ytd_pct_longs, { sign: true }),
+      sub: empty
+        ? "No sleeve yet"
+        : stats.avg_ytd_pct_longs == null
+          ? "No long names"
+          : "Equal-weighted sleeve",
+      tone:
+        stats.avg_ytd_pct_longs == null
+          ? "neutral"
+          : stats.avg_ytd_pct_longs >= 0
+            ? "up"
+            : "down",
+      span: "col-span-12 md:col-span-8",
     },
     {
-      label: "Best Performer",
+      label: "Best tape",
       value: stats.best?.ticker ?? "—",
       sub: stats.best
         ? formatPct(stats.best.ytd_pct, { sign: true }) + " YTD"
-        : "",
-      tone: "up",
+        : "Awaiting names",
+      tone: stats.best ? "up" : "neutral",
+      span: "col-span-6 md:col-span-4",
     },
     {
-      label: "Worst Performer",
+      label: "Worst tape",
       value: stats.worst?.ticker ?? "—",
       sub: stats.worst
         ? formatPct(stats.worst.ytd_pct, { sign: true }) + " YTD"
-        : "",
-      tone: "down",
+        : "Awaiting names",
+      tone: stats.worst ? "down" : "neutral",
+      span: "col-span-6 md:col-span-4",
     },
     {
-      label: "Highest Conviction",
+      label: "High conviction",
       value: `${stats.highest_conviction_count}`,
-      sub: "Top-tier names",
+      sub: "Names flagged top tier",
       tone: "gold",
+      span: "col-span-12 md:col-span-4",
     },
   ];
 
   return (
-    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {items.map((item) => (
+    <section className="grid grid-cols-12 gap-3 sm:gap-4">
+      {items.map((item, i) => (
         <article
           key={item.label}
-          className="group relative overflow-hidden rounded-3xl border border-[var(--color-border-strong)] bg-[var(--color-bg-card)] px-6 py-5 transition hover:border-[var(--color-gold)]/40"
+          style={{ animationDelay: `${i * 55}ms` }}
+          className={`animate-fade-up group relative min-h-[140px] overflow-hidden rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-bg-card)]/90 px-5 py-5 transition-[border-color,box-shadow] duration-300 ease-out hover:border-[var(--color-gold)]/30 liquid-panel sm:px-6 sm:py-6 ${item.span}`}
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
+          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-[var(--color-text-muted)]">
             {item.label}
           </p>
           <p
-            className={`mt-2 font-sans text-5xl leading-none font-semibold ${toneClass(item.tone)}`}
+            className={`mt-3 font-mono text-3xl leading-none font-semibold tracking-tight sm:text-4xl ${toneClass(item.tone)}`}
           >
             {item.value}
           </p>
           {item.sub && (
-            <p className="mt-2 text-sm text-[var(--color-text-dim)]">
+            <p className="mt-3 text-sm leading-snug text-[var(--color-text-dim)]">
               {item.sub}
             </p>
           )}
